@@ -9,10 +9,10 @@ import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import * as vendorAPI from '../../API/vendors';
-import VendorForm from '../../Components/VendorForm';
 import useInputState from '../../Hooks/UseInputHook';
 import style from '../../Styles/GlobalStyles';
 import FeaturedVendors from './FeaturedVendors';
+import VendorForm from './vendor Components/VendorForm';
 import VendorsList from './VendorsList';
 
 const Vendor = () => {

@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import * as vendorsAPI from '../../API/vendors';
-import VendorAccordionDetails from '../../Components/VendorAccordionDetails';
+import React, { useContext } from 'react';
+import { VendorContext } from '../../Context APIs/vendorContext';
+import VendorAccordionDetails from './vendor Components/VendorAccordionDetails';
 
 const VendorsList = () => {
-    const [vendors, setVendors] = useState([]);
-
-    useEffect(() => {
-        vendorsAPI.getAllVendors().then(result => {
-            setVendors(result.data);
-        });
-    }, []);
+    const { vendors } = useContext(VendorContext)
 
     return (
         <React.Fragment>

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 // MaterialUI Elements
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
@@ -18,8 +18,6 @@ import { UserContext } from '../../Context APIs/userContext';
 
 
 export default function NavBar(){
-    const navigate = useNavigate();
-
     const { UserToken } = useContext(UserContext);
 
     const [loggedin, setLoggedin] = useState(UserToken !== '');
@@ -140,7 +138,7 @@ export default function NavBar(){
                 >
                 <ReceiptIcon />
                 </IconButton>
-                <NavLink to="/" >Cupons</NavLink>
+                <NavLink to="/" >Coupons</NavLink>
             </MenuItem>
         )}
 
@@ -155,7 +153,7 @@ export default function NavBar(){
                 >
                 <AddBusinessIcon />
                 </IconButton>
-                <NavLink to="/" >Vendors</NavLink>
+                <NavLink to="/vendors" >Vendors</NavLink>
             </MenuItem>
         )}
 
@@ -170,7 +168,7 @@ export default function NavBar(){
                 >
                 <CategoryIcon />
                 </IconButton>
-                <NavLink to="/" >categories</NavLink>
+                <NavLink to="/category" >categories</NavLink>
             </MenuItem>
         )}
 
@@ -234,7 +232,7 @@ export default function NavBar(){
                                 component="div"
                                 sx={{ display: { xs: 'none', sm: 'block' } }}
                             >
-                                <NavLink to="" >Cupons</NavLink>
+                                <NavLink to="" >Coupons</NavLink>
                             </Typography>
                         </IconButton>
                      )}
@@ -246,7 +244,7 @@ export default function NavBar(){
                                 component="div"
                                 sx={{ display: { xs: 'none', sm: 'block' } }}
                             >
-                                <NavLink to="" >Vendor</NavLink>
+                                <NavLink to="/vendors" >Vendor</NavLink>
                             </Typography>
                         </IconButton>
                      )}
@@ -258,7 +256,7 @@ export default function NavBar(){
                                 component="div"
                                 sx={{ display: { xs: 'none', sm: 'block' } }}
                             >
-                                <NavLink to="" >Categories</NavLink>
+                                <NavLink to="/category" >Categories</NavLink>
                             </Typography>
                         </IconButton>
                      )}

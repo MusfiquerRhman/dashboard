@@ -1,7 +1,7 @@
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
-import * as vendorAPI from '../API/vendors';
-import useInputState from '../Hooks/UseInputHook';
+import * as vendorAPI from '../../../API/vendors';
+import useInputState from '../../../Hooks/UseInputHook';
 import VendorForm from './VendorForm';
 
 const UpdateVendorDialague = (props) => {

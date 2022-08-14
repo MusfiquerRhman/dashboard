@@ -7,10 +7,10 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 import React, { useState } from "react";
-import * as vendorAPI from '../API/vendors';
-import ConfrimDeleteDialogue from '../Components/ConfrimDeleteDialogue';
-import UpdateVendorDialague from '../Components/UpdateVendorDialague';
-import Styles from "../Pages/vendors/vendorsStyle";
+import * as vendorAPI from '../../../API/vendors';
+import Styles from "../vendorsStyle";
+import ConfrimDeleteDialogue from '../../../Components/ConfrimDeleteDialogue';
+import UpdateVendorDialague from './UpdateVendorDialague';
 
 const VendorAccordionDetails = (props) => {
     const [deleteOpen, setDeleteOpen] = useState(false);

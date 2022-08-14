@@ -1,0 +1,143 @@
+import React, { useState } from 'react';
+// MaterialUI Elements
+import CloseIcon from '@mui/icons-material/Close';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import Slide from '@mui/material/Slide';
+import TextField from '@mui/material/TextField';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Style from '../../../Styles/GlobalStyles';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const CategoriesForm = (props) => {
+    const {
+        category_name,
+        handleChangecategory_name,
+        handleCloseAdd,
+        addOpen,
+        formType,
+        setImage
+    } = props;
+
+    const [displayImage, setDisplayImage] = useState("");
+    
+    const imageSelectHandeler = (files) => {
+        setImage(files[0]);
+        const reader = new FileReader();
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+                setDisplayImage(reader.result);
+            }
+        };
+        if (files[0] && files[0].type.match("image.*")) {
+            reader.readAsDataURL(files[0]);
+        }
+    };
+    const classes = Style();
+
+    let imageSelectedMsg = (
+        <Typography variant="h6" className={classes.imagetext}>
+            Select an Image
+        </Typography>
+    );
+    if (displayImage !== "") {
+        imageSelectedMsg = (
+            <img src={displayImage} className={classes.image} alt="product" />
+        );
+    }
+
+    return (
+        <Dialog
+            fullScreen
+            open={addOpen}
+            onClose={handleCloseAdd}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            TransitionComponent={Transition}
+        >
+            <AppBar sx={{ position: 'relative' }}>
+                <Toolbar>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        onClick={handleCloseAdd}
+                        aria-label="close"
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                    <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                        {formType} Coupons
+                    </Typography>
+                    {/* <Button autoFocus color="inherit" onClick={handleClickVendor}>
+                        save
+                    </Button> */}
+                </Toolbar>
+            </AppBar>
+            <DialogContent>
+                <div>
+                    <Paper elevation={6} className={classes.formBox} >
+                        <form className={classes.form}>
+                            <Typography variant="h4" sx={{ padding: '1rem 3rem' }}>
+                                Enter Category Details:
+                            </Typography>
+
+                            <Box sx={{ width: '100%' }}>
+                                <Grid container item direction="column" spacing={2} lg={12} sx={{ marginBottom: '1.5rem' }}>
+                                    <Grid item >
+                                        <TextField id="registration-coupon-code"
+                                            label="Coupon Code"
+                                            type="text"
+                                            variant="standard"
+                                            value={category_name}
+                                            onChange={handleChangecategory_name}
+                                            required
+                                            fullWidth
+                                        />
+                                    </Grid>
+                                </Grid>
+                                {imageSelectedMsg}
+                                <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
+                                    <Grid item>
+                                        <Button
+                                            variant="contained"
+                                            component="label"
+                                            fullWidth
+                                            sx={{ marginTop: "1rem" }}
+                                        >
+                                            Select a vendor image
+                                            <input
+                                                name="image"
+                                                type="file"
+                                                onChange={(e) => {
+                                                    imageSelectHandeler(e.target.files);
+                                                }}
+                                                hidden
+                                                required
+                                            />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                                {/* <Grid item>
+                                    <Button fullWidth variant="contained" onClick={handleClickVendor}>Submit</Button>
+                                </Grid> */}
+                            </Box>
+                        </form>
+                    </Paper>
+                </div >
+            </DialogContent>
+        </Dialog>
+    )
+}
+
+export default CategoriesForm;

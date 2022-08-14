@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as vendorsAPI from '../../API/vendors';
-import VendorAccordionDetails from '../../Components/VendorAccordionDetails';
+import VendorAccordionDetails from './vendor Components/VendorAccordionDetails';
 
 const FeaturedVendors = () => {
     const [vendors, setVendors] = useState([]);

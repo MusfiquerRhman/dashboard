@@ -14,7 +14,7 @@ import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Style from '../Styles/GlobalStyles';
+import Style from '../../../Styles/GlobalStyles';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -72,6 +72,17 @@ const VendorForm = (props) => {
             reader.readAsDataURL(files[0]);
         }
     };
+
+    let imageSelectedMsg = (
+        <Typography variant="h6" className={classes.imagetext}>
+            Select an Image
+        </Typography>
+    );
+    if (displayImage !== "") {
+        imageSelectedMsg = (
+            <img src={displayImage} className={classes.image} alt="product" />
+        );
+    }
 
 
     return (
@@ -284,7 +295,7 @@ const VendorForm = (props) => {
                                         /> <span>Feature Vendor</span>
                                     </Grid>
                                 </Grid>
-                                <img src={displayImage} className={classes.image} alt="product" />
+                                {imageSelectedMsg}
                                 <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
                                     <Grid item>
                                         <Button

@@ -69,28 +69,29 @@ export const addVendor = async (
   const formdata = new FormData();
   formdata.append("file", file);
     try {
-        return await axios.post(`${API_URL}/vendor`, formdata, {
-            params: {
-              vendor_name: vendor_name,
-              email: email,
-              phone: phone,
-              street1: street1,
-              street2: street2,
-              description: description,
-              city: city,
-              state: state,
-              zip_code: zip_code,
-              website: website,
-              requirements: requirements,
-              is_active: is_active,
-              feature_vendor: feature_vendor,
-              hours: hours,
-            },
-            headers: {
-                "Authorization": `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`,
-            },
-        });
-    } catch (e) {
+      return await axios.post(`${API_URL}/vendor`, formdata, {
+        params: {
+          vendor_name: vendor_name,
+          email: email,
+          phone: phone,
+          street1: street1,
+          street2: street2,
+          description: description,
+          city: city,
+          state: state,
+          zip_code: zip_code,
+          website: website,
+          requirements: requirements,
+          is_active: is_active,
+          feature_vendor: feature_vendor,
+          hours: hours,
+        },
+        headers: {
+          "Authorization": `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`,
+        },
+      });
+    } 
+    catch (e) {
         return -1;
     }
 }
