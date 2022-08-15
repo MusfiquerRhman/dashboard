@@ -3,17 +3,18 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useSnackbar } from 'notistack';
 import React, { useContext, useState } from 'react';
-import * as cuponsAPI from '../../../API/coupons';
-import { VendorContext } from '../../../Context APIs/vendorContext';
-import CuponsTable from './CuponsTable';
+import * as subcategoryAPI from '../../../API/subcategory';
+import { CategoryContext } from '../../../Context APIs/categoryContext';
+import SubCategoryTable from './SubCategoriesTable';
 
-const CouponsByVendors = () => {
-    const [selectedVendorName, setSelectedVendorName] = useState("")
-    const [cupons, setCupons] = useState([])
+
+const SubCategoriesByCategory = () => {
+    const {categories} = useContext(CategoryContext);
     const { enqueueSnackbar } = useSnackbar();
-    const { vendors } = useContext(VendorContext)
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [selectedCategoryName, setSelectedCategoryName] = useState("")
+    const [subcategories, setSubcategories] = useState([])
 
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -22,12 +23,12 @@ const CouponsByVendors = () => {
         setAnchorEl(null);
     };
 
-    const handleClickItem = (vid, vendorName) => {
-        setSelectedVendorName(vendorName);
+    const handleClickItem = (cid, categoryName) => {
+        setSelectedCategoryName(categoryName);
 
-        cuponsAPI.getCouponsByVendor(vid).then(
+        subcategoryAPI.getAllSubCategoryByCategoryID(cid).then(
             res => {
-                setCupons(res.data)
+                setSubcategories(res.data)
                 if(res.status !== 200) {
                     enqueueSnackbar(`Connection Error`, { variant: 'error' });
                 }
@@ -38,7 +39,7 @@ const CouponsByVendors = () => {
     }
 
     return (
-        <React.Fragment>
+        <>
             <div>
                 <Button
                     id="basic-button"
@@ -47,7 +48,7 @@ const CouponsByVendors = () => {
                     aria-expanded={open ? 'true' : undefined}
                     onClick={handleClick}
                 >
-                    {selectedVendorName === '' ? "Select a vendor" : `Selected Vendor: ${selectedVendorName}`}
+                    {selectedCategoryName === '' ? "Select a Category" : `Selected Category: ${selectedCategoryName}`}
                 </Button>
                 <Menu
                     id="basic-menu"
@@ -58,16 +59,16 @@ const CouponsByVendors = () => {
                         'aria-labelledby': 'basic-button',
                     }}
                 >
-                    {vendors.map((element, index) => (
-                        <MenuItem key={index} onClick={() => handleClickItem(element.vid, element.vendor_name)}>{element.vendor_name}</MenuItem>
+                    {categories.map((element, index) => (
+                        <MenuItem key={index} onClick={() => handleClickItem(element.cid, element.category_name)}>{element.category_name}</MenuItem>
                     ))}
                 </Menu>
             </div>
             <div>
-                <CuponsTable data={cupons} />
+                <SubCategoryTable subCategories={subcategories} />
             </div>
-        </React.Fragment>
+        </>
     )
 }
 
-export default CouponsByVendors;
+export default SubCategoriesByCategory;

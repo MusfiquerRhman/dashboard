@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 // MaterialUI Elements
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import CategoryIcon from '@mui/icons-material/Category';
+import GroupsIcon from '@mui/icons-material/Groups';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import ReceiptIcon from '@mui/icons-material/Receipt';
@@ -14,17 +15,10 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { UserContext } from '../../Context APIs/userContext';
-
+import * as userAPI from '../../API/user';
 
 export default function NavBar(){
-    const { UserToken } = useContext(UserContext);
-
-    const [loggedin, setLoggedin] = useState(UserToken !== '');
-
-    useEffect(() => {
-        setLoggedin(UserToken !== '')
-    }, [UserToken]);
+    let loggedin = localStorage.getItem('userInformations') !== null;
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -48,6 +42,10 @@ export default function NavBar(){
         setAnchorEl(null);
         handleMobileMenuClose();
 
+        const res = userAPI.logout();
+        console.log(res);
+        localStorage.removeItem('userInformations');
+        window.location.reload();
     }
 
     const handleMobileMenuOpen = (event) => {
@@ -83,18 +81,18 @@ export default function NavBar(){
                 >
                 <AccountCircle />
                 </IconButton>
-                    <NavLink to="/">Profile</NavLink>
+                    <NavLink to="/profile">Profile</NavLink>
                 </MenuItem>
                 <MenuItem onClick={handleLogOut}>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                <LogoutIcon />
-                </IconButton>
+                    <IconButton
+                        size="large"
+                        aria-label="account of current user"
+                        aria-controls="primary-search-account-menu"
+                        aria-haspopup="true"
+                        color="inherit"
+                    >
+                    <LogoutIcon />
+                    </IconButton>
                     <NavLink to="/">Logout</NavLink>
                 </MenuItem>
             </Box>
@@ -173,6 +171,21 @@ export default function NavBar(){
         )}
 
         {loggedin && (
+            <MenuItem >
+                <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="primary-search-account-menu"
+                    aria-haspopup="true"
+                    color="inherit"
+                >
+                <GroupsIcon />
+                </IconButton>
+                <NavLink to="/users" >Users</NavLink>
+            </MenuItem>
+        )}
+
+        {loggedin && (
             <MenuItem>
                 <IconButton
                     size="large"
@@ -183,7 +196,7 @@ export default function NavBar(){
                 >
                 <AccountCircle />
                 </IconButton>
-                <NavLink to="/" >Profile</NavLink>
+                <NavLink to="/profile" >Profile</NavLink>
             </MenuItem>
         )}
 
@@ -257,6 +270,18 @@ export default function NavBar(){
                                 sx={{ display: { xs: 'none', sm: 'block' } }}
                             >
                                 <NavLink to="/category" >Categories</NavLink>
+                            </Typography>
+                        </IconButton>
+                     )}
+
+                    {loggedin && ( 
+                        <IconButton size="large" color="inherit">
+                            <Typography
+                                variant="h6"
+                                component="div"
+                                sx={{ display: { xs: 'none', sm: 'block' } }}
+                            >
+                                <NavLink to="/users" >Users</NavLink>
                             </Typography>
                         </IconButton>
                      )}

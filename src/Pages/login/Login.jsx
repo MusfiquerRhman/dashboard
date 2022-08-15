@@ -5,9 +5,8 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { UserContext } from '../../Context APIs/userContext';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 import * as userApi from '../../API/auth';
 import useInputState from '../../Hooks/UseInputHook';
@@ -16,45 +15,21 @@ import style from '../../Styles/GlobalStyles';
 const Login = () => {
     const [userName, handleChangeUserName] = useInputState("");
     const [password, handleChangePassword] = useInputState("");
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const classes = style();
-    const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
-
-    const {
-        setUserToken,
-        setFullName,
-        setEmail,
-        setPhone,
-        setZip,
-        setUser_status,
-    } = useContext(UserContext)
 
     const submitForm = async (e) => {
         const res = await userApi.login(userName, password);
         if (res === -1) {
             enqueueSnackbar("Error Logining in!", { variant: 'error' });
         } else if (res.status === 200) {
-            setIsAuthenticated(true);
             localStorage.setItem('userInformations', JSON.stringify(res.data));
-            setUserToken(res.data.access_token);
-            setFullName(res.data.user_info.full_name);
-            setEmail(res.data.user_info.email);
-            setPhone(res.data.user_info.phone);
-            setZip(res.data.user_info.zip);
-            setUser_status(res.data.user_info.status);
+            window.location.reload();
         }
         else if (res.status === 422) {
             enqueueSnackbar("Validation Error!", { variant: 'error' });
         }
-
     }
-
-    useEffect(() => {
-        if (isAuthenticated) {
-            navigate('/');
-        }
-    });
 
     return (
         <div>

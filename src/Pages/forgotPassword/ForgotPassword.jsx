@@ -26,7 +26,6 @@ const ForgotPassword = () => {
             enqueueSnackbar("Error Logining in!", { variant: 'error' });
         } else if (res.status === 200) {
             setIsAuthenticated(true);
-            console.log(res)
             enqueueSnackbar(res.data.message, { variant: 'success' });
         }
         else if (res.status === 422) {

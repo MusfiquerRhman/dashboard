@@ -15,9 +15,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import * as couponsAPI from '../../../API/coupons';
 import ConfrimDeleteDialogue from '../../../Components/ConfrimDeleteDialogue';
+
 import useInputState from '../../../Hooks/UseInputHook';
 import CouponsForm from './CuponsForm';
 
@@ -34,10 +35,6 @@ const Row = (props) => {
         setDeleteOpen(false);
     }
 
-    const handleClickOpenUpdate = () => {
-        setUpdateOpen(true);
-    }
-
     const handleCloseUpdate = () => {
         setUpdateOpen(false);
     }
@@ -45,13 +42,29 @@ const Row = (props) => {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
 
-    const [coupon_code, handleChangeCoupon_code] = useInputState('')
-    const [percentage_off, handleChangePercentage_off] = useInputState('');
+    const [coupon_code, handleChangeCoupon_code, setCouponCode] = useInputState('')
+    const [percentage_off, handleChangePercentage_off, setPercentageOff] = useInputState('');
     const [single_use, setSingle_use] = useState(false)
     const [feature_coupon, setFeature_coupon] = useState(false)
-    const [start_date, handleChangeStart_date, setStartDate] = useInputState(new Date());
-    const [end_date, handleChangeEnd_date, setEnddate] = useInputState(new Date());
-    const updated_date = new Date();
+    const [isActive, setIsActive] = useState(false)
+    const [start_date, setStartDate] = useState(new Date());
+    const [end_date, setEnddate] = useState(new Date());
+    const [vid, setVid] = useState('');
+    const [scid, setScid] = useState('');
+    const updateDate = new Date();
+
+    const handleClickOpenUpdate = (row) => {
+        setCouponCode(row.coupon_code);
+        setPercentageOff(row.percentage_off);
+        setSingle_use(row.single_use);
+        setFeature_coupon(row.feature_coupon);
+        setIsActive(row.is_active);
+        setStartDate(row.start_date);
+        setEnddate(row.end_date);
+        setVid(row.history.vid);
+        setScid(row.history.scid)
+        setUpdateOpen(true);
+    }
 
     const handleChangeSingle_use = (event) => {
         setSingle_use(event.target.checked);
@@ -59,6 +72,10 @@ const Row = (props) => {
 
     const handleChangeFeature_coupon = (event) => {
         setFeature_coupon(event.target.checked);
+    };
+
+    const handleChangeIs_Active = (event) => {
+        setIsActive(event.target.checked);
     };
 
     // useEffect(() => {
@@ -78,10 +95,17 @@ const Row = (props) => {
         setDeleteOpen(false);
     }
 
-    // const updateForm = async () => {
-    //     // coupon_id, vendor_id, subcategory_id, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, updated_date
-    //     const res = couponsAPI.updateCoupons(row.history.coupon_id, row.history.vid, row.history.scid, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, updated_date)
-    // }
+    const updateForm = async () => {
+        couponsAPI.updateCoupons(row.history.coupon_id, vid, scid, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, updateDate).then(res => {
+            if (res.status === 200) {
+                enqueueSnackbar(`Successfully updated`, { variant: 'info' });
+                window.location.reload();
+            }
+            else {
+                enqueueSnackbar(`Failed to Update`, { variant: 'error' });
+            }
+        });
+    }
 
     return (
         <React.Fragment>
@@ -101,6 +125,11 @@ const Row = (props) => {
                 updateOpen={updateOpen}
                 setStartDate={setStartDate}
                 setEnddate={setEnddate}
+                isActive={isActive}
+                handleChangeIs_Active={handleChangeIs_Active}
+                setVid={setVid}
+                setScid={setScid}
+                handleClickSubmit={updateForm}
             />
 
             <ConfrimDeleteDialogue
@@ -158,7 +187,7 @@ const Row = (props) => {
                                         <TableCell align="right">{row.history.created_date}</TableCell>
                                         <TableCell align="right">{row.history.updated_date}</TableCell>
                                         <TableCell align="right"><Button variant="text" onClick={handleClickOpenDelete}><DeleteForeverIcon /></Button></TableCell>
-                                        <TableCell align="right"><Button variant="text" onClick={handleClickOpenUpdate}><EditIcon /></Button></TableCell>
+                                        <TableCell align="right"><Button variant="text" onClick={() => handleClickOpenUpdate(row)}><EditIcon /></Button></TableCell>
                                     </TableRow>
                                 </TableBody>
                             </Table>

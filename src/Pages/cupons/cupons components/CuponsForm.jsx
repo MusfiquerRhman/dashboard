@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 // MaterialUI Elements
 import CloseIcon from '@mui/icons-material/Close';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
@@ -16,6 +19,8 @@ import Typography from '@mui/material/Typography';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { SubCategoryContext } from '../../../Context APIs/subcategoriesContext';
+import { VendorContext } from '../../../Context APIs/vendorContext';
 import Style from '../../../Styles/GlobalStyles';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -35,13 +40,58 @@ const CouponsForm = (props) => {
         feature_coupon,
         handleChangeFeature_coupon,
         start_date,
-        end_date ,
+        end_date,
         setStartDate,
         setEnddate,
         handleCloseUpdate,
         updateOpen,
-        formType
+        formType,
+        isActive,
+        handleChangeIs_Active,
+        setVid,
+        setScid,
+        handleClickSubmit
     } = props;
+
+    const { subCategories } = useContext(SubCategoryContext);
+    const { vendors } = useContext(VendorContext);
+
+    const [selectedVendorName, setSelectedVendorName] = useState("")
+    const [selectedSubCategoryName, setSelectedSubCategoryName] = useState("")
+
+    // for controlling vendor selection menu
+    const [anchorElVendorMenu, setAnchorElVendorMenu] = useState(null);
+
+    const openVendorMenu = Boolean(anchorElVendorMenu);
+    const handleClickVendorMenu = (event) => {
+        setAnchorElVendorMenu(event.currentTarget);
+    };
+    const handleCloseVendorMenu = () => {
+        setAnchorElVendorMenu(null);
+    };
+
+    const handleClickItemVendorMenu = (vid, vendor_name) => {
+        setSelectedVendorName(vendor_name);
+        setVid(vid);
+        setAnchorElVendorMenu(null);
+    }
+
+    // for controlling subcategory selection menu
+    const [anchorElSubCategory, setAnchorElSubCategory] = useState(null);
+
+    const openSubCategory = Boolean(anchorElSubCategory);
+    const handleClickSubCategoryMenu = (event) => {
+        setAnchorElSubCategory(event.currentTarget);
+    };
+    const handleCloseSubCategory = () => {
+        setAnchorElSubCategory(null);
+    };
+
+    const handleClickItemSubctegory = (scid, sub_category_name) => {
+        setSelectedSubCategoryName(sub_category_name);
+        setScid(scid);
+        setAnchorElSubCategory(null);
+    }
 
 
     return (
@@ -66,9 +116,9 @@ const CouponsForm = (props) => {
                     <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                         {formType} Coupons
                     </Typography>
-                    {/* <Button autoFocus color="inherit" onClick={handleClickVendor}>
+                    <Button autoFocus color="inherit" onClick={handleClickSubmit}>
                         save
-                    </Button> */}
+                    </Button>
                 </Toolbar>
             </AppBar>
             <DialogContent>
@@ -99,7 +149,7 @@ const CouponsForm = (props) => {
                                             label="Percentage off"
                                             type="number"
                                             variant="standard"
-                                            value={ percentage_off}
+                                            value={percentage_off}
                                             onChange={handleChangePercentage_off}
                                             required
                                             fullWidth
@@ -115,16 +165,73 @@ const CouponsForm = (props) => {
                                         /> <span>Single Use</span>
                                     </Grid>
                                 </Grid>
-                                <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
+                                <Grid container item direction="column" spacing={2} xs={12}>
                                     <Grid item>
                                         <Checkbox
                                             label="Feture Vendor"
                                             onChange={handleChangeFeature_coupon}
                                             checked={feature_coupon}
-                                        /> <span>Feature Vendor</span>
+                                        /> <span>Feature Coupon</span>
                                     </Grid>
                                 </Grid>
-                                <Box sx={{ marginBottom: "1rem"}}>
+                                <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
+                                    <Grid item>
+                                        <Checkbox
+                                            label="Feture Vendor"
+                                            onChange={handleChangeIs_Active}
+                                            checked={isActive}
+                                        /> <span>Is Active</span>
+                                    </Grid>
+                                </Grid>
+                                <Box sx={{ marginBottom: "1rem" }}>
+                                    <Button
+                                        id="basic-buttonVendor"
+                                        aria-controls={openVendorMenu ? 'basic-menu' : undefined}
+                                        aria-haspopup="true"
+                                        aria-expanded={openVendorMenu ? 'true' : undefined}
+                                        onClick={handleClickVendorMenu}
+                                    >
+                                        {selectedVendorName === '' ? "Select a vendor" : `Selected Vendor: ${selectedVendorName}`}
+                                    </Button>
+                                    <Menu
+                                        id="basic-menu"
+                                        anchorEl={anchorElVendorMenu}
+                                        open={openVendorMenu}
+                                        onClose={handleCloseVendorMenu}
+                                        MenuListProps={{
+                                            'aria-labelledby': 'basic-button',
+                                        }}
+                                    >
+                                        {vendors.map((element, index) => (
+                                            <MenuItem key={index} onClick={() => handleClickItemVendorMenu(element.vid, element.vendor_name)}>{element.vendor_name}</MenuItem>
+                                        ))}
+                                    </Menu>
+                                </Box>
+                                <Box sx={{ marginBottom: "1.5rem" }}>
+                                    <Button
+                                        id="basic-button"
+                                        aria-controls={openSubCategory ? 'basic-menu' : undefined}
+                                        aria-haspopup="true"
+                                        aria-expanded={openSubCategory ? 'true' : undefined}
+                                        onClick={handleClickSubCategoryMenu}
+                                    >
+                                        {selectedSubCategoryName === '' ? "Select a Sub-Category" : `Selected Sub-Category: ${selectedSubCategoryName}`}
+                                    </Button>
+                                    <Menu
+                                        id="basic-menu"
+                                        anchorEl={anchorElSubCategory}
+                                        open={openSubCategory}
+                                        onClose={handleCloseSubCategory}
+                                        MenuListProps={{
+                                            'aria-labelledby': 'basic-button',
+                                        }}
+                                    >
+                                        {subCategories.map((element, index) => (
+                                            <MenuItem key={index} onClick={() => handleClickItemSubctegory(element.scid, element.sub_category_name)}>{element.sub_category_name}</MenuItem>
+                                        ))}
+                                    </Menu>
+                                </Box>
+                                <Box sx={{ marginBottom: "1rem" }}>
                                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                                         <DatePicker
                                             label="Start Date"
@@ -136,20 +243,23 @@ const CouponsForm = (props) => {
                                         />
                                     </LocalizationProvider>
                                 </Box>
-                                <br/>
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                <DatePicker
-                                    label="End Date"
-                                    value={end_date}
-                                    onChange={(newValue) => {
-                                        setEnddate(newValue);
-                                    }}
-                                    renderInput={(params) => <TextField {...params} />}
-                                />
-                                </LocalizationProvider>
-                                {/* <Grid item>
-                                    <Button fullWidth variant="contained" onClick={handleClickVendor}>Submit</Button>
-                                </Grid> */}
+                                <br />
+                                <Box sx={{ marginBottom: "1rem" }}>
+                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                        <DatePicker
+                                            label="End Date"
+                                            value={end_date}
+                                            onChange={(newValue) => {
+                                                setEnddate(newValue);
+                                            }}
+                                            renderInput={(params) => <TextField {...params} />}
+                                        />
+                                    </LocalizationProvider>
+                                </Box>
+
+                                <Grid item>
+                                    <Button fullWidth variant="contained" onClick={handleClickSubmit}>Submit</Button>
+                                </Grid>
                             </Box>
                         </form>
                     </Paper>

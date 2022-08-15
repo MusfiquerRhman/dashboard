@@ -12,20 +12,22 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
-import * as categoriesAPI from "../../../API/category";
+import * as subcategoriesAPI from "../../../API/subcategory";
 import ConfrimDeleteDialogue from '../../../Components/ConfrimDeleteDialogue';
 import useInputState from '../../../Hooks/UseInputHook';
 import style from "../categoryStyles";
-import CategoriesForm from './CategoriesForm';
+import SubCategoriesForm from './SubCategoriesForm';
 
-function createData(category_logo_path, category_name, cid, created_date, updated_date, is_active) {
-  return { category_logo_path, category_name, cid, created_date, updated_date, is_active };
+function createData(sub_category_logo_path, sub_category_name, cid, scid, created_date, updated_date, is_active) {
+  return { sub_category_logo_path, sub_category_name, cid, scid, created_date, updated_date, is_active };
 }
 
-const CategoryTable = (categories) => {
+const SubCategoryTable = (subCategories) => {
   const classes = style();
-  const [category_name, handleChangecategory_name, setCategory_name] = useInputState('')
-  const [categoryID, setCategoryID] = useState('')
+  const [subCategory_name, handleSubChangecategory_name, setSubCategory_name] = useInputState('')
+
+  const [subCategoryID, setSubCategoryID] = useState('')
+  const [categoryID, setcategoryID] = useState('')
   const [addOpen, setaddOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [file, setImage] = useState("");
@@ -33,11 +35,12 @@ const CategoryTable = (categories) => {
 
   let rows = [];
 
-  categories.categories.forEach((element) => {
+  subCategories.subCategories.forEach((element) => {
     rows.push(createData(
-      element.category_logo_path,
-      element.category_name,
+      element.sub_category_logo_path,
+      element.sub_category_name,
       element.cid,
+      element.scid,
       element.updated_date,
       element.created_date,
       element.is_active
@@ -49,8 +52,8 @@ const CategoryTable = (categories) => {
   }
 
   const handleClickOpenDelete = (row) => {
-    setCategory_name(row.category_name);
-    setCategoryID(row.cid);
+    setSubCategory_name(row.category_name);
+    setSubCategoryID(row.scid);
     setDeleteOpen(true);
   }
 
@@ -59,29 +62,25 @@ const CategoryTable = (categories) => {
   }
 
   const handleClickOpenUpdate = (row) => {
-    setCategory_name(row.category_name);
-    setCategoryID(row.cid);
+    setSubCategory_name(row.sub_category_name);
+    setSubCategoryID(row.scid);
+    setcategoryID(row.cid);
     setaddOpen(true);
   }
 
-  const updateCatgoriesForm = () => {
-    if (file === "") {
-      enqueueSnackbar(`Please Select an image file`, { variant: 'error' });
-    }
-    else {
-      categoriesAPI.updateCategories(categoryID, category_name, file).then(res => {
-        if (res.status !== 200) {
-          enqueueSnackbar(`Failed to update category`, { variant: 'error' });
-        }
-        else {
-          window.location.reload();
-        }
-      })
-    }
+  const updateSubCatgoriesForm = () => {
+    subcategoriesAPI.updateSubCategories(categoryID, subCategoryID, subCategory_name, file).then(res => {
+      if (res.status !== 200) {
+        enqueueSnackbar(`Failed to update category`, { variant: 'error' });
+      }
+      else {
+        window.location.reload();
+      }
+    })
   }
 
   const deleteForm = () => {
-    categoriesAPI.deleteCategories(categoryID).then(res => {
+    subcategoriesAPI.deleteSubCategories(subCategoryID).then(res => {
       if (res.status !== 200) {
         enqueueSnackbar(`Failed to update category`, { variant: 'error' });
       }
@@ -93,21 +92,22 @@ const CategoryTable = (categories) => {
 
   return (
     <React.Fragment>
-      <CategoriesForm
-        category_name={category_name}
-        handleChangecategory_name={handleChangecategory_name}
+      <SubCategoriesForm
+        category_name={subCategory_name}
+        handleSubChangecategory_name={handleSubChangecategory_name}
         handleCloseAdd={handleCloseUpdate}
         addOpen={addOpen}
-        formType="Add"
+        formType="Update"
         setImage={setImage}
-        handleClickAction={updateCatgoriesForm}
+        handleClickAction={updateSubCatgoriesForm}
+        setCategoriesId={setcategoryID}
       />
 
       <ConfrimDeleteDialogue
-          deleteOpen={deleteOpen}
-          handleCloseDelete={handleCloseDelete}
-          name={category_name}
-          deleteForm={deleteForm}
+        deleteOpen={deleteOpen}
+        handleCloseDelete={handleCloseDelete}
+        name={subCategory_name}
+        deleteForm={deleteForm}
       />
 
       <TableContainer component={Paper}>
@@ -116,7 +116,8 @@ const CategoryTable = (categories) => {
             <TableRow>
               <TableCell>Logo</TableCell>
               <TableCell align="right">Calories Name</TableCell>
-              <TableCell align="right">ID</TableCell>
+              <TableCell align="right">Category ID</TableCell>
+              <TableCell align="right">Sub-category ID</TableCell>
               <TableCell align="right">Created Date</TableCell>
               <TableCell align="right">Updated Date</TableCell>
               <TableCell align="right">isActive</TableCell>
@@ -131,10 +132,11 @@ const CategoryTable = (categories) => {
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  <img src={row.category_logo_path} alt="category logo" className={classes.categoryImg} />
+                  <img src={row.sub_category_logo_path} alt="category logo" className={classes.categoryImg} />
                 </TableCell>
-                <TableCell align="right">{row.category_name} </TableCell>
+                <TableCell align="right">{row.sub_category_name} </TableCell>
                 <TableCell align="right">{row.cid}</TableCell>
+                <TableCell align="right">{row.scid}</TableCell>
                 <TableCell align="right">{row.created_date}</TableCell>
                 <TableCell align="right">{row.updated_date}</TableCell>
                 <TableCell align="right">{row.is_active ? <CheckIcon /> : <CloseIcon />}</TableCell>
@@ -150,5 +152,5 @@ const CategoryTable = (categories) => {
   );
 }
 
-export default CategoryTable;
+export default SubCategoryTable;
 

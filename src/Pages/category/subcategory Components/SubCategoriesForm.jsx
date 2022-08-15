@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 // MaterialUI Elements
 import CloseIcon from '@mui/icons-material/Close';
 import AppBar from '@mui/material/AppBar';
@@ -8,30 +8,53 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { CategoryContext } from '../../../Context APIs/categoryContext';
 import Style from '../../../Styles/GlobalStyles';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CategoriesForm = (props) => {
+const SubCategoriesForm = (props) => {
     const {
         category_name,
-        handleChangecategory_name,
+        handleSubChangecategory_name,
         handleCloseAdd,
         addOpen,
         formType,
         setImage,
-        handleClickAction
+        handleClickAction,
+        setCategoriesId,
     } = props;
 
     const [displayImage, setDisplayImage] = useState("");
-    
+    const { categories } = useContext(CategoryContext);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [categoryName, setcategoryName] = useState('');
+
+    const open = Boolean(anchorEl);
+    const classes = Style();
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleClickCategory = (category) => {
+        setCategoriesId(category.cid);
+        setcategoryName(category.category_name);
+        setAnchorEl(null);
+    };
+
     const imageSelectHandeler = (files) => {
         setImage(files[0]);
         const reader = new FileReader();
@@ -44,7 +67,6 @@ const CategoriesForm = (props) => {
             reader.readAsDataURL(files[0]);
         }
     };
-    const classes = Style();
 
     let imageSelectedMsg = (
         <Typography variant="h6" className={classes.imagetext}>
@@ -53,7 +75,7 @@ const CategoriesForm = (props) => {
     );
     if (displayImage !== "") {
         imageSelectedMsg = (
-            <img src={displayImage} className={classes.image} alt="product"/>
+            <img src={displayImage} className={classes.image} alt="product" />
         );
     }
 
@@ -77,7 +99,7 @@ const CategoriesForm = (props) => {
                         <CloseIcon />
                     </IconButton>
                     <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                        {formType} Category
+                        {formType} Sub-Category
                     </Typography>
                     <Button autoFocus color="inherit" onClick={handleClickAction}>
                         save
@@ -89,23 +111,51 @@ const CategoriesForm = (props) => {
                     <Paper elevation={6} className={classes.formBox} >
                         <form className={classes.form}>
                             <Typography variant="h4" sx={{ padding: '1rem 3rem' }}>
-                                Enter Category Details:
+                                Enter Sub-Category Details:
                             </Typography>
 
                             <Box sx={{ width: '100%' }}>
                                 <Grid container item direction="column" spacing={2} lg={12} sx={{ marginBottom: '1.5rem' }}>
                                     <Grid item >
-                                        <TextField id="registration-category_name"
-                                            label="Category Name"
+                                        <TextField id="registration-sub-category_name"
+                                            label="Sub-Category Name"
                                             type="text"
                                             variant="standard"
                                             value={category_name}
-                                            onChange={handleChangecategory_name}
+                                            onChange={handleSubChangecategory_name}
                                             required
                                             fullWidth
                                         />
                                     </Grid>
                                 </Grid>
+                                {formType === 'Add' && (
+                                    <div>
+                                        <Button
+                                            id="basic-button"
+                                            aria-controls={open ? 'basic-menu' : undefined}
+                                            aria-haspopup="true"
+                                            aria-expanded={open ? 'true' : undefined}
+                                            onClick={handleClick}
+                                        >
+                                            Select a category
+                                        </Button>
+                                        <span className={classes.subCategoryMenu}>{categoryName === '' ? "" : `Selected Category: ${categoryName}`}</span>
+                                        <Menu
+                                            id="basic-menu"
+                                            anchorEl={anchorEl}
+                                            open={open}
+                                            onClose={handleClose}
+                                            MenuListProps={{
+                                                'aria-labelledby': 'basic-button',
+                                            }}
+                                        >
+                                            {categories.map((element, index) => (
+                                                <MenuItem key={index} onClick={() => handleClickCategory(element)}>{element.category_name}</MenuItem>
+                                            ))}
+                                        </Menu>
+                                    </div>
+                                )}
+
                                 {imageSelectedMsg}
                                 <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
                                     <Grid item>
@@ -115,7 +165,7 @@ const CategoriesForm = (props) => {
                                             fullWidth
                                             sx={{ marginTop: "1rem" }}
                                         >
-                                            Select a category image
+                                            Select a Sub-categoory image
                                             <input
                                                 name="image"
                                                 type="file"
@@ -140,4 +190,4 @@ const CategoriesForm = (props) => {
     )
 }
 
-export default CategoriesForm;
+export default SubCategoriesForm;

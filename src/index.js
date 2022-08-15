@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { CategoryProvider } from "./Context APIs/categoryContext";
+import { SubCategoryProvider } from "./Context APIs/subcategoriesContext";
 import { VendorProvider } from "./Context APIs/vendorContext";
 import theme from './Styles/theme';
 
@@ -12,9 +13,11 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
     <VendorProvider>
-      <CategoryProvider>      
+      <CategoryProvider>     
+        <SubCategoryProvider>
         <CssBaseline />
         <App />
+        </SubCategoryProvider> 
       </CategoryProvider>
       </VendorProvider>
     </ThemeProvider>

@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import { useSnackbar } from 'notistack';
-import * as userApi from '../../API/auth';
+import * as authApi from '../../API/auth';
 import useInputState from '../../Hooks/UseInputHook';
 import style from '../../Styles/GlobalStyles';
 
@@ -28,7 +28,7 @@ function Registration() {
     const submitForm = async (e) => {
         e.preventDefault();
         if (password === confrimPassword) {
-            const res = await userApi.registration(password, phoneNo, email, admin_status);
+            const res = await authApi.registration(password, phoneNo, email, admin_status);
             if (res === -1) {
                 enqueueSnackbar("Error; Try again", { variant: 'error' });
             }

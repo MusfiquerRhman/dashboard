@@ -19,6 +19,14 @@ const style = makeStyles((theme) => ({
             width: "55%"
         }
     },
+    image: {
+        marginLeft: '10%',
+        width: "80%",
+        aspectRatio: "1/1"
+    },
+    subCategoryMenu: {
+        marginLeft: '1rem'
+    },
 }));
 
 export default style;
