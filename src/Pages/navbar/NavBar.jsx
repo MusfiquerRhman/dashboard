@@ -232,7 +232,7 @@ export default function NavBar(){
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
-                        <NavLink to="/"><i>Dash-Board</i></NavLink>
+                        <NavLink to="/"><i>Best of Logan</i></NavLink>
                     </Typography>
 
                     <Box sx={{ flexGrow: 1 }} />

@@ -28,7 +28,7 @@ function Registration() {
     const submitForm = async (e) => {
         e.preventDefault();
         if (password === confrimPassword) {
-            const res = await authApi.registration(password, phoneNo, email, admin_status);
+            const res = await authApi.registration(email, password, phoneNo, admin_status);
             if (res === -1) {
                 enqueueSnackbar("Error; Try again", { variant: 'error' });
             }

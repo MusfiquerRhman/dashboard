@@ -14,7 +14,6 @@ export const login = async (username, password) => {
 
 export const registration = async (email, password, phone, admin_status) => {
   try {
-    console.log(email, password, phone, admin_status);
     return await axios.post(`${API_URL}/admin/register`, {
       email: email,
       phone: phone,
