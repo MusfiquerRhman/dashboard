@@ -96,7 +96,21 @@ const Row = (props) => {
     }
 
     const updateForm = async () => {
-        couponsAPI.updateCoupons(row.history.coupon_id, vid, scid, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, updateDate).then(res => {
+        //coupon_id, vendor_id, subcategory_id, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, updateDate
+        // console.log({"Coupons Id": row.history.coupon_id, "vid": vid, "sid": scid, "coupon code": coupon_code, "off": percentage_off, 
+        //     'single': single_use, 'feature': feature_coupon, 'start': start_date, 'end': end_date, 'update': updateDate})
+        couponsAPI.updateCoupons(
+            row.history.coupon_id,
+            vid, 
+            scid, 
+            coupon_code, 
+            percentage_off, 
+            single_use, 
+            feature_coupon, 
+            start_date, 
+            end_date,
+            updateDate).then(res => {
+            console.log(res)
             if (res.status === 200) {
                 enqueueSnackbar(`Successfully updated`, { variant: 'info' });
                 window.location.reload();

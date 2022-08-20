@@ -60,7 +60,8 @@ const Cupons = () => {
 
 
     const addForm = async () => {
-        couponsAPI.addCoupons(vid, scid, coupon_code, percentage_off, single_use, feature_coupon, start_date.toISOString().substring(0, 10), end_date.toISOString().substring(0, 10)).then(res => {
+        couponsAPI.addCoupons(vid, scid, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date).then(res => {
+            console.log(res)
             if (res.status === 200) {
                 enqueueSnackbar(`Successfully Added`, { variant: 'info' });
                 window.location.reload();

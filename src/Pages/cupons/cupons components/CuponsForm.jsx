@@ -237,7 +237,7 @@ const CouponsForm = (props) => {
                                             label="Start Date"
                                             value={start_date}
                                             onChange={(newValue) => {
-                                                setStartDate(newValue);
+                                                setStartDate(new Date(newValue).toISOString().substring(0, 10));
                                             }}
                                             renderInput={(params) => <TextField {...params} />}
                                         />
@@ -250,7 +250,7 @@ const CouponsForm = (props) => {
                                             label="End Date"
                                             value={end_date}
                                             onChange={(newValue) => {
-                                                setEnddate(newValue);
+                                                setEnddate(new Date(newValue).toISOString().substring(0, 10));
                                             }}
                                             renderInput={(params) => <TextField {...params} />}
                                         />
