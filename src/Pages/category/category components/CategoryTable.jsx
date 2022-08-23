@@ -6,15 +6,14 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import * as categoriesAPI from "../../../API/category";
 import ConfrimDeleteDialogue from '../../../Components/ConfrimDeleteDialogue';
 import useInputState from '../../../Hooks/UseInputHook';
+import { StyledTableCell, StyledTableRow } from '../../../Styles/GlobalStyles';
 import style from "../categoryStyles";
 import CategoriesForm from './CategoriesForm';
 
@@ -104,44 +103,52 @@ const CategoryTable = (categories) => {
       />
 
       <ConfrimDeleteDialogue
-          deleteOpen={deleteOpen}
-          handleCloseDelete={handleCloseDelete}
-          name={category_name}
-          deleteForm={deleteForm}
+        deleteOpen={deleteOpen}
+        handleCloseDelete={handleCloseDelete}
+        name={category_name}
+        deleteForm={deleteForm}
       />
 
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 750 }} aria-label="simple table">
           <TableHead>
-            <TableRow>
-              <TableCell>Logo</TableCell>
-              <TableCell align="right">Calories Name</TableCell>
-              <TableCell align="right">ID</TableCell>
-              <TableCell align="right">Created Date</TableCell>
-              <TableCell align="right">Updated Date</TableCell>
-              <TableCell align="right">isActive</TableCell>
-              <TableCell align="right">Edit</TableCell>
-              <TableCell align="right">Delete</TableCell>
-            </TableRow>
+            <StyledTableRow>
+              <StyledTableCell>Logo</StyledTableCell>
+              <StyledTableCell align="center">Category Name</StyledTableCell>
+              <StyledTableCell align="center">Created Date</StyledTableCell>
+              <StyledTableCell align="center">Updated Date</StyledTableCell>
+              <StyledTableCell align="center">isActive</StyledTableCell>
+              <StyledTableCell align="center">Edit</StyledTableCell>
+              <StyledTableCell align="center">Delete</StyledTableCell>
+            </StyledTableRow>
           </TableHead>
           <TableBody>
             {rows.map((row, index) => (
-              <TableRow
+              <StyledTableRow
                 key={index}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
+                <StyledTableCell component="th" scope="row">
                   <img src={row.category_logo_path} alt="category logo" className={classes.categoryImg} />
-                </TableCell>
-                <TableCell align="right">{row.category_name} </TableCell>
-                <TableCell align="right">{row.cid}</TableCell>
-                <TableCell align="right">{row.created_date}</TableCell>
-                <TableCell align="right">{row.updated_date}</TableCell>
-                <TableCell align="right">{row.is_active ? <CheckIcon /> : <CloseIcon />}</TableCell>
-                <TableCell align="right"><Button variant="text" onClick={() => handleClickOpenUpdate(row)}><EditIcon /></Button></TableCell>
-                <TableCell align="right"><Button variant="text" onClick={() => handleClickOpenDelete(row)}><DeleteForeverIcon /></Button></TableCell>
+                </StyledTableCell>
+                <StyledTableCell align="center">{row.category_name} </StyledTableCell>
+                <StyledTableCell align="center">{row.created_date}</StyledTableCell>
+                <StyledTableCell align="center">{row.updated_date}</StyledTableCell>
+                <StyledTableCell align="center">{row.is_active ? <CheckIcon /> : <CloseIcon />}</StyledTableCell>
 
-              </TableRow>
+                <StyledTableCell align="center">
+                  <Button variant="text" onClick={() => handleClickOpenUpdate(row)}>
+                    <EditIcon />
+                  </Button>
+                </StyledTableCell>
+                
+                <StyledTableCell align="center">
+                  <Button variant="text" onClick={() => handleClickOpenDelete(row)} color='error'>
+                    <DeleteForeverIcon />
+                  </Button>
+                </StyledTableCell>
+
+              </StyledTableRow>
             ))}
           </TableBody>
         </Table>

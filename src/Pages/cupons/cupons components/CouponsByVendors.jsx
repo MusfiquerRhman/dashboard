@@ -1,6 +1,7 @@
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import { useSnackbar } from 'notistack';
 import React, { useContext, useState } from 'react';
 import * as cuponsAPI from '../../../API/coupons';
@@ -12,15 +13,6 @@ const CouponsByVendors = () => {
     const [cupons, setCupons] = useState([])
     const { enqueueSnackbar } = useSnackbar();
     const { vendors } = useContext(VendorContext)
-    const [anchorEl, setAnchorEl] = useState(null);
-
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
     const handleClickItem = (vid, vendorName) => {
         setSelectedVendorName(vendorName);
@@ -33,35 +25,24 @@ const CouponsByVendors = () => {
                 }
             }
         );
-
-        setAnchorEl(null);
     }
 
     return (
         <React.Fragment>
-            <div>
-                <Button
-                    id="basic-button"
-                    aria-controls={open ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}
-                >
-                    {selectedVendorName === '' ? "Select a vendor" : `Selected Vendor: ${selectedVendorName}`}
-                </Button>
-                <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                        'aria-labelledby': 'basic-button',
-                    }}
-                >
+            <div style={{marginBottom: '1.5rem'}}>
+                <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Select a Vendor</InputLabel>
+                    <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={selectedVendorName}
+                    label="Select a Vendor"
+                    >
                     {vendors.map((element, index) => (
-                        <MenuItem key={index} onClick={() => handleClickItem(element.vid, element.vendor_name)}>{element.vendor_name}</MenuItem>
+                        <MenuItem key={index} onClick={() => handleClickItem(element.vid, element.vendor_name)} value={element.vendor_name}>{element.vendor_name}</MenuItem>
                     ))}
-                </Menu>
+                    </Select>
+                </FormControl>
             </div>
             <div>
                 <CuponsTable data={cupons} />

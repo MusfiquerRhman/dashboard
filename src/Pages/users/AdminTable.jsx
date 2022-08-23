@@ -8,6 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import * as React from 'react';
+import { StyledTableCell, StyledTableRow } from '../../Styles/GlobalStyles';
 import style from './userStyles';
 
 function createData(admin_status, created_on, email, fullname, id, phone, profile_logo_path, status, zip) {
@@ -38,34 +39,30 @@ const AdminTable = (admins) => {
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
-          <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell align="right">Image</TableCell>
-            <TableCell align="right">Full Name</TableCell>
-            <TableCell align="right">Email</TableCell>
-            <TableCell align="right">Phone No</TableCell>
-            <TableCell align="right">Admin Status</TableCell>
-            <TableCell align="right">Status</TableCell>
-            <TableCell align="right">Created On</TableCell>
-            <TableCell align="right">Zip</TableCell>
-          </TableRow>
+          <StyledTableRow>
+            <StyledTableCell align="center">Image</StyledTableCell>
+            <StyledTableCell align="center">Full Name</StyledTableCell>
+            <StyledTableCell align="center">Email</StyledTableCell>
+            <StyledTableCell align="center">Phone No</StyledTableCell>
+            <StyledTableCell align="center">Admin Status</StyledTableCell>
+            <StyledTableCell align="center">Status</StyledTableCell>
+            <StyledTableCell align="center">Created On</StyledTableCell>
+          </StyledTableRow>
         </TableHead>
         <TableBody>
           {rows.map((row, index) => (
-            <TableRow
+            <StyledTableRow
               key={index}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">{row.id}</TableCell>
-              <TableCell align="right"><img src={row.profile_logo_path} alt="Admin" className={classes.categoryImg} /></TableCell>
-              <TableCell align="right">{row.fullname}</TableCell>
-              <TableCell align="right">{row.email}</TableCell>
-              <TableCell align="right">{row.phone}</TableCell>
-              <TableCell align="right">{row.admin_status ? <CheckIcon /> : <ClearIcon />}</TableCell>
-              <TableCell align="right">{row.status}</TableCell>
-              <TableCell align="right">{row.created_on.toLocaleDateString() + " " + row.created_on.toLocaleTimeString()}</TableCell>
-              <TableCell align="right">{row.zip}</TableCell>
-            </TableRow>
+              <StyledTableCell align="center"><img src={row.profile_logo_path} alt="Admin" className={classes.categoryImg} /></StyledTableCell>
+              <StyledTableCell align="center">{row.fullname}</StyledTableCell>
+              <StyledTableCell align="center">{row.email}</StyledTableCell>
+              <StyledTableCell align="center">{row.phone}</StyledTableCell>
+              <StyledTableCell align="center">{row.admin_status ? <CheckIcon /> : <ClearIcon />}</StyledTableCell>
+              <StyledTableCell align="center">{row.status}</StyledTableCell>
+              <StyledTableCell align="center">{row.created_on.toLocaleDateString() + " " + row.created_on.toLocaleTimeString()}</StyledTableCell>
+            </StyledTableRow>
           ))}
         </TableBody>
       </Table>

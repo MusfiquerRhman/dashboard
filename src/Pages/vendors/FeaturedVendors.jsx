@@ -1,6 +1,7 @@
+import Grid from '@mui/material/Grid';
 import React, { useEffect, useState } from 'react';
 import * as vendorsAPI from '../../API/vendors';
-import VendorAccordionDetails from './vendor Components/VendorAccordionDetails';
+import VendorCards from './vendor Components/VendorCards';
 
 const FeaturedVendors = () => {
     const [vendors, setVendors] = useState([]);
@@ -12,11 +13,13 @@ const FeaturedVendors = () => {
 
     return (
         <React.Fragment>
-            <div>
+            <Grid container spacing={3}>
                 {vendors.map((element, index) => (
-                    <VendorAccordionDetails key={index} element={element}/>
+                    <Grid item xs={12} sm={6} md={4} xl={3} key={index} direction="row" justifyContent="space-between">
+                        <VendorCards key={index} element={element} />
+                    </Grid>
                 ))}
-            </div>
+            </Grid>
         </React.Fragment>
     )
 }

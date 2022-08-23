@@ -11,15 +11,18 @@ const style = makeStyles((theme) => ({
         height: "4rem",
         width: "4rem",
         borderRadius: '50%',
-        marginRight: "2rem"
     }, 
     title: {
-        fontSize: "1.2rem",
+        fontSize: "1rem",
         marginRight: "1rem",
     },
     value: {
-        fontSize: "1.2rem",
+        fontSize: "1rem",
         color: "#263238",
+    }, 
+    icon: {
+        height: '100%',
+        
     }
 }));
 

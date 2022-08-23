@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 // MaterialUI Elements
 import CloseIcon from '@mui/icons-material/Close';
 import AppBar from '@mui/material/AppBar';
@@ -7,11 +7,13 @@ import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
+import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
+import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
+import Select from '@mui/material/Select';
 import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
@@ -50,49 +52,33 @@ const CouponsForm = (props) => {
         handleChangeIs_Active,
         setVid,
         setScid,
+        vid,
+        scid,
         handleClickSubmit
     } = props;
+
+    const [selectedVendorName, setSelectedVendorName] = useState('')
+    const [selectedSubCategoryName, setSelectedSubCategoryName] = useState('')
 
     const { subCategories } = useContext(SubCategoryContext);
     const { vendors } = useContext(VendorContext);
 
-    const [selectedVendorName, setSelectedVendorName] = useState("")
-    const [selectedSubCategoryName, setSelectedSubCategoryName] = useState("")
-
-    // for controlling vendor selection menu
-    const [anchorElVendorMenu, setAnchorElVendorMenu] = useState(null);
-
-    const openVendorMenu = Boolean(anchorElVendorMenu);
-    const handleClickVendorMenu = (event) => {
-        setAnchorElVendorMenu(event.currentTarget);
-    };
-    const handleCloseVendorMenu = () => {
-        setAnchorElVendorMenu(null);
-    };
+    useEffect(() => {
+        const selectedVendor = vid !== '' ? vendors.find((element) => element.vid === vid)?.vendor_name : '';
+        const subCategoryName = scid !== '' ? subCategories.find((element) => element.scid === scid)?.sub_category_name : '';
+        setSelectedSubCategoryName(subCategoryName)
+        setSelectedVendorName(selectedVendor)
+    }, [vid, scid, vendors, subCategories])
 
     const handleClickItemVendorMenu = (vid, vendor_name) => {
         setSelectedVendorName(vendor_name);
         setVid(vid);
-        setAnchorElVendorMenu(null);
     }
-
-    // for controlling subcategory selection menu
-    const [anchorElSubCategory, setAnchorElSubCategory] = useState(null);
-
-    const openSubCategory = Boolean(anchorElSubCategory);
-    const handleClickSubCategoryMenu = (event) => {
-        setAnchorElSubCategory(event.currentTarget);
-    };
-    const handleCloseSubCategory = () => {
-        setAnchorElSubCategory(null);
-    };
 
     const handleClickItemSubctegory = (scid, sub_category_name) => {
         setSelectedSubCategoryName(sub_category_name);
         setScid(scid);
-        setAnchorElSubCategory(null);
     }
-
 
     return (
         <Dialog
@@ -183,53 +169,40 @@ const CouponsForm = (props) => {
                                         /> <span>Is Active</span>
                                     </Grid>
                                 </Grid>
-                                <Box sx={{ marginBottom: "1rem" }}>
-                                    <Button
-                                        id="basic-buttonVendor"
-                                        aria-controls={openVendorMenu ? 'basic-menu' : undefined}
-                                        aria-haspopup="true"
-                                        aria-expanded={openVendorMenu ? 'true' : undefined}
-                                        onClick={handleClickVendorMenu}
-                                    >
-                                        {selectedVendorName === '' ? "Select a vendor" : `Selected Vendor: ${selectedVendorName}`}
-                                    </Button>
-                                    <Menu
-                                        id="basic-menu"
-                                        anchorEl={anchorElVendorMenu}
-                                        open={openVendorMenu}
-                                        onClose={handleCloseVendorMenu}
-                                        MenuListProps={{
-                                            'aria-labelledby': 'basic-button',
-                                        }}
-                                    >
-                                        {vendors.map((element, index) => (
-                                            <MenuItem key={index} onClick={() => handleClickItemVendorMenu(element.vid, element.vendor_name)}>{element.vendor_name}</MenuItem>
-                                        ))}
-                                    </Menu>
-                                </Box>
                                 <Box sx={{ marginBottom: "1.5rem" }}>
-                                    <Button
-                                        id="basic-button"
-                                        aria-controls={openSubCategory ? 'basic-menu' : undefined}
-                                        aria-haspopup="true"
-                                        aria-expanded={openSubCategory ? 'true' : undefined}
-                                        onClick={handleClickSubCategoryMenu}
-                                    >
-                                        {selectedSubCategoryName === '' ? "Select a Sub-Category" : `Selected Sub-Category: ${selectedSubCategoryName}`}
-                                    </Button>
-                                    <Menu
-                                        id="basic-menu"
-                                        anchorEl={anchorElSubCategory}
-                                        open={openSubCategory}
-                                        onClose={handleCloseSubCategory}
-                                        MenuListProps={{
-                                            'aria-labelledby': 'basic-button',
-                                        }}
-                                    >
-                                        {subCategories.map((element, index) => (
-                                            <MenuItem key={index} onClick={() => handleClickItemSubctegory(element.scid, element.sub_category_name)}>{element.sub_category_name}</MenuItem>
-                                        ))}
-                                    </Menu>
+                                    <FormControl fullWidth sx={{ marginBottom: "1.5rem" }}>
+                                        <InputLabel id="demo-simple-select-label">Select a Vendor</InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            value={selectedVendorName}
+                                            label="Select a Vendor"
+                                        >
+                                            {vendors.map((element, index) => (
+                                                <MenuItem key={index}
+                                                    onClick={() => handleClickItemVendorMenu(element.vid, element.vendor_name)}
+                                                    value={element.vendor_name}>{element.vendor_name}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+
+                                    <FormControl fullWidth>
+                                        <InputLabel id="demo-simple-select-label">Select a Sub-Category</InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            value={selectedSubCategoryName}
+                                            label="Select a Sub-Category"
+                                        >
+                                            {subCategories.map((element, index) => (
+                                                <MenuItem key={index}
+                                                    onClick={() => handleClickItemSubctegory(element.scid, element.sub_category_name)}
+                                                    value={element.sub_category_name}>{element.sub_category_name}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
                                 </Box>
                                 <Box sx={{ marginBottom: "1rem" }}>
                                     <LocalizationProvider dateAdapter={AdapterDateFns}>

@@ -6,15 +6,15 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import * as subcategoriesAPI from "../../../API/subcategory";
 import ConfrimDeleteDialogue from '../../../Components/ConfrimDeleteDialogue';
 import useInputState from '../../../Hooks/UseInputHook';
+import { StyledTableCell, StyledTableRow } from '../../../Styles/GlobalStyles';
 import style from "../categoryStyles";
 import SubCategoriesForm from './SubCategoriesForm';
 
@@ -110,47 +110,59 @@ const SubCategoryTable = (subCategories) => {
         deleteForm={deleteForm}
       />
 
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 750 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Logo</TableCell>
-              <TableCell align="right">Calories Name</TableCell>
-              <TableCell align="right">Category ID</TableCell>
-              <TableCell align="right">Sub-category ID</TableCell>
-              <TableCell align="right">Created Date</TableCell>
-              <TableCell align="right">Updated Date</TableCell>
-              <TableCell align="right">isActive</TableCell>
-              <TableCell align="right">Edit</TableCell>
-              <TableCell align="right">Delete</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row, index) => (
-              <TableRow
-                key={index}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <img src={row.sub_category_logo_path} alt="category logo" className={classes.categoryImg} />
-                </TableCell>
-                <TableCell align="right">{row.sub_category_name} </TableCell>
-                <TableCell align="right">{row.cid}</TableCell>
-                <TableCell align="right">{row.scid}</TableCell>
-                <TableCell align="right">{row.created_date}</TableCell>
-                <TableCell align="right">{row.updated_date}</TableCell>
-                <TableCell align="right">{row.is_active ? <CheckIcon /> : <CloseIcon />}</TableCell>
-                <TableCell align="right"><Button variant="text" onClick={() => handleClickOpenUpdate(row)}><EditIcon /></Button></TableCell>
-                <TableCell align="right"><Button variant="text" onClick={() => handleClickOpenDelete(row)}><DeleteForeverIcon /></Button></TableCell>
+      {rows.length > 0 &&
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 750 }} aria-label="simple table">
+            <TableHead>
+              <StyledTableRow>
+                <StyledTableCell>Logo</StyledTableCell>
+                <StyledTableCell align="center">Sub-Category Name</StyledTableCell>
+                <StyledTableCell align="center">Created Date</StyledTableCell>
+                <StyledTableCell align="center">Updated Date</StyledTableCell>
+                <StyledTableCell align="center">isActive</StyledTableCell>
+                <StyledTableCell align="center">Edit</StyledTableCell>
+                <StyledTableCell align="center">Delete</StyledTableCell>
+              </StyledTableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row, index) => (
+                <StyledTableRow
+                  key={index}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <StyledTableCell component="th" scope="row">
+                    <img src={row.sub_category_logo_path} alt="category logo" className={classes.categoryImg} />
+                  </StyledTableCell>
+                  <StyledTableCell align="center">{row.sub_category_name} </StyledTableCell>
+                  <StyledTableCell align="center">{row.created_date}</StyledTableCell>
+                  <StyledTableCell align="center">{row.updated_date}</StyledTableCell>
+                  <StyledTableCell align="center">{row.is_active ? <CheckIcon /> : <CloseIcon />}</StyledTableCell>
 
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                  <StyledTableCell align="center">
+                    <Button variant="text" onClick={() => handleClickOpenUpdate(row)}>
+                      <EditIcon />
+                    </Button>
+                  </StyledTableCell>
+
+                  <StyledTableCell align="center">
+                    <Button variant="text" onClick={() => handleClickOpenDelete(row)} color='error'>
+                      <DeleteForeverIcon />
+                    </Button>
+                  </StyledTableCell>
+
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      }
+      {rows.length === 0 &&
+        <Typography variant="h5" gutterBottom sx={{textAlign: 'center'}}>
+          No Data
+        </Typography>
+      }
     </React.Fragment>
   );
 }
 
 export default SubCategoryTable;
-

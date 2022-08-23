@@ -1,13 +1,12 @@
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import { StyledTableCell, StyledTableRow } from '../../../Styles/GlobalStyles';
 import Row from './CouponsTableRow';
-
 
 function createData(coupon_code, start_date, end_date, is_active, feature_coupon, single_use, coupon_id, vid, scid, sub_category_name, percentage_off, created_date, updated_date) {
   return {
@@ -53,28 +52,40 @@ const CuponsTable = (data) => {
   })
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>Coupon Code</TableCell>
-            <TableCell align="right">Start Date</TableCell>
-            <TableCell align="right">End Date</TableCell>
-            <TableCell align="right">Sub Category Name</TableCell>
-            <TableCell align="right">Percentage Off</TableCell>
-            <TableCell align="right">Featured</TableCell>
-            <TableCell align="right">Active</TableCell>
-            <TableCell align="right">Single Use</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, index) => (
-            <Row key={index} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      {rows.length > 0 &&
+        <TableContainer component={Paper}>
+          <Table aria-label="collapsible table">
+            <TableHead>
+              <StyledTableRow>
+                <StyledTableCell align="center">Coupon Code</StyledTableCell>
+                <StyledTableCell align="center">Start Date</StyledTableCell>
+                <StyledTableCell align="center">End Date</StyledTableCell>
+                <StyledTableCell align="center">Sub Category Name</StyledTableCell>
+                <StyledTableCell align="center">Percentage Off</StyledTableCell>
+                <StyledTableCell align="center">Featured</StyledTableCell>
+                <StyledTableCell align="center">Active</StyledTableCell>
+                <StyledTableCell align="center">Single Use</StyledTableCell>
+                <StyledTableCell align="center">Update Coupon</StyledTableCell>
+                <StyledTableCell align="center">Delete Coupon</StyledTableCell>
+
+              </StyledTableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row, index) => (
+                <Row key={index} row={row} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      }
+
+      {rows.length === 0 &&
+        <Typography variant="h5" gutterBottom sx={{textAlign: 'center'}}>
+          No Data
+        </Typography>
+      }
+    </>
   );
 }
 

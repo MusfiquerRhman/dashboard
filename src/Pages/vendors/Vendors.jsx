@@ -1,11 +1,10 @@
+import AddIcon from '@mui/icons-material/Add';
 import TabContext from '@mui/lab/TabContext';
 import TabPanel from '@mui/lab/TabPanel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import * as vendorAPI from '../../API/vendors';
@@ -96,15 +95,6 @@ const Vendor = () => {
 
     return (
         <>
-            <Paper elevation={2} className={classes.formBox}>
-                <div className={classes.form}>
-                    <Typography variant="h5" gutterBottom component="div">
-                        Add A New Vendor
-                    </Typography>
-                    <Button fullWidth variant="outlined"  onClick={handleClickOpenAdd} >Add a new Vendor</Button>
-                </div>
-            </Paper>
-
             <VendorForm 
                 updateOpen={updateAdd}
                 handleCloseUpdate={handleCloseAdd}
@@ -141,14 +131,17 @@ const Vendor = () => {
                 formType="Add"
             />
 
-            <Box sx={{ width: '100%', typography: 'body1', marginTop: "1rem" }}>
-                <h1>Vendors list</h1>
+            <Box className={classes.form}>
+                <Box className={classes.header}>
+                    <h1>All Vendors</h1>
+                    <Button className={classes.button} variant="contained" onClick={handleClickOpenAdd} startIcon={<AddIcon />}>Add a new Vendor</Button>
+                </Box>
                 <TabContext value={value} >
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <Tabs
                             value={value}
                             onChange={handleChange}
-                            indicatorColor="secondary"
+                            indicatorColor="primary"
                             textColor="inherit"
                             variant="fullWidth"
                             aria-label="tabs"

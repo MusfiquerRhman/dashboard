@@ -1,3 +1,4 @@
+import AddIcon from '@mui/icons-material/Add';
 import TabContext from '@mui/lab/TabContext';
 import TabPanel from '@mui/lab/TabPanel';
 import Box from '@mui/material/Box';
@@ -116,31 +117,15 @@ const Category = () => {
                 handleClickAction={addSubCatgoriesForm}
                 setCategoriesId={setSelectedCategoriesIdInSubcategory}
             />
-            <Grid container spacing={2}>
-                <Grid item xs={6}>
-                    <Paper elevation={2}>
-                        <div className={classes.form}>
-                            <Typography variant="h5" gutterBottom component="div">
-                                Add A New Category
-                            </Typography>
-                            <Button fullWidth variant="outlined" onClick={handleClickOpenAdd} >Add a new Category</Button>
-                        </div>
-                    </Paper>
-                </Grid>
-                <Grid item xs={6}>
-                    <Paper elevation={2}>
-                        <div className={classes.form}>
-                            <Typography variant="h5" gutterBottom component="div">
-                                Add A New Subcategory
-                            </Typography>
-                            <Button fullWidth variant="outlined" onClick={handleClickOpenAddSubcategory} >Add a new Subcategory</Button>
-                        </div>
-                    </Paper>
-                </Grid>
-            </Grid>
 
-            <Box sx={{ width: '100%', typography: 'body1', marginTop: "1rem" }}>
-                <h1>Categories and Subcategories list</h1>
+            <div className={classes.form}>
+                <div className={classes.header}>
+                    <h1>All Categories and Subcategories</h1>
+                    <div>
+                        <Button className={classes.button} variant="contained" onClick={handleClickOpenAdd} startIcon={<AddIcon />} sx={{marginRight: "1rem"}}>Add Category</Button>
+                        <Button className={classes.button} variant="contained" onClick={handleClickOpenAddSubcategory} startIcon={<AddIcon />}>Add Subcategory</Button>
+                    </div>
+                </div>
                 <TabContext value={value} >
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <Tabs
@@ -160,7 +145,7 @@ const Category = () => {
                     <TabPanel sx={{ padding: 1, paddingTop: '1.5rem' }} value="2"><SubCategoriesTable subCategories={subCategories} /></TabPanel>
                     <TabPanel sx={{ padding: 1, paddingTop: '1.5rem' }} value="3"><SubCategoriesByCategory /></TabPanel>
                 </TabContext>
-            </Box>
+            </div>
         </React.Fragment>
     )
 }

@@ -6,11 +6,13 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
+import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
+import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
+import Select from '@mui/material/Select';
 import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
@@ -36,23 +38,14 @@ const SubCategoriesForm = (props) => {
 
     const [displayImage, setDisplayImage] = useState("");
     const { categories } = useContext(CategoryContext);
-    const [anchorEl, setAnchorEl] = useState(null);
     const [categoryName, setcategoryName] = useState('');
 
-    const open = Boolean(anchorEl);
     const classes = Style();
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
     const handleClickCategory = (category) => {
         setCategoriesId(category.cid);
         setcategoryName(category.category_name);
-        setAnchorEl(null);
     };
 
     const imageSelectHandeler = (files) => {
@@ -130,29 +123,22 @@ const SubCategoriesForm = (props) => {
                                 </Grid>
                                 {formType === 'Add' && (
                                     <div>
-                                        <Button
-                                            id="basic-button"
-                                            aria-controls={open ? 'basic-menu' : undefined}
-                                            aria-haspopup="true"
-                                            aria-expanded={open ? 'true' : undefined}
-                                            onClick={handleClick}
-                                        >
-                                            Select a category
-                                        </Button>
-                                        <span className={classes.subCategoryMenu}>{categoryName === '' ? "" : `Selected Category: ${categoryName}`}</span>
-                                        <Menu
-                                            id="basic-menu"
-                                            anchorEl={anchorEl}
-                                            open={open}
-                                            onClose={handleClose}
-                                            MenuListProps={{
-                                                'aria-labelledby': 'basic-button',
-                                            }}
+                                        <FormControl fullWidth>
+                                        <InputLabel id="demo-simple-select-label">Select a Subcategory</InputLabel>
+                                        <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={categoryName}
+                                        label="Select a Subcategory"
                                         >
                                             {categories.map((element, index) => (
-                                                <MenuItem key={index} onClick={() => handleClickCategory(element)}>{element.category_name}</MenuItem>
+                                                <MenuItem key={index} 
+                                                    onClick={() => handleClickCategory(element)} 
+                                                    value={element.category_name}>{element.category_name}
+                                                </MenuItem>
                                             ))}
-                                        </Menu>
+                                        </Select>
+                                    </FormControl>
                                     </div>
                                 )}
 

@@ -1,8 +1,8 @@
+import AddIcon from '@mui/icons-material/Add';
 import TabContext from '@mui/lab/TabContext';
 import TabPanel from '@mui/lab/TabPanel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
@@ -94,29 +94,23 @@ const Cupons = () => {
                 handleChangeIs_Active={handleChangeIs_Active}
                 setVid={setVid}
                 setScid={setScid}
+                vid = ''
+                scid = ''
                 handleClickSubmit={addForm}
             />
-            <Paper elevation={2} className={classes.formBox}>
-                <div className={classes.form}>
-                    <Typography variant="h5" gutterBottom component="div">
-                        Add A New Coupon
-                    </Typography>
-                    <Button fullWidth variant="outlined" onClick={handleClickOpenAdd} >Add a new Coupon</Button>
-                </div>
-            </Paper>
+
             <div className={classes.form}>
-                <h1>Coupons list</h1>
+                <div className={classes.header}>
+                    <h1>All Coupons</h1>
+                    <Button className={classes.button} variant="contained" onClick={handleClickOpenAdd} startIcon={<AddIcon />}>Add a new Coupon</Button>
+                </div>
                 <div>
-                    <Typography variant="h5" gutterBottom component="div">
-                        Cupon Filters
-                    </Typography>
                     <Box sx={{ maxWidth: { xs: 320, sm: '100%' }, bgcolor: 'background.paper' }}>
                         <TabContext value={value} >
                             <Tabs
                                 value={value}
                                 onChange={handleChange}
-                                variant="scrollable"
-                                scrollButtons="auto"
+                                variant="fullWidth"
                                 aria-label="scrollable auto tabs example"
                             >
                                 <Tab label="All Coupons" value="1" />

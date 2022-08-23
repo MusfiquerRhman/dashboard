@@ -104,7 +104,7 @@ const VendorForm = (props) => {
                     >
                         <CloseIcon />
                     </IconButton>
-                    <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                    <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="span">
                         {formType} Vendor
                     </Typography>
                     <Button autoFocus color="inherit" onClick={handleClickVendor}>
@@ -113,7 +113,7 @@ const VendorForm = (props) => {
                 </Toolbar>
             </AppBar>
             <DialogContent>
-                <div>
+                <Box>
                     <Paper elevation={6} className={classes.formBox} >
                         <form className={classes.form}>
                             <Typography variant="h4" sx={{ padding: '1rem 3rem' }}>
@@ -323,7 +323,7 @@ const VendorForm = (props) => {
                             </Box>
                         </form>
                     </Paper>
-                </div >
+                </Box >
             </DialogContent>
         </Dialog>
     )

@@ -1,6 +1,7 @@
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import { useSnackbar } from 'notistack';
 import React, { useContext, useState } from 'react';
 import * as subcategoryAPI from '../../../API/subcategory';
@@ -14,18 +15,9 @@ const SubCategoriesByCategory = () => {
     const [selectedCategoryName, setSelectedCategoryName] = useState("")
     const [subcategories, setSubcategories] = useState([])
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
     const handleClickItem = (cid, categoryName) => {
         setSelectedCategoryName(categoryName);
-
         subcategoryAPI.getAllSubCategoryByCategoryID(cid).then(
             res => {
                 setSubcategories(res.data)
@@ -34,35 +26,24 @@ const SubCategoriesByCategory = () => {
                 }
             }
         );
-
-        setAnchorEl(null);
     }
 
     return (
         <>
-            <div>
-                <Button
-                    id="basic-button"
-                    aria-controls={open ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}
-                >
-                    {selectedCategoryName === '' ? "Select a Category" : `Selected Category: ${selectedCategoryName}`}
-                </Button>
-                <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                        'aria-labelledby': 'basic-button',
-                    }}
-                >
+            <div style={{marginBottom: '1.5rem'}}>
+                <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Select a Category</InputLabel>
+                    <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={selectedCategoryName}
+                    label="Select a Category"
+                    >
                     {categories.map((element, index) => (
-                        <MenuItem key={index} onClick={() => handleClickItem(element.cid, element.category_name)}>{element.category_name}</MenuItem>
+                        <MenuItem key={index} onClick={() => handleClickItem(element.cid, element.category_name)} value={element.category_name}>{element.category_name}</MenuItem>
                     ))}
-                </Menu>
+                    </Select>
+                </FormControl>
             </div>
             <div>
                 <SubCategoryTable subCategories={subcategories} />

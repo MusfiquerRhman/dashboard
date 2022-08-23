@@ -33,20 +33,20 @@ const Users = () => {
 
     return (
         <>
-            <Grid container spacing={2}>
-                <Grid item xs={6}>
+            <Grid container spacing={2} sx={{justifyContent: 'center'}}>
+                <Grid item xs={3}>
                     <Card className={classes.form}>
                         <CardContent>
-                            <Typography variant="h5" color="text.secondary" gutterBottom>
+                            <Typography variant="h6" color="text.secondary" gutterBottom>
                                 Total Admins: {adminUserCount}
                             </Typography>
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={3}>
                     <Card className={classes.form}>
                         <CardContent>
-                            <Typography variant="h5" color="text.secondary" gutterBottom>
+                            <Typography variant="h6" color="text.secondary" gutterBottom>
                                 Total Users: {userCount}
                             </Typography>
                         </CardContent>

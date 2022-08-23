@@ -1,17 +1,20 @@
+import Grid from '@mui/material/Grid';
 import React, { useContext } from 'react';
 import { VendorContext } from '../../Context APIs/vendorContext';
-import VendorAccordionDetails from './vendor Components/VendorAccordionDetails';
+import VendorCards from './vendor Components/VendorCards';
 
 const VendorsList = () => {
     const { vendors } = useContext(VendorContext)
 
     return (
         <React.Fragment>
-            <div>
+            <Grid container spacing={3}>
                 {vendors.map((element, index) => (
-                    <VendorAccordionDetails key={index} element={element}/>
+                    <Grid item xs={12} sm={6} md={4} xl={3} key={index} >
+                        <VendorCards key={index} element={element} />
+                    </Grid>
                 ))}
-            </div>
+            </Grid>
         </React.Fragment>
     )
 }
