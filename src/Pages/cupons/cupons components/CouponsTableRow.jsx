@@ -39,6 +39,7 @@ const Row = (props) => {
     const [isActive, setIsActive] = useState(false)
     const [start_date, setStartDate] = useState(new Date());
     const [end_date, setEnddate] = useState(new Date());
+    const [coupon_description, setcoupon_description] = useState('');
     const [vid, setVid] = useState('');
     const [scid, setScid] = useState('');
     const updateDate = new Date();
@@ -55,6 +56,7 @@ const Row = (props) => {
         setEnddate(row.end_date);
         setVid(row.history.vid);
         setScid(row.history.scid)
+        setcoupon_description(row.coupon_description)
         setUpdateOpen(true);
     }
 
@@ -69,6 +71,11 @@ const Row = (props) => {
     const handleChangeIs_Active = (event) => {
         setIsActive(event.target.checked);
     };
+
+    const handleChangeCouponDescription = (event) => {
+        setcoupon_description(event.target.value)
+    }
+
 
     // useEffect(() => {
     //     console.log(coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date)
@@ -101,6 +108,7 @@ const Row = (props) => {
             feature_coupon,
             start_date,
             end_date,
+            coupon_description,
             updateDate).then(res => {
                 console.log(res)
                 if (res.status === 200) {
@@ -137,6 +145,8 @@ const Row = (props) => {
                 setScid={setScid}
                 scid={scid}
                 vid={vid}
+                coupnsDescription={coupon_description}
+                handleChangeCouponDescription={handleChangeCouponDescription}
                 handleClickSubmit={updateForm}
             />
 
@@ -156,11 +166,14 @@ const Row = (props) => {
                 <StyledTableCell align="center">{row.feature_coupon ? <CheckIcon /> : <CloseIcon />}</StyledTableCell>
                 <StyledTableCell align="center">{row.is_active ? <CheckIcon /> : <CloseIcon />}</StyledTableCell>
                 <StyledTableCell align="center">{row.single_use ? <CheckIcon /> : <CloseIcon />}</StyledTableCell>
+                <StyledTableCell align="center">{row.coupon_description}</StyledTableCell>
                 <StyledTableCell align="center"><Button variant="text" onClick={() => handleClickOpenUpdate(row)}><EditIcon /></Button></StyledTableCell>
                 <StyledTableCell align="center"><Button variant="text" onClick={handleClickOpenDelete} color="error"><DeleteForeverIcon /></Button></StyledTableCell>
             </StyledTableRow>
         </React.Fragment>
     );
 }
+
+
 
 export default Row;

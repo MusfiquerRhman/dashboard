@@ -45,6 +45,7 @@ const Cupons = () => {
     const [end_date, setEnddate] = useState(new Date());
     const [vid, setVid] = useState('');
     const [scid, setScid] = useState('');
+    const [coupnsDescription, setCoupnsDescription] = useState('')
 
     const handleChangeSingle_use = (event) => {
         setSingle_use(event.target.checked);
@@ -58,9 +59,13 @@ const Cupons = () => {
         setIsActive(event.target.checked);
     };
 
+    const handleChangeCouponDescription = (event) => {
+        setCoupnsDescription(event.target.value)
+    }
+
 
     const addForm = async () => {
-        couponsAPI.addCoupons(vid, scid, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date).then(res => {
+        couponsAPI.addCoupons(vid, scid, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, coupnsDescription).then(res => {
             console.log(res)
             if (res.status === 200) {
                 enqueueSnackbar(`Successfully Added`, { variant: 'info' });
@@ -96,6 +101,8 @@ const Cupons = () => {
                 setScid={setScid}
                 vid = ''
                 scid = ''
+                coupnsDescription={coupnsDescription}
+                handleChangeCouponDescription={handleChangeCouponDescription}
                 handleClickSubmit={addForm}
             />
 

@@ -14,8 +14,7 @@ export default function NavBar() {
     let loggedin = localStorage.getItem('userInformations') !== null;
 
     const handleLogOut = async () => {
-        const res = userAPI.logout();
-        console.log(res);
+        userAPI.logout();
         localStorage.removeItem('userInformations');
         window.location.reload();
     }

@@ -13,22 +13,43 @@ const Users = () => {
     const [userCount, setUserCount] = useState(0);
     const [allAdmin, setAllAdmin] = useState([]);
 
+    const handleLogOut = async () => {
+        userAPI.logout();
+        localStorage.removeItem('userInformations');
+        window.location.reload();
+    }
+
     useEffect(() => {
-        userAPI.adminUserCount().then(res => {
-            setAdminUserCount(res.data.count)
-        })
+        try {
+            userAPI.adminUserCount().then(res => {
+                setAdminUserCount(res.data.count)
+            });
+        }
+        catch (e) {
+            handleLogOut();
+        }
     }, []);
 
     useEffect(() => {
-        userAPI.userCount().then(res => {
-            setUserCount(res.data.count)
-        })
+        try {
+            userAPI.userCount().then(res => {
+                setUserCount(res.data.count)
+            });
+        }
+        catch (e) {
+            handleLogOut();
+        }
     }, []);
 
     useEffect(() => {
-        userAPI.getAllAdmin().then(res => {
-            setAllAdmin(res.data);
-        })
+        try {
+            userAPI.getAllAdmin().then(res => {
+                setAllAdmin(res.data);
+            });
+        }
+        catch (e) {
+            handleLogOut();
+        }
     }, []);
 
     return (
@@ -60,4 +81,3 @@ const Users = () => {
 }
 
 export default Users;
-

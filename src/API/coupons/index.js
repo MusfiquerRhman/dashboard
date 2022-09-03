@@ -53,7 +53,7 @@ export const deleteCoupon = async (coupon_id) => {
   }
 };
 
-export const updateCoupons = async (coupon_id, vendor_id, subcategory_id, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, updateDate) => {
+export const updateCoupons = async (coupon_id, vendor_id, subcategory_id, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, updateDate, coupon_description) => {
   try {
     return await axios.put(`${API_URL}/${vendor_id}/coupon/${coupon_id}/${subcategory_id}`, {
       vid: vendor_id,
@@ -64,7 +64,8 @@ export const updateCoupons = async (coupon_id, vendor_id, subcategory_id, coupon
       feature_coupon: feature_coupon,
       start_date: start_date,
       end_date: end_date,
-      updated_date: updateDate
+      updated_date: updateDate, 
+      coupon_description: coupon_description
     }, {
       headers: {
         "Authorization": `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`
@@ -76,7 +77,7 @@ export const updateCoupons = async (coupon_id, vendor_id, subcategory_id, coupon
 };
 
 
-export const addCoupons = async (vendor_id, subcategory_id, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date) => {
+export const addCoupons = async (vendor_id, subcategory_id, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, coupon_description) => {
   try {
     return await axios.post(`${API_URL}/${vendor_id}/${subcategory_id}/coupon`, {
       coupon_code: coupon_code,
@@ -85,6 +86,7 @@ export const addCoupons = async (vendor_id, subcategory_id, coupon_code, percent
       feature_coupon: feature_coupon,
       start_date: start_date,
       end_date: end_date,
+      coupon_description: coupon_description
     }, {
       headers: {
         "Authorization": `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`

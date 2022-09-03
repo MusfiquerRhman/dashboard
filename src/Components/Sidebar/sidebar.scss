@@ -1,15 +1,14 @@
 :root {
-    --color-sidebar: #018F8F44;
+    --color-sidebar: #018f8f44;
     --color-text: #000000;
-    --color-card: #FFFFFF;
-    --color-text--light: #018F8F;
+    --color-card: #ffffff;
+    --color-text--light: #018f8f;
 
     --transition: all 400ms ease;
-  }
-  
+}
 
-.container{
-    display:flex;
+.container {
+    display: flex;
 }
 
 .sidebar__container {
@@ -18,7 +17,6 @@
     height: 100vh;
     width: 16%;
     min-width: 270px;
-
 
     .sidebar__logo {
         height: 7rem;
@@ -54,7 +52,7 @@
         transition: var(--transition);
         border-left: 5px solid var(--color-text--light);
         padding: 0 1rem;
-        background: var( --color-card);
+        background: var(--color-card);
 
         .sidebar__link--text {
             color: var(--color-text);

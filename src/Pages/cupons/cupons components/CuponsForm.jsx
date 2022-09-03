@@ -54,7 +54,9 @@ const CouponsForm = (props) => {
         setScid,
         vid,
         scid,
-        handleClickSubmit
+        coupnsDescription,
+        handleChangeCouponDescription,
+        handleClickSubmit,
     } = props;
 
     const [selectedVendorName, setSelectedVendorName] = useState('')
@@ -229,6 +231,19 @@ const CouponsForm = (props) => {
                                         />
                                     </LocalizationProvider>
                                 </Box>
+                                <Grid container item direction="column" spacing={2} lg={12} sx={{ marginBottom: '1.5rem' }}>
+                                    <Grid item >
+                                        <TextField id="registration-coupon-code"
+                                            label="Coupon Description"
+                                            type="text"
+                                            variant="standard"
+                                            value={coupnsDescription}
+                                            onChange={handleChangeCouponDescription}
+                                            required
+                                            fullWidth
+                                        />
+                                    </Grid>
+                                </Grid>
 
                                 <Grid item>
                                     <Button fullWidth variant="contained" onClick={handleClickSubmit}>Submit</Button>

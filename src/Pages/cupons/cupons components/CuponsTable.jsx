@@ -8,7 +8,7 @@ import * as React from 'react';
 import { StyledTableCell, StyledTableRow } from '../../../Styles/GlobalStyles';
 import Row from './CouponsTableRow';
 
-function createData(coupon_code, start_date, end_date, is_active, feature_coupon, single_use, coupon_id, vid, scid, sub_category_name, percentage_off, created_date, updated_date) {
+function createData(coupon_code, start_date, end_date, is_active, feature_coupon, single_use, coupon_id, vid, scid, sub_category_name, percentage_off, created_date, updated_date, coupon_description) {
   return {
     coupon_code,
     start_date,
@@ -18,6 +18,7 @@ function createData(coupon_code, start_date, end_date, is_active, feature_coupon
     single_use,
     sub_category_name,
     percentage_off,
+    coupon_description,
     history:
     {
       coupon_id: coupon_id,
@@ -47,7 +48,8 @@ const CuponsTable = (data) => {
       element.sub_category_name,
       element.percentage_off,
       element.created_date,
-      element.updated_date
+      element.updated_date,
+      element.coupon_description,
     ))
   })
 
@@ -66,9 +68,9 @@ const CuponsTable = (data) => {
                 <StyledTableCell align="center">Featured</StyledTableCell>
                 <StyledTableCell align="center">Active</StyledTableCell>
                 <StyledTableCell align="center">Single Use</StyledTableCell>
+                <StyledTableCell align='center'>Coupons Description</StyledTableCell>
                 <StyledTableCell align="center">Update Coupon</StyledTableCell>
                 <StyledTableCell align="center">Delete Coupon</StyledTableCell>
-
               </StyledTableRow>
             </TableHead>
             <TableBody>
