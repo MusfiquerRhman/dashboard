@@ -108,8 +108,9 @@ const Row = (props) => {
             feature_coupon,
             start_date,
             end_date,
+            updateDate,
             coupon_description,
-            updateDate).then(res => {
+            ).then(res => {
                 console.log(res)
                 if (res.status === 200) {
                     enqueueSnackbar(`Successfully updated`, { variant: 'info' });

@@ -65,7 +65,7 @@ export const updateCoupons = async (coupon_id, vendor_id, subcategory_id, coupon
       start_date: start_date,
       end_date: end_date,
       updated_date: updateDate, 
-      coupon_description: coupon_description
+      coupon_description: coupon_description,
     }, {
       headers: {
         "Authorization": `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`
