@@ -39,6 +39,15 @@ const style = makeStyles((theme) => ({
   button: {
     height: "3rem",
   },
+  chip__container: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    padding: '0.5rem',
+    borderRadius: '0.5rem',
+    border: '1px solid #018F8F',
+    justifyContent: 'space-between',
+}
 }));
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({

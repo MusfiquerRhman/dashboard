@@ -44,7 +44,7 @@ const Cupons = () => {
     const [start_date, setStartDate] = useState(new Date());
     const [end_date, setEnddate] = useState(new Date());
     const [vid, setVid] = useState('');
-    const [scid, setScid] = useState('');
+    const [scid, setScid] = useState([]);
     const [coupnsDescription, setCoupnsDescription] = useState('')
 
     const handleChangeSingle_use = (event) => {
@@ -65,16 +65,20 @@ const Cupons = () => {
 
 
     const addForm = async () => {
-        couponsAPI.addCoupons(vid, scid, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, coupnsDescription).then(res => {
-            console.log(res)
-            if (res.status === 200) {
-                enqueueSnackbar(`Successfully Added`, { variant: 'info' });
-                window.location.reload();
-            }
-            else {
-                enqueueSnackbar(`Failed to Add`, { variant: 'error' });
-            }
-        });
+        let flag = 0;
+        scid.forEach(item => {
+            couponsAPI.addCoupons(vid, item, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, coupnsDescription).then(res => {
+                console.log(res)
+                if (res.status === 200) {
+                    enqueueSnackbar(`Successfully Added`, { variant: 'info' });
+                    flag++;
+                    if(flag === scid.length) window.location.reload();
+                }
+                else {
+                    enqueueSnackbar(`Failed to Add`, { variant: 'error' });
+                }
+            });
+        })
     }
 
     return (
@@ -100,7 +104,7 @@ const Cupons = () => {
                 setVid={setVid}
                 setScid={setScid}
                 vid = ''
-                scid = ''
+                scid = {scid}
                 coupnsDescription={coupnsDescription}
                 handleChangeCouponDescription={handleChangeCouponDescription}
                 handleClickSubmit={addForm}

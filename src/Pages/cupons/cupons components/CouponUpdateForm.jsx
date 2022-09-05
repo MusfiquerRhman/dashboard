@@ -1,19 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 // MaterialUI Elements
-import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import Chip from '@mui/material/Chip';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import InputLabel from '@mui/material/InputLabel';
-import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 import Select from '@mui/material/Select';
@@ -34,17 +31,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const CouponsForm = (props) => {
     const classes = Style();
-
-    const [anchorElSubCategory, setAnchorElSubCategory] = React.useState(null);
-    const openSubCategory = Boolean(anchorElSubCategory);
-
-    const handleClickSubCategory = (event) => {
-        setAnchorElSubCategory(event.currentTarget);
-    };
-
-    const handleCloseSubCategory = () => {
-        setAnchorElSubCategory(null);
-    };
 
     const {
         coupon_code,
@@ -74,34 +60,26 @@ const CouponsForm = (props) => {
     } = props;
 
     const [selectedVendorName, setSelectedVendorName] = useState('')
-    const [selectedSubCategoryName, setSelectedSubCategoryName] = useState([])
+    const [selectedSubCategoryName, setSelectedSubCategoryName] = useState('')
 
     const { subCategories } = useContext(SubCategoryContext);
     const { vendors } = useContext(VendorContext);
 
     useEffect(() => {
         const selectedVendor = vid !== '' ? vendors.find((element) => element.vid === vid)?.vendor_name : '';
-        // const subCategoryName = scid !== '' ? subCategories.find((element) => element.scid === scid)?.sub_category_name : '';
-        // setSelectedSubCategoryName(subCategoryName)
+        const subCategoryName = scid !== '' ? subCategories.find((element) => element.scid === scid)?.sub_category_name : '';
+        setSelectedSubCategoryName(subCategoryName)
         setSelectedVendorName(selectedVendor)
-    }, [vid, vendors])
+    }, [vid, scid, vendors, subCategories])
 
     const handleClickItemVendorMenu = (vid, vendor_name) => {
         setSelectedVendorName(vendor_name);
         setVid(vid);
     }
 
-    const handleClickItemSubctegory = (id, sub_category_name) => {
-        if(scid.indexOf(id) === -1){
-            setSelectedSubCategoryName(prevName => [...prevName, sub_category_name]);
-            setScid(prevScid => [...prevScid, id]);
-        }
-    }
-
-    const handleDeleteSubCategory = (value) => {
-        let id = subCategories.find(item => item.sub_category_name === value).scid;
-        setSelectedSubCategoryName(prevName => prevName.filter(item => item !== value));
-        setScid(prevScid => prevScid.filter(item => item !== id));
+    const handleClickItemSubctegory = (scid, sub_category_name) => {
+        setSelectedSubCategoryName(sub_category_name);
+        setScid(scid);
     }
 
     return (
@@ -211,7 +189,7 @@ const CouponsForm = (props) => {
                                         </Select>
                                     </FormControl>
 
-                                    {/* <FormControl fullWidth>
+                                    <FormControl fullWidth>
                                         <InputLabel id="demo-simple-select-label">Select a Sub-Category</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-label"
@@ -226,49 +204,7 @@ const CouponsForm = (props) => {
                                                 </MenuItem>
                                             ))}
                                         </Select>
-                                    </FormControl> */}
-
-
-                                    <div className={classes.chip__container}>
-                                        <div className='chips'>
-                                            {selectedSubCategoryName.map((value) => (
-                                                <Chip sx={{ marginRight: '0.5rem', marginBottom: '0.5rem' }}
-                                                    key={value}
-                                                    label={value}
-                                                    onDelete={() => handleDeleteSubCategory(value)}
-                                                />
-                                            ))}
-                                        </div>
-                                        <div>
-                                            <Button
-                                                id="basic-button"
-                                                aria-controls={openSubCategory ? 'basic-menu' : undefined}
-                                                aria-haspopup="true"
-                                                aria-expanded={openSubCategory ? 'true' : undefined}
-                                                onClick={handleClickSubCategory}
-                                                startIcon={<AddIcon />}
-                                                sx={{ borderRadius: '2rem' }}
-                                            >
-                                                Add
-                                            </Button>
-                                            <Menu
-                                                id="basic-menu"
-                                                anchorEl={anchorElSubCategory}
-                                                open={openSubCategory}
-                                                onClose={handleCloseSubCategory}
-                                                MenuListProps={{
-                                                    'aria-labelledby': 'basic-button',
-                                                }}
-                                            >
-                                                {subCategories.map((element, index) => (
-                                                    <MenuItem key={index}
-                                                        onClick={() => handleClickItemSubctegory(element.scid, element.sub_category_name)}
-                                                        value={element.sub_category_name}>{element.sub_category_name}
-                                                    </MenuItem>
-                                                ))}
-                                            </Menu>
-                                        </div>
-                                    </div>
+                                    </FormControl>
                                 </Box>
                                 <Box sx={{ marginBottom: "1rem" }}>
                                     <LocalizationProvider dateAdapter={AdapterDateFns}>
