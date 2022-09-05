@@ -211,6 +211,7 @@ const CouponsForm = (props) => {
                                         <DatePicker
                                             label="Start Date"
                                             value={start_date}
+                                            disablePast
                                             onChange={(newValue) => {
                                                 setStartDate(new Date(newValue).toISOString().substring(0, 10));
                                             }}
@@ -224,6 +225,7 @@ const CouponsForm = (props) => {
                                         <DatePicker
                                             label="End Date"
                                             value={end_date}
+                                            disablePast
                                             onChange={(newValue) => {
                                                 setEnddate(new Date(newValue).toISOString().substring(0, 10));
                                             }}
