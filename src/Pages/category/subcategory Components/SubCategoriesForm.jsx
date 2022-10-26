@@ -122,14 +122,14 @@ const SubCategoriesForm = (props) => {
                                     </Grid>
                                 </Grid>
                                 {formType === 'Add' && (
-                                    <div>
+                                    <div style={{marginBottom: '2rem'}}>
                                         <FormControl fullWidth>
-                                        <InputLabel id="demo-simple-select-label">Select a Subcategory</InputLabel>
+                                        <InputLabel id="demo-simple-select-label">Select a Category</InputLabel>
                                         <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         value={categoryName}
-                                        label="Select a Subcategory"
+                                        label="Select a Category"
                                         >
                                             {categories.map((element, index) => (
                                                 <MenuItem key={index} 
@@ -151,7 +151,7 @@ const SubCategoriesForm = (props) => {
                                             fullWidth
                                             sx={{ marginTop: "1rem" }}
                                         >
-                                            Select a Sub-categoory image
+                                            Select a Sub-category image
                                             <input
                                                 name="image"
                                                 type="file"

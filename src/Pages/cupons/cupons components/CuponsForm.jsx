@@ -136,7 +136,7 @@ const CouponsForm = (props) => {
                     <Paper elevation={6} className={classes.formBox} >
                         <form className={classes.form}>
                             <Typography variant="h4" sx={{ padding: '1rem 3rem' }}>
-                                Enter Coupons Details:
+                                Enter Coupon Details:
                             </Typography>
 
                             <Box sx={{ width: '100%' }}>
@@ -156,8 +156,8 @@ const CouponsForm = (props) => {
                                 <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
                                     <Grid item>
                                         <TextField id="registration-percentage_off"
-                                            label="Percentage off"
-                                            type="number"
+                                            label="Deal Type"
+                                            type="text"
                                             variant="standard"
                                             value={percentage_off}
                                             onChange={handleChangePercentage_off}
@@ -169,10 +169,10 @@ const CouponsForm = (props) => {
                                 <Grid container item direction="column" spacing={2} xs={12}>
                                     <Grid item>
                                         <Checkbox
-                                            label="Is Active"
-                                            onChange={handleChangeSingle_use}
-                                            checked={single_use}
-                                        /> <span>Single Use</span>
+                                            label="Active"
+                                            onChange={handleChangeIs_Active}
+                                            checked={isActive}
+                                        /> <span>Active</span>
                                     </Grid>
                                 </Grid>
                                 <Grid container item direction="column" spacing={2} xs={12}>
@@ -184,13 +184,13 @@ const CouponsForm = (props) => {
                                         /> <span>Feature Coupon</span>
                                     </Grid>
                                 </Grid>
-                                <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
+                                <Grid container item direction="column" spacing={2} xs={12}  sx={{ marginBottom: '1.5rem' }}>
                                     <Grid item>
                                         <Checkbox
-                                            label="Feture Vendor"
-                                            onChange={handleChangeIs_Active}
-                                            checked={isActive}
-                                        /> <span>Is Active</span>
+                                            label="Single Use"
+                                            onChange={handleChangeSingle_use}
+                                            checked={single_use}
+                                        /> <span>Single Use</span>
                                     </Grid>
                                 </Grid>
                                 <Box sx={{ marginBottom: "1.5rem" }}>
@@ -249,7 +249,7 @@ const CouponsForm = (props) => {
                                                 startIcon={<AddIcon />}
                                                 sx={{ borderRadius: '2rem' }}
                                             >
-                                                Add
+                                                Add Subcategory
                                             </Button>
                                             <Menu
                                                 id="basic-menu"

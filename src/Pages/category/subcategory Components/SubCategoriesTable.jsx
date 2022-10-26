@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import * as subcategoriesAPI from "../../../API/subcategory";
+import noImage from '../../../Assets/icons8-no-image-100.png';
 import ConfrimDeleteDialogue from '../../../Components/ConfrimDeleteDialogue';
 import useInputState from '../../../Hooks/UseInputHook';
 import { StyledTableCell, StyledTableRow } from '../../../Styles/GlobalStyles';
@@ -131,7 +132,13 @@ const SubCategoryTable = (subCategories) => {
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <StyledTableCell component="th" scope="row">
-                    <img src={row.sub_category_logo_path} alt="category logo" className={classes.categoryImg} />
+                    {row.sub_category_logo_path?.length > 0 ? (
+                        <img src={row.sub_category_logo_path} alt="subcategory logo" className={classes.categoryImg} />
+                      ) : (
+                        <img src={noImage} alt="category logo" className={classes.categoryImg} />
+                      )
+                    }
+                    
                   </StyledTableCell>
                   <StyledTableCell align="center">{row.sub_category_name} </StyledTableCell>
                   <StyledTableCell align="center">{row.created_date}</StyledTableCell>

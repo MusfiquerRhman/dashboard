@@ -40,9 +40,9 @@ const Cupons = () => {
     const [percentage_off, handleChangePercentage_off] = useInputState('');
     const [single_use, setSingle_use] = useState(false)
     const [feature_coupon, setFeature_coupon] = useState(false)
-    const [isActive, setIsActive] = useState(false)
-    const [start_date, setStartDate] = useState(new Date());
-    const [end_date, setEnddate] = useState(new Date());
+    const [isActive, setIsActive] = useState(true)
+    const [start_date, setStartDate] = useState(new Date().getTime() + 24 * 60 * 60 * 1000);
+    const [end_date, setEnddate] = useState(new Date().getTime() + 24 * 60 * 60 * 1000);
     const [vid, setVid] = useState('');
     const [scid, setScid] = useState([]);
     const [coupnsDescription, setCoupnsDescription] = useState('')
