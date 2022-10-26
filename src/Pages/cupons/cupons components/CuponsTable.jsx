@@ -2,13 +2,58 @@ import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import Typography from '@mui/material/Typography';
-import * as React from 'react';
-import { StyledTableCell, StyledTableRow } from '../../../Styles/GlobalStyles';
+import React, { useContext, useMemo } from 'react';
+import { SubCategoryContext } from "../../../Context APIs/subcategoriesContext";
+import { VendorContext } from "../../../Context APIs/vendorContext";
 import Row from './CouponsTableRow';
+import TableHeadSort from "./TableHeadSort";
 
-function createData(coupon_code, start_date, end_date, is_active, feature_coupon, single_use, coupon_id, vid, scid, sub_category_name, percentage_off, created_date, updated_date, coupon_description) {
+const headCells = [
+  {
+    id: 'coupon_code',
+    label: 'Coupon Code'
+  },
+  {
+    id: 'selectedVendor',
+    label: 'Vendor Name'
+  },
+  {
+    id: 'start_date',
+    label: 'Start Date'
+  },
+  {
+    id: 'end_date',
+    label: 'End Date'
+  },
+  {
+    id: 'sub_category_name',
+    label: 'Sub Category Name'
+  },
+  {
+    id: 'percentage_off',
+    label: 'Deal Type'
+  },
+];
+
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+
+function createData(coupon_code, start_date, end_date, is_active, feature_coupon, single_use, coupon_id, vid, scid, sub_category_name, selectedVendor, percentage_off, created_date, updated_date, coupon_description) {
   return {
     coupon_code,
     start_date,
@@ -17,6 +62,7 @@ function createData(coupon_code, start_date, end_date, is_active, feature_coupon
     feature_coupon,
     single_use,
     sub_category_name,
+    selectedVendor,
     percentage_off,
     coupon_description,
     history:
@@ -32,20 +78,35 @@ function createData(coupon_code, start_date, end_date, is_active, feature_coupon
 
 
 const CuponsTable = (data) => {
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('end_date');
+
+  const { subCategories } = useContext(SubCategoryContext);
+  const { vendors } = useContext(VendorContext)
+
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    console.log(property)
+    setOrderBy(property);
+  };
+
+
   let rows = [];
 
   data.data.forEach((element) => {
     rows.push(createData(
-      element.coupon_code,
-      element.start_date,
-      element.end_date,
+      element.coupon_code.toLowerCase(),
+      element.start_date.toLowerCase(),
+      element.end_date.toLowerCase(),
       element.is_active,
       element.feature_coupon,
       element.single_use,
       element.coupon_id,
       element.vid,
       element.scid,
-      element.sub_category_name,
+      subCategories.find((e) => e.scid === element.scid)?.sub_category_name.toLowerCase(),
+      vendors.find((e) => e.vid === element.vid)?.vendor_name.toLowerCase(),
       element.percentage_off,
       element.created_date,
       element.updated_date,
@@ -58,23 +119,14 @@ const CuponsTable = (data) => {
       {rows.length > 0 &&
         <TableContainer component={Paper}>
           <Table aria-label="collapsible table">
-            <TableHead>
-              <StyledTableRow>
-                <StyledTableCell align="center">Coupon Code</StyledTableCell>
-                <StyledTableCell align="center">Start Date</StyledTableCell>
-                <StyledTableCell align="center">End Date</StyledTableCell>
-                <StyledTableCell align="center">Sub Category Name</StyledTableCell>
-                <StyledTableCell align="center">Percentage Off</StyledTableCell>
-                <StyledTableCell align="center">Featured</StyledTableCell>
-                <StyledTableCell align="center">Active</StyledTableCell>
-                <StyledTableCell align="center">Single Use</StyledTableCell>
-                <StyledTableCell align='center'>Coupons Description</StyledTableCell>
-                <StyledTableCell align="center">Update Coupon</StyledTableCell>
-                <StyledTableCell align="center">Delete Coupon</StyledTableCell>
-              </StyledTableRow>
-            </TableHead>
+            <TableHeadSort
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={handleRequestSort}
+              headCells={headCells}
+            />
             <TableBody>
-              {rows.map((row, index) => (
+              {rows.slice().sort(getComparator(order, orderBy)).map((row, index) => (
                 <Row key={index} row={row} />
               ))}
             </TableBody>
@@ -83,7 +135,7 @@ const CuponsTable = (data) => {
       }
 
       {rows.length === 0 &&
-        <Typography variant="h5" gutterBottom sx={{textAlign: 'center'}}>
+        <Typography variant="h5" gutterBottom sx={{ textAlign: 'center' }}>
           No Data
         </Typography>
       }

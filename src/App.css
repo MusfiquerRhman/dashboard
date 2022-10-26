@@ -23,3 +23,10 @@ a {
   box-sizing: border-box;
 }
 
+.Mui-active {
+  color: #fff !important
+}
+
+.MuiTableSortLabel-icon {
+  color: #fff !important
+}

@@ -2,6 +2,12 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './sidebar.scss';
 
+const CustomNavLinks = ({text, link}) => (
+    <NavLink end to={link} className={`sidebar__link ${(navData) => (navData.isActive ? "active" : '')}`}>
+        <span className='sidebar__link--text'>{text}</span>
+    </NavLink>
+)
+
 function Sidebar({ children }) {
     let loggedin = localStorage.getItem('userInformations') !== null;
 
@@ -11,21 +17,11 @@ function Sidebar({ children }) {
                 <div className='container'>
                     <div className='sidebar__container'>
                         <div className='sidebar__links'>
-                            <NavLink to='/' className={`sidebar__link ${(navData) => (navData.isActive ? "active" : '')}`}>
-                                <span className='sidebar__link--text'>Coupons</span>
-                            </NavLink>
-                            <NavLink to='/vendors' className={`sidebar__link ${(navData) => (navData.isActive ? "active" : '')}`}>
-                                <span className='sidebar__link--text'>Vendors</span>
-                            </NavLink>
-                            <NavLink to='/category' className={`sidebar__link ${(navData) => (navData.isActive ? "active" : '')}`}>
-                                <span className='sidebar__link--text'>Category</span>
-                            </NavLink>
-                            <NavLink to='/users' className={`sidebar__link ${(navData) => (navData.isActive ? "active" : '')}`}>
-                                <span className='sidebar__link--text'>Users</span>
-                            </NavLink>
-                            <NavLink to='/profile' className={`sidebar__link ${(navData) => (navData.isActive ? "active" : '')}`}>
-                                <span className='sidebar__link--text'>Profile</span>
-                            </NavLink>
+                            <CustomNavLinks link='/' text="Coupons"/>
+                            <CustomNavLinks link='/vendors' text="Vendors"/>
+                            <CustomNavLinks link='/category' text="Category"/>
+                            <CustomNavLinks link='/users' text="Users"/>
+                            <CustomNavLinks link='/profile' text="Profile"/>
                         </div>
                     </div>
                     <main style={{ width: '100%', margin: '0 2rem' }}>{children}</main>

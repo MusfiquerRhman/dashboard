@@ -8,6 +8,7 @@ import React, { useContext, useState } from 'react';
 import * as couponsAPI from '../../../API/coupons';
 import ConfrimDeleteDialogue from '../../../Components/ConfrimDeleteDialogue';
 import { SubCategoryContext } from "../../../Context APIs/subcategoriesContext";
+import { VendorContext } from "../../../Context APIs/vendorContext";
 import useInputState from '../../../Hooks/UseInputHook';
 import { StyledTableCell, StyledTableRow } from '../../../Styles/GlobalStyles';
 import CouponsForm from './CouponUpdateForm';
@@ -17,6 +18,7 @@ const Row = (props) => {
     const [updateOpen, setUpdateOpen] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const { subCategories } = useContext(SubCategoryContext);
+    const { vendors } = useContext(VendorContext)
 
     const handleClickOpenDelete = () => {
         setDeleteOpen(true);
@@ -44,6 +46,7 @@ const Row = (props) => {
     const [scid, setScid] = useState('');
     const updateDate = new Date();
     const subCategoryName = subCategories.find((element) => element.scid === row.history.scid)?.sub_category_name;
+    const selectedVendor = vendors.find((element) => element.vid === row.history.vid)?.vendor_name;
 
 
     const handleClickOpenUpdate = (row) => {
@@ -157,9 +160,10 @@ const Row = (props) => {
 
             <StyledTableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
                 <StyledTableCell align="center" component="th" scope="row">{row.coupon_code}</StyledTableCell>
+                <StyledTableCell align="center">{row.selectedVendor}</StyledTableCell>
                 <StyledTableCell align="center">{row.start_date}</StyledTableCell>
                 <StyledTableCell align="center">{row.end_date}</StyledTableCell>
-                <StyledTableCell align="center">{subCategoryName}</StyledTableCell>
+                <StyledTableCell align="center">{row.sub_category_name}</StyledTableCell>
                 <StyledTableCell align="center">{row.percentage_off}</StyledTableCell>
                 <StyledTableCell align="center">{row.feature_coupon ? <CheckIcon /> : <CloseIcon />}</StyledTableCell>
                 <StyledTableCell align="center">{row.is_active ? <CheckIcon /> : <CloseIcon />}</StyledTableCell>

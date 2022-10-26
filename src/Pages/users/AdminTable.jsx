@@ -1,5 +1,6 @@
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,6 +9,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import * as React from 'react';
+import noImage from '../../Assets/icons8-no-image-100.png';
 import { StyledTableCell, StyledTableRow } from '../../Styles/GlobalStyles';
 import style from './userStyles';
 
@@ -55,8 +57,17 @@ const AdminTable = (admins) => {
               key={index}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <StyledTableCell align="center"><img src={row.profile_logo_path} alt="Admin" className={classes.categoryImg} /></StyledTableCell>
-              <StyledTableCell align="center">{row.fullname}</StyledTableCell>
+              <StyledTableCell align="center">
+                {row.profile_logo_path?.length > 0 ? (
+                    <img src={row.profile_logo_path} alt="Admin" className={classes.categoryImg} />
+                  ) : (
+                    <img src={noImage} alt="Admin" className={classes.categoryImg} />
+                  )
+                }
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {row.fullname?.length > 0 ? row.fullname : <HorizontalRuleIcon />}
+              </StyledTableCell>
               <StyledTableCell align="center">{row.email}</StyledTableCell>
               <StyledTableCell align="center">{row.phone}</StyledTableCell>
               <StyledTableCell align="center">{row.admin_status ? <CheckIcon /> : <ClearIcon />}</StyledTableCell>

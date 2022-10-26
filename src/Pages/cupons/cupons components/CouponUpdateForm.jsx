@@ -114,7 +114,7 @@ const CouponsForm = (props) => {
                     <Paper elevation={6} className={classes.formBox} >
                         <form className={classes.form}>
                             <Typography variant="h4" sx={{ padding: '1rem 3rem' }}>
-                                Enter Coupons Details:
+                                Update Coupon Details:
                             </Typography>
 
                             <Box sx={{ width: '100%' }}>
@@ -134,8 +134,8 @@ const CouponsForm = (props) => {
                                 <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
                                     <Grid item>
                                         <TextField id="registration-percentage_off"
-                                            label="Percentage off"
-                                            type="number"
+                                            label="Deal Type"
+                                            type="text"
                                             variant="standard"
                                             value={percentage_off}
                                             onChange={handleChangePercentage_off}
@@ -211,7 +211,6 @@ const CouponsForm = (props) => {
                                         <DatePicker
                                             label="Start Date"
                                             value={start_date}
-                                            disablePast
                                             onChange={(newValue) => {
                                                 setStartDate(new Date(newValue).toISOString().substring(0, 10));
                                             }}
@@ -225,7 +224,6 @@ const CouponsForm = (props) => {
                                         <DatePicker
                                             label="End Date"
                                             value={end_date}
-                                            disablePast
                                             onChange={(newValue) => {
                                                 setEnddate(new Date(newValue).toISOString().substring(0, 10));
                                             }}
