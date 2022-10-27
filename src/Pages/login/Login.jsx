@@ -24,6 +24,7 @@ const Login = () => {
             enqueueSnackbar("Error Logining in!", { variant: 'error' });
         } else if (res.status === 200) {
             localStorage.setItem('userInformations', JSON.stringify(res.data));
+            localStorage.setItem('last_login', new Date().getTime());
             window.location.reload();
         }
         else if (res.status === 422) {

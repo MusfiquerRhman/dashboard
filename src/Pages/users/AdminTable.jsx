@@ -4,12 +4,10 @@ import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import * as React from 'react';
-import noImage from '../../Assets/icons8-no-image-100.png';
+import accountImg from '../../Assets/icons8-account.png';
 import { StyledTableCell, StyledTableRow } from '../../Styles/GlobalStyles';
 import style from './userStyles';
 
@@ -61,7 +59,7 @@ const AdminTable = (admins) => {
                 {row.profile_logo_path?.length > 0 ? (
                     <img src={row.profile_logo_path} alt="Admin" className={classes.categoryImg} />
                   ) : (
-                    <img src={noImage} alt="Admin" className={classes.categoryImg} />
+                    <img src={accountImg} alt="Admin" className={classes.categoryImg} />
                   )
                 }
               </StyledTableCell>

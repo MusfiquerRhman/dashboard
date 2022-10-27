@@ -53,21 +53,21 @@ const Users = () => {
     }, []);
 
     return (
-        <>
-            <Grid container spacing={2} sx={{justifyContent: 'center'}}>
+        <div className={classes.form}>
+            <Grid container spacing={2} sx={{justifyContent: 'center', marginBottom: '2rem'}}>
                 <Grid item xs={3}>
-                    <Card className={classes.form}>
+                    <Card>
                         <CardContent>
-                            <Typography variant="h6" color="text.secondary" gutterBottom>
+                            <Typography variant="h6" color="text.secondary">
                                 Total Admins: {adminUserCount}
                             </Typography>
                         </CardContent>
                     </Card>
                 </Grid>
                 <Grid item xs={3}>
-                    <Card className={classes.form}>
+                    <Card>
                         <CardContent>
-                            <Typography variant="h6" color="text.secondary" gutterBottom>
+                            <Typography variant="h6" color="text.secondary">
                                 Total Users: {userCount}
                             </Typography>
                         </CardContent>
@@ -76,7 +76,7 @@ const Users = () => {
             </Grid>
 
             <AdminTable users={allAdmin}/>
-        </>
+        </div>
     );
 }
 

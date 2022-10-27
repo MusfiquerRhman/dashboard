@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 // MaterialUI Elements
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import CloseIcon from '@mui/icons-material/Close';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -98,7 +99,8 @@ const CategoriesForm = (props) => {
                                         <TextField id="registration-category_name"
                                             label="Category Name"
                                             type="text"
-                                            variant="standard"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                             value={category_name}
                                             onChange={handleChangecategory_name}
                                             required
@@ -114,6 +116,7 @@ const CategoriesForm = (props) => {
                                             component="label"
                                             fullWidth
                                             sx={{ marginTop: "1rem" }}
+                                            startIcon={<CameraAltIcon/>}
                                         >
                                             Select a category image
                                             <input

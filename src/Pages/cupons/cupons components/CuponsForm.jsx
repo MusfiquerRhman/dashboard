@@ -145,11 +145,12 @@ const CouponsForm = (props) => {
                                         <TextField id="registration-coupon-code"
                                             label="Coupon Code"
                                             type="text"
-                                            variant="standard"
+                                            variant="outlined"
                                             value={coupon_code}
                                             onChange={handleChangeCoupon_code}
                                             required
                                             fullWidth
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                         />
                                     </Grid>
                                 </Grid>
@@ -158,41 +159,45 @@ const CouponsForm = (props) => {
                                         <TextField id="registration-percentage_off"
                                             label="Deal Type"
                                             type="text"
-                                            variant="standard"
                                             value={percentage_off}
                                             onChange={handleChangePercentage_off}
                                             required
                                             fullWidth
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                         />
                                     </Grid>
                                 </Grid>
-                                <Grid container item direction="column" spacing={2} xs={12}>
-                                    <Grid item>
-                                        <Checkbox
-                                            label="Active"
-                                            onChange={handleChangeIs_Active}
-                                            checked={isActive}
-                                        /> <span>Active</span>
+                                <p style={{fontSize: '1.15rem'}}>Select the appropriate box/s: </p>
+                                <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                                    <Grid container item direction="column" spacing={2} xs={12}>
+                                        <Grid item>
+                                            <Checkbox
+                                                label="Active"
+                                                onChange={handleChangeIs_Active}
+                                                checked={isActive}
+                                                /> <span>Active</span>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                                <Grid container item direction="column" spacing={2} xs={12}>
-                                    <Grid item>
-                                        <Checkbox
-                                            label="Feture Vendor"
-                                            onChange={handleChangeFeature_coupon}
-                                            checked={feature_coupon}
-                                        /> <span>Feature Coupon</span>
+                                    <Grid container item direction="column" spacing={2} xs={12}>
+                                        <Grid item>
+                                            <Checkbox
+                                                label="Feture Vendor"
+                                                onChange={handleChangeFeature_coupon}
+                                                checked={feature_coupon}
+                                                /> <span>Feature Coupon</span>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                                <Grid container item direction="column" spacing={2} xs={12}  sx={{ marginBottom: '1.5rem' }}>
-                                    <Grid item>
-                                        <Checkbox
-                                            label="Single Use"
-                                            onChange={handleChangeSingle_use}
-                                            checked={single_use}
-                                        /> <span>Single Use</span>
+                                    <Grid container item direction="column" spacing={2} xs={12}  sx={{ marginBottom: '1.5rem' }}>
+                                        <Grid item>
+                                            <Checkbox
+                                                label="Single Use"
+                                                onChange={handleChangeSingle_use}
+                                                checked={single_use}
+                                                /> <span>Single Use</span>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
+                                </div>
                                 <Box sx={{ marginBottom: "1.5rem" }}>
                                     <FormControl fullWidth sx={{ marginBottom: "1.5rem" }}>
                                         <InputLabel id="demo-simple-select-label">Select a Vendor</InputLabel>
@@ -201,6 +206,7 @@ const CouponsForm = (props) => {
                                             id="demo-simple-select"
                                             value={selectedVendorName}
                                             label="Select a Vendor"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                         >
                                             {vendors.map((element, index) => (
                                                 <MenuItem key={index}
@@ -211,28 +217,10 @@ const CouponsForm = (props) => {
                                         </Select>
                                     </FormControl>
 
-                                    {/* <FormControl fullWidth>
-                                        <InputLabel id="demo-simple-select-label">Select a Sub-Category</InputLabel>
-                                        <Select
-                                            labelId="demo-simple-select-label"
-                                            id="demo-simple-select"
-                                            value={selectedSubCategoryName}
-                                            label="Select a Sub-Category"
-                                        >
-                                            {subCategories.map((element, index) => (
-                                                <MenuItem key={index}
-                                                    onClick={() => handleClickItemSubctegory(element.scid, element.sub_category_name)}
-                                                    value={element.sub_category_name}>{element.sub_category_name}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl> */}
-
-
                                     <div className={classes.chip__container}>
                                         <div className='chips'>
                                             {selectedSubCategoryName.map((value) => (
-                                                <Chip sx={{ marginRight: '0.5rem', marginBottom: '0.5rem' }}
+                                                <Chip sx={{ marginRight: '0.5rem', marginBottom: '0.5rem', backgroundColor: '#30C3CD30' }}
                                                     key={value}
                                                     label={value}
                                                     onDelete={() => handleDeleteSubCategory(value)}
@@ -247,9 +235,9 @@ const CouponsForm = (props) => {
                                                 aria-expanded={openSubCategory ? 'true' : undefined}
                                                 onClick={handleClickSubCategory}
                                                 startIcon={<AddIcon />}
-                                                sx={{ borderRadius: '2rem' }}
+                                                variant="contained"
                                             >
-                                                Add Subcategory
+                                                Add Sub-category
                                             </Button>
                                             <Menu
                                                 id="basic-menu"
@@ -269,44 +257,49 @@ const CouponsForm = (props) => {
                                             </Menu>
                                         </div>
                                     </div>
+                                    <p className='info'><i>You can add multiplt sub-categories by clicking the + ADD SUB-CATEGGORY button. Click on the X icon in the selected sub-category tags to delete them</i></p>
+
                                 </Box>
-                                <Box sx={{ marginBottom: "1rem" }}>
-                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                        <DatePicker
-                                            label="Start Date"
-                                            value={start_date}
-                                            disablePast
-                                            onChange={(newValue) => {
-                                                setStartDate(new Date(newValue).toISOString().substring(0, 10));
-                                            }}
-                                            renderInput={(params) => <TextField {...params} />}
-                                        />
-                                    </LocalizationProvider>
-                                </Box>
-                                <br />
-                                <Box sx={{ marginBottom: "1rem" }}>
-                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                        <DatePicker
-                                            label="End Date"
-                                            value={end_date}
-                                            disablePast
-                                            onChange={(newValue) => {
-                                                setEnddate(new Date(newValue).toISOString().substring(0, 10));
-                                            }}
-                                            renderInput={(params) => <TextField {...params} />}
-                                        />
-                                    </LocalizationProvider>
-                                </Box>
+                                <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                                    <Box sx={{ marginBottom: "1rem", width: '50%', marginRight: '0.5rem' }}>
+                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                            <DatePicker
+                                                label="Start Date"
+                                                value={start_date}
+                                                disablePast
+                                                onChange={(newValue) => {
+                                                    setStartDate(new Date(newValue).toISOString().substring(0, 10));
+                                                }}
+                                                renderInput={(params) => <TextField  fullWidth {...params} sx={{backgroundColor: '#30C3CD20'}}/>}
+                                                />
+                                        </LocalizationProvider>
+                                    </Box>
+                                    <br />
+                                    <Box sx={{ marginBottom: "1rem", width: '50%', marginLeft: '0.5rem' }}>
+                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                            <DatePicker
+                                                label="End Date"
+                                                value={end_date}
+                                                disablePast
+                                                onChange={(newValue) => {
+                                                    setEnddate(new Date(newValue).toISOString().substring(0, 10));
+                                                }}
+                                                renderInput={(params) => <TextField  fullWidth {...params} sx={{backgroundColor: '#30C3CD20'}}/>}
+                                                />
+                                        </LocalizationProvider>
+                                    </Box>
+                                </div>
                                 <Grid container item direction="column" spacing={2} lg={12} sx={{ marginBottom: '1.5rem' }}>
                                     <Grid item >
                                         <TextField id="registration-coupon-code"
                                             label="Coupon Description"
                                             type="text"
-                                            variant="standard"
                                             value={coupnsDescription}
                                             onChange={handleChangeCouponDescription}
                                             required
                                             fullWidth
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                         />
                                     </Grid>
                                 </Grid>

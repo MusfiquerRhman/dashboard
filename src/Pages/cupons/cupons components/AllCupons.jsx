@@ -3,21 +3,13 @@ import React, { useEffect, useState } from 'react';
 import * as cuponsAPI from '../../../API/coupons';
 import CuponsTable from './CuponsTable';
 
-const AllCupons = () => {
-    const [cupons, setCupons] = useState([])
-
-    useEffect(() => {
-        cuponsAPI.getAllCoupons().then(res => {
-            if(res.status === 200){
-                setCupons(res.data);
-            }
-        });
-    }, []);
+const AllCupons = (props) => {
+    const {coupons} = props;
 
     return (
         <React.Fragment>
             <div>
-                <CuponsTable data={cupons}/>
+                <CuponsTable data={coupons}/>
             </div>
         </React.Fragment>
     )

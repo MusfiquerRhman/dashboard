@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 // MaterialUI Elements
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import CloseIcon from '@mui/icons-material/Close';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -113,7 +114,8 @@ const SubCategoriesForm = (props) => {
                                         <TextField id="registration-sub-category_name"
                                             label="Sub-Category Name"
                                             type="text"
-                                            variant="standard"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                             value={category_name}
                                             onChange={handleSubChangecategory_name}
                                             required
@@ -124,21 +126,22 @@ const SubCategoriesForm = (props) => {
                                 {formType === 'Add' && (
                                     <div style={{marginBottom: '2rem'}}>
                                         <FormControl fullWidth>
-                                        <InputLabel id="demo-simple-select-label">Select a Category</InputLabel>
-                                        <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        value={categoryName}
-                                        label="Select a Category"
-                                        >
-                                            {categories.map((element, index) => (
-                                                <MenuItem key={index} 
-                                                    onClick={() => handleClickCategory(element)} 
-                                                    value={element.category_name}>{element.category_name}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
+                                            <InputLabel id="demo-simple-select-label">Select a Category</InputLabel>
+                                            <Select
+                                                labelId="demo-simple-select-label"
+                                                id="demo-simple-select"
+                                                value={categoryName}
+                                                label="Select a Category"
+                                                sx={{backgroundColor: '#30C3CD20'}}
+                                            >
+                                                {categories.map((element, index) => (
+                                                    <MenuItem key={index} 
+                                                        onClick={() => handleClickCategory(element)} 
+                                                        value={element.category_name}>{element.category_name}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </FormControl>
                                     </div>
                                 )}
 
@@ -150,6 +153,7 @@ const SubCategoriesForm = (props) => {
                                             component="label"
                                             fullWidth
                                             sx={{ marginTop: "1rem" }}
+                                            startIcon={<CameraAltIcon />}
                                         >
                                             Select a Sub-category image
                                             <input
