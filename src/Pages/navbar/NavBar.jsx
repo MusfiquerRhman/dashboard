@@ -16,6 +16,7 @@ export default function NavBar() {
     const handleLogOut = async () => {
         userAPI.logout();
         localStorage.removeItem('userInformations');
+        localStorage.removeItem('last_login');
         window.location.reload();
     }
 
@@ -28,7 +29,7 @@ export default function NavBar() {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block', flex: '1' } }}
                     >
-                        <NavLink to="/"><i>Best of Logan</i></NavLink>
+                        <p><i>Best of Logan</i></p>
                     </Typography>
 
                     {loggedin &&

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 // MaterialUI Elements
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import CloseIcon from '@mui/icons-material/Close';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -126,7 +127,8 @@ const VendorForm = (props) => {
                                         <TextField id="registration-name"
                                             label="Name"
                                             type="text"
-                                            variant="standard"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                             value={name}
                                             onChange={handleChangeName}
                                             required
@@ -139,7 +141,8 @@ const VendorForm = (props) => {
                                         <TextField id="registration-email"
                                             label="Email"
                                             type="email"
-                                            variant="standard"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                             value={email}
                                             onChange={handleChangeEmail}
                                             required
@@ -152,7 +155,8 @@ const VendorForm = (props) => {
                                         <TextField id="registration-phone"
                                             label="Phone number"
                                             type="tel"
-                                            variant="standard"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                             value={phone}
                                             onChange={handleChangePhone}
                                             required
@@ -165,7 +169,8 @@ const VendorForm = (props) => {
                                         <TextField id="registration-description"
                                             label="Description"
                                             type="text"
-                                            variant="standard"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                             value={description}
                                             onChange={handleChangeDescription}
                                             required
@@ -178,7 +183,8 @@ const VendorForm = (props) => {
                                         <TextField id="registration-street1"
                                             label="Street 1"
                                             type="text"
-                                            variant="standard"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                             value={street1}
                                             onChange={handleChangeStreet1}
                                             required
@@ -191,7 +197,8 @@ const VendorForm = (props) => {
                                         <TextField id="registration-street2"
                                             label="Street 2"
                                             type="text"
-                                            variant="standard"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                             value={street2}
                                             onChange={handleChangeStreet2}
                                             required
@@ -204,7 +211,8 @@ const VendorForm = (props) => {
                                         <TextField id="registration-city"
                                             label="City"
                                             type="text"
-                                            variant="standard"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                             value={city}
                                             onChange={handleChangeCity}
                                             required
@@ -217,7 +225,8 @@ const VendorForm = (props) => {
                                         <TextField id="registration-state"
                                             label="State"
                                             type="text"
-                                            variant="standard"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                             value={state}
                                             onChange={handleChangeState}
                                             required
@@ -230,7 +239,8 @@ const VendorForm = (props) => {
                                         <TextField id="registration-hours"
                                             label="Hours"
                                             type="number"
-                                            variant="standard"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                             value={hours}
                                             onChange={handleChangeHours}
                                             required
@@ -243,7 +253,8 @@ const VendorForm = (props) => {
                                         <TextField id="registration-zip"
                                             label="Zip Code"
                                             type="number"
-                                            variant="standard"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                             value={zip_code}
                                             onChange={handleChangeZip_code}
                                             required
@@ -256,7 +267,8 @@ const VendorForm = (props) => {
                                         <TextField id="registration-website"
                                             label="Website"
                                             type="url"
-                                            variant="standard"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                             value={website}
                                             onChange={handleChangeWebsite}
                                             required
@@ -269,7 +281,8 @@ const VendorForm = (props) => {
                                         <TextField id="registration-requirements"
                                             label="Requirements"
                                             type="text"
-                                            variant="standard"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                             value={requirements}
                                             onChange={handleChangeRequirements}
                                             required
@@ -277,24 +290,27 @@ const VendorForm = (props) => {
                                         />
                                     </Grid>
                                 </Grid>
-                                <Grid container item direction="column" spacing={2} xs={12}>
-                                    <Grid item>
-                                        <Checkbox
-                                            label="Is Active"
-                                            onChange={handleChangeis_active}
-                                            checked={is_active}
-                                        /> <span>Active</span>
+                                <p style={{fontSize: '1.15rem'}}>Select the appropriate box: </p>
+                                <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                                    <Grid container item direction="column" spacing={2} xs={12}>
+                                        <Grid item>
+                                            <Checkbox
+                                                label="Is Active"
+                                                onChange={handleChangeis_active}
+                                                checked={is_active}
+                                                /> <span>Active</span>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                                <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
-                                    <Grid item>
-                                        <Checkbox
-                                            label="Feture Vendor"
-                                            onChange={handleChangefeature_vendor}
-                                            checked={feature_vendor}
-                                        /> <span>Feature Vendor</span>
+                                    <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
+                                        <Grid item>
+                                            <Checkbox
+                                                label="Feture Vendor"
+                                                onChange={handleChangefeature_vendor}
+                                                checked={feature_vendor}
+                                                /> <span>Feature Vendor</span>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
+                                </div>
                                 {imageSelectedMsg}
                                 <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
                                     <Grid item>
@@ -303,6 +319,7 @@ const VendorForm = (props) => {
                                             component="label"
                                             fullWidth
                                             sx={{ marginTop: "1rem" }}
+                                            startIcon={<CameraAltIcon />}
                                         >
                                             Select a vendor image
                                             <input

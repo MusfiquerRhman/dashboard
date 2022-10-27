@@ -123,7 +123,8 @@ const CouponsForm = (props) => {
                                         <TextField id="registration-coupon-code"
                                             label="Coupon Code"
                                             type="text"
-                                            variant="standard"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                             value={coupon_code}
                                             onChange={handleChangeCoupon_code}
                                             required
@@ -136,7 +137,8 @@ const CouponsForm = (props) => {
                                         <TextField id="registration-percentage_off"
                                             label="Deal Type"
                                             type="text"
-                                            variant="standard"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                             value={percentage_off}
                                             onChange={handleChangePercentage_off}
                                             required
@@ -144,33 +146,36 @@ const CouponsForm = (props) => {
                                         />
                                     </Grid>
                                 </Grid>
-                                <Grid container item direction="column" spacing={2} xs={12}>
-                                    <Grid item>
-                                        <Checkbox
-                                            label="Is Active"
-                                            onChange={handleChangeSingle_use}
-                                            checked={single_use}
-                                        /> <span>Single Use</span>
+                                <p style={{fontSize: '1.15rem'}}>Select the appropriate box/s: </p>
+                                <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                                    <Grid container item direction="column" spacing={2} xs={12}>
+                                        <Grid item>
+                                            <Checkbox
+                                                label="Is Active"
+                                                onChange={handleChangeSingle_use}
+                                                checked={single_use}
+                                                /> <span>Single Use</span>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                                <Grid container item direction="column" spacing={2} xs={12}>
-                                    <Grid item>
-                                        <Checkbox
-                                            label="Feture Vendor"
-                                            onChange={handleChangeFeature_coupon}
-                                            checked={feature_coupon}
-                                        /> <span>Feature Coupon</span>
+                                    <Grid container item direction="column" spacing={2} xs={12}>
+                                        <Grid item>
+                                            <Checkbox
+                                                label="Feture Vendor"
+                                                onChange={handleChangeFeature_coupon}
+                                                checked={feature_coupon}
+                                                /> <span>Feature Coupon</span>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                                <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
-                                    <Grid item>
-                                        <Checkbox
-                                            label="Feture Vendor"
-                                            onChange={handleChangeIs_Active}
-                                            checked={isActive}
-                                        /> <span>Is Active</span>
+                                    <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
+                                        <Grid item>
+                                            <Checkbox
+                                                label="Feture Vendor"
+                                                onChange={handleChangeIs_Active}
+                                                checked={isActive}
+                                                /> <span>Is Active</span>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
+                                </div>
                                 <Box sx={{ marginBottom: "1.5rem" }}>
                                     <FormControl fullWidth sx={{ marginBottom: "1.5rem" }}>
                                         <InputLabel id="demo-simple-select-label">Select a Vendor</InputLabel>
@@ -179,6 +184,7 @@ const CouponsForm = (props) => {
                                             id="demo-simple-select"
                                             value={selectedVendorName}
                                             label="Select a Vendor"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                         >
                                             {vendors.map((element, index) => (
                                                 <MenuItem key={index}
@@ -196,6 +202,7 @@ const CouponsForm = (props) => {
                                             id="demo-simple-select"
                                             value={selectedSubCategoryName}
                                             label="Select a Sub-Category"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                         >
                                             {subCategories.map((element, index) => (
                                                 <MenuItem key={index}
@@ -206,41 +213,44 @@ const CouponsForm = (props) => {
                                         </Select>
                                     </FormControl>
                                 </Box>
-                                <Box sx={{ marginBottom: "1rem" }}>
-                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                        <DatePicker
-                                            label="Start Date"
-                                            value={start_date}
-                                            onChange={(newValue) => {
-                                                setStartDate(new Date(newValue).toISOString().substring(0, 10));
-                                            }}
-                                            renderInput={(params) => <TextField {...params} />}
-                                        />
-                                    </LocalizationProvider>
-                                </Box>
-                                <br />
-                                <Box sx={{ marginBottom: "1rem" }}>
-                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                        <DatePicker
-                                            label="End Date"
-                                            value={end_date}
-                                            onChange={(newValue) => {
-                                                setEnddate(new Date(newValue).toISOString().substring(0, 10));
-                                            }}
-                                            renderInput={(params) => <TextField {...params} />}
-                                        />
-                                    </LocalizationProvider>
-                                </Box>
+                                <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                                    <Box sx={{ marginBottom: "1rem", width: '50%', marginRight: '0.5rem' }}>
+                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                            <DatePicker
+                                                label="Start Date"
+                                                value={start_date}
+                                                onChange={(newValue) => {
+                                                    setStartDate(new Date(newValue).toISOString().substring(0, 10));
+                                                }}
+                                                renderInput={(params) => <TextField fullWidth {...params} sx={{backgroundColor: '#30C3CD20'}}/>}
+                                                />
+                                        </LocalizationProvider>
+                                    </Box>
+                                    <br />
+                                    <Box sx={{ marginBottom: "1rem", width: '50%', marginLeft: '0.5rem' }}>
+                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                            <DatePicker
+                                                label="End Date"
+                                                value={end_date}
+                                                onChange={(newValue) => {
+                                                    setEnddate(new Date(newValue).toISOString().substring(0, 10));
+                                                }}
+                                                renderInput={(params) => <TextField fullWidth {...params} sx={{backgroundColor: '#30C3CD20'}}/>}
+                                                />
+                                        </LocalizationProvider>
+                                    </Box>
+                                </div>
                                 <Grid container item direction="column" spacing={2} lg={12} sx={{ marginBottom: '1.5rem' }}>
                                     <Grid item >
                                         <TextField id="registration-coupon-code"
                                             label="Coupon Description"
                                             type="text"
-                                            variant="standard"
                                             value={coupnsDescription}
                                             onChange={handleChangeCouponDescription}
                                             required
                                             fullWidth
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
                                         />
                                     </Grid>
                                 </Grid>

@@ -30,6 +30,7 @@ const CouponsByVendors = () => {
     return (
         <React.Fragment>
             <div style={{marginBottom: '1.5rem'}}>
+                <p style={{fontSize: '1.15rem'}}>Select a vendor to see related coupons: </p>
                 <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Select a Vendor</InputLabel>
                     <Select
@@ -37,6 +38,7 @@ const CouponsByVendors = () => {
                     id="demo-simple-select"
                     value={selectedVendorName}
                     label="Select a Vendor"
+                    sx={{backgroundColor: '#30C3CD20'}}
                     >
                     {vendors.map((element, index) => (
                         <MenuItem key={index} onClick={() => handleClickItem(element.vid, element.vendor_name)} value={element.vendor_name}>{element.vendor_name}</MenuItem>

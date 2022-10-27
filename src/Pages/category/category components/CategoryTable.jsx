@@ -11,7 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import * as categoriesAPI from "../../../API/category";
-import noImage from '../../../Assets/icons8-no-image-100.png';
+import CategoryImg from "../../../Assets/icons8-diversity.png";
 import ConfrimDeleteDialogue from '../../../Components/ConfrimDeleteDialogue';
 import useInputState from '../../../Hooks/UseInputHook';
 import { StyledTableCell, StyledTableRow } from '../../../Styles/GlobalStyles';
@@ -133,7 +133,7 @@ const CategoryTable = (categories) => {
                   {row.category_logo_path?.length > 0 ? (
                       <img src={row.category_logo_path} alt="category logo" className={classes.categoryImg} />
                     ) : (
-                      <img src={noImage} alt="category logo" className={classes.categoryImg} />
+                      <img src={CategoryImg} alt="category logo" className={classes.categoryImg} />
                     )
                   }
                 </StyledTableCell>

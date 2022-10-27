@@ -31,6 +31,7 @@ const SubCategoriesByCategory = () => {
     return (
         <>
             <div style={{marginBottom: '1.5rem'}}>
+            <p style={{fontSize: '1.15rem'}}>Select a category to see related sub-categories: </p>
                 <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Select a Category</InputLabel>
                     <Select
@@ -38,6 +39,7 @@ const SubCategoriesByCategory = () => {
                     id="demo-simple-select"
                     value={selectedCategoryName}
                     label="Select a Category"
+                    sx={{backgroundColor: '#30C3CD20'}}
                     >
                     {categories.map((element, index) => (
                         <MenuItem key={index} onClick={() => handleClickItem(element.cid, element.category_name)} value={element.category_name}>{element.category_name}</MenuItem>

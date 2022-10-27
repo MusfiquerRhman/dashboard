@@ -102,9 +102,9 @@ export default function VendorCards(props) {
         setupdateOpen={setupdateOpen}
       />
 
-        <Box className={classes.form}>
+        <Box className={classes.form} >
           <Box sx={{ width: '100%' }}>
-            <Card sx={{ maxWidth: 345 }}>
+            <Card sx={{ maxWidth: 345, boxShadow: "0 0 8px #018F8F55" }}>
               <CardHeader
                 avatar={
                   <img src={element.vendor_log_path} alt='vendor' className={classes.vendorImg} />

@@ -1,5 +1,5 @@
 :root {
-    --color-sidebar: #018f8f44;
+    --color-sidebar: #018f8f70;
     --color-text: #000000;
     --color-card: #ffffff;
     --color-text--light: #018f8f;
@@ -15,9 +15,30 @@
     background: var(--color-sidebar);
     color: var(--color--text);
     height: 100vh;
-    width: 16%;
-    min-width: 270px;
+    width: 270px;
+    
+    position: fixed;
+    overflow-y: scroll;
+    overflow-x: hidden;
 
+    &::-webkit-scrollbar {
+        width: 0;
+    }
+
+    .sidebar__iconbox {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 20vh;
+
+        .sidebar__icon {
+            width: 40%;
+            margin-top: 1rem;
+            border-radius: 50%;
+        }
+    }
+    
     .sidebar__logo {
         height: 7rem;
         width: 100%;

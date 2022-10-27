@@ -1,27 +1,42 @@
 import AddIcon from '@mui/icons-material/Add';
+import ClearIcon from '@mui/icons-material/Clear';
+import SearchIcon from '@mui/icons-material/Search';
 import TabContext from '@mui/lab/TabContext';
 import TabPanel from '@mui/lab/TabPanel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useTransition } from 'react';
 import * as couponsAPI from '../../API/coupons';
+import * as cuponsAPI from '../../API/coupons';
 import useInputState from '../../Hooks/UseInputHook';
 import Style from '../../Styles/GlobalStyles';
 import ActiveAndFutureCoupons from './cupons components/ActiveAndFutureCoupons';
 import AllCupons from './cupons components/AllCupons';
 import CouponsByVendors from './cupons components/CouponsByVendors';
 import CouponsForm from './cupons components/CuponsForm';
+import CuponsTable from './cupons components/CuponsTable';
 import ExpiredCoupons from './cupons components/ExpiredCoupons';
 import FeaturedCoupons from './cupons components/FeaturedCoupons';
+import './searchBoxStyles.scss';
 
 const Cupons = () => {
     const classes = Style()
     const { enqueueSnackbar } = useSnackbar();
     const [value, setValue] = useState('1');
+    const [isPending, startTransition] = useTransition()
+
+    const [cupons, setCupons] = useState([])
+
+    useEffect(() => {
+        cuponsAPI.getAllCoupons().then(res => {
+            if (res.status === 200) {
+                setCupons(res.data);
+            }
+        });
+    }, []);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -46,6 +61,38 @@ const Cupons = () => {
     const [vid, setVid] = useState('');
     const [scid, setScid] = useState([]);
     const [coupnsDescription, setCoupnsDescription] = useState('')
+
+    const [searchedTerm, setSearchedTerm] = useState('');
+    const [searchResult, setSearchResult] = useState([]);
+
+    const onChangeSearch = (e) => {
+        setSearchedTerm(e.target.value);
+
+        startTransition(() =>{
+            setSearchResult(cupons.filter(item => 
+                item.coupon_code.toLowerCase().includes(searchedTerm) ||
+                item.start_date.toLowerCase().includes(searchedTerm) ||
+                item.end_date.toLowerCase().includes(searchedTerm) ||
+                item.percentage_off.toString().toLowerCase().includes(searchedTerm)
+            ));
+        })
+    }
+
+    // const deferreedSearchTearm = useDeferredValue(searchedTerm)
+
+    // useEffect(() => {
+    //     setSearchResult(cupons.filter(item => 
+    //         item.coupon_code.toLowerCase().includes(deferreedSearchTearm) ||
+    //         item.start_date.toLowerCase().includes(deferreedSearchTearm) ||
+    //         item.end_date.toLowerCase().includes(deferreedSearchTearm) ||
+    //         item.percentage_off.toString().toLowerCase().includes(deferreedSearchTearm)
+    //     ));
+    // }, [deferreedSearchTearm, cupons])
+
+
+    const clearInput = () => {
+        setSearchedTerm('')
+    }
 
     const handleChangeSingle_use = (event) => {
         setSingle_use(event.target.checked);
@@ -72,7 +119,7 @@ const Cupons = () => {
                 if (res.status === 200) {
                     enqueueSnackbar(`Successfully Added`, { variant: 'info' });
                     flag++;
-                    if(flag === scid.length) window.location.reload();
+                    if (flag === scid.length) window.location.reload();
                 }
                 else {
                     enqueueSnackbar(`Failed to Add`, { variant: 'error' });
@@ -103,8 +150,8 @@ const Cupons = () => {
                 handleChangeIs_Active={handleChangeIs_Active}
                 setVid={setVid}
                 setScid={setScid}
-                vid = ''
-                scid = {scid}
+                vid=''
+                scid={scid}
                 coupnsDescription={coupnsDescription}
                 handleChangeCouponDescription={handleChangeCouponDescription}
                 handleClickSubmit={addForm}
@@ -115,33 +162,110 @@ const Cupons = () => {
                     <h1>All Coupons</h1>
                     <Button className={classes.button} variant="contained" onClick={handleClickOpenAdd} startIcon={<AddIcon />}>Add a new Coupon</Button>
                 </div>
-                <div>
-                    <Box sx={{ maxWidth: { xs: 320, sm: '100%' }, bgcolor: 'background.paper' }}>
-                        <TabContext value={value} >
-                            <Tabs
-                                value={value}
-                                onChange={handleChange}
-                                variant="fullWidth"
-                                aria-label="scrollable auto tabs example"
-                            >
-                                <Tab label="All Coupons" value="1" />
-                                <Tab label="Featured Coupons" value="2" />
-                                <Tab label="Expired Coupons" value="3" />
-                                <Tab label="Active and future coupons" value="4" />
-                                <Tab label="Coupons by Vendors" value="5" />
 
-                            </Tabs>
-                            <TabPanel sx={{ padding: 1, paddingTop: '1.5rem' }} value="1">< AllCupons /></TabPanel>
-                            <TabPanel sx={{ padding: 1, paddingTop: '1.5rem' }} value="2">< FeaturedCoupons /></TabPanel>
-                            <TabPanel sx={{ padding: 1, paddingTop: '1.5rem' }} value="3">< ExpiredCoupons /></TabPanel>
-                            <TabPanel sx={{ padding: 1, paddingTop: '1.5rem' }} value="4">< ActiveAndFutureCoupons /></TabPanel>
-                            <TabPanel sx={{ padding: 1, paddingTop: '1.5rem' }} value="5">< CouponsByVendors /></TabPanel>
-                        </TabContext>
-                    </Box>
+                <div className='search'>
+                    <div className='search__box' >
+                        <SearchIcon className='search__icon' />
+                        <input type="text" className='search__input' placeholder='Search Coupons' onChange={onChangeSearch} value={searchedTerm} />
+                        {searchedTerm !== '' && (
+                            <ClearIcon className='search__icon' onClick={clearInput} />
+                            )}
+                    </div>
+                    <p className='search__info'><i>Only Coupon Code, Start Date, End Date and Deal Type.</i></p>
                 </div>
+                {
+                    (searchedTerm !== '' && (
+                        <div className='search__results'>
+                            {
+                                searchResult.length > 0 && (
+                                    <CuponsTable data={searchResult} />
+                                )
+                            }
+                            {
+                                searchResult.length === 0 && (
+                                    <p className='search_item'>Nothing Found</p>
+                                )
+                            }
+                        </div>
+                    ))
+                }
+                {
+                    (isPending && (
+                        <p>Loading...</p>
+                    ))
+                }
+
+                {
+                    searchedTerm === '' && (
+
+                        <div>
+                            <Box sx={{ maxWidth: { xs: 320, sm: '100%' }, bgcolor: 'background.paper' }}>
+                                <TabContext value={value} >
+                                    <Tabs
+                                        value={value}
+                                        onChange={handleChange}
+                                        variant="fullWidth"
+                                        aria-label="scrollable auto tabs example"
+
+                                        TabIndicatorProps={{
+                                            sx: {
+                                                display: 'none'
+                                            }
+                                        }}
+
+                                        sx={{
+                                            background: '#018F8F',
+                                            color: '#FFFFFF',
+                                            "& button": {
+                                                color: '#FFFFFF',
+                                                fontWeight: 'bold',
+                                                fontSize: '1rem',
+
+                                                "&:not(last-child)": {
+                                                    borderRight: '1px solid #30C3CD'
+                                                }
+                                            },
+                                            "& button:hover": {
+                                                color: '#FFFFFF',
+                                                background: '#30C3CD'
+                                            },
+                                            "& button:focus": {
+                                                color: '#FFFFFF',
+                                                background: "#E8804B"
+                                            },
+                                            "& button:active": {
+                                                color: '#FFFFFF',
+                                                background: "#E8804B"
+                                            },
+                                            "& button.Mui-selected": {
+                                                color: '#FFFFFF',
+                                                background: "#E8804B"
+                                            }
+                                        }}
+                                    >
+                                        <Tab label="All Coupons" value="1" />
+                                        <Tab label="Featured Coupons" value="2" />
+                                        <Tab label="Expired Coupons" value="3" />
+                                        <Tab label="Active and future coupons" value="4" />
+                                        <Tab label="Coupons by Vendors" value="5" />
+
+                                    </Tabs>
+                                    <p className='info'><i>
+                                    You can sort Coupon Codes, Vendor names, Start dates, End dates, Sub-category names and Deal types by clicking on the column name in the table.
+                                    Click on the Pen icon to edit and the trash icon to delete the corresponding coupon.
+                                    </i></p>
+                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="1">< AllCupons coupons={cupons} /></TabPanel>
+                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="2">< FeaturedCoupons /></TabPanel>
+                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="3">< ExpiredCoupons /></TabPanel>
+                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="4">< ActiveAndFutureCoupons /></TabPanel>
+                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="5">< CouponsByVendors /></TabPanel>
+                                </TabContext>
+                            </Box>
+                        </div>
+                    )
+                }
             </div>
         </>
-
     )
 }
 

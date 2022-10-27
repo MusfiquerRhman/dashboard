@@ -142,16 +142,55 @@ const Vendor = () => {
                             value={value}
                             onChange={handleChange}
                             indicatorColor="primary"
-                            textColor="inherit"
                             variant="fullWidth"
                             aria-label="tabs"
+
+                            TabIndicatorProps={{
+                                sx: {
+                                    display: 'none'
+                                }
+                            }}
+
+                            sx={{
+                                background: '#018F8F',
+                                color: '#FFFFFF',
+                                "& button": {
+                                    color: '#FFFFFF',
+                                    fontWeight: 'bold',
+                                    fontSize: '1rem',
+
+                                    "&:not(last-child)": {
+                                        borderRight: '1px solid #30C3CD'
+                                    }
+                                },
+                                "& button:hover": {
+                                    color: '#FFFFFF',
+                                    background: '#30C3CD'
+                                },
+                                "& button:focus": {
+                                    color: '#FFFFFF',
+                                    background: "#E8804B"
+                                },
+                                "& button:active": {
+                                    color: '#FFFFFF',
+                                    background: "#E8804B"
+                                },
+                                "& button.Mui-selected": {
+                                    color: '#FFFFFF',
+                                    background: "#E8804B"
+                                }
+                            }}
                         >
                             <Tab label="All Vendors" value="1" />
                             <Tab label="Featured Vendors" value="2" />
                         </Tabs>
                     </Box>
-                    <TabPanel sx={{ padding: 1, paddingTop: '1.5rem' }} value="1">< VendorsList /></TabPanel>
-                    <TabPanel sx={{ padding: 1, paddingTop: '1.5rem' }} value="2">< FeaturedVendors /></TabPanel>
+                    <p className='info'><i>
+                        Click on the down arrow icon in the bottom of each card to view more details about the vendor, 
+                        click on the pen icon to update the information of that vendor, click the red trash icon to delete
+                    </i></p>
+                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="1">< VendorsList /></TabPanel>
+                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="2">< FeaturedVendors /></TabPanel>
                 </TabContext>
             </Box>
            

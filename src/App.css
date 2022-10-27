@@ -30,3 +30,9 @@ a {
 .MuiTableSortLabel-icon {
   color: #fff !important
 }
+
+.info {
+  color: #656565;
+  font-size: 0.75rem;
+  margin: 0.5rem 0 0 0;
+}

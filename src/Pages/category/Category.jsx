@@ -131,19 +131,53 @@ const Category = () => {
                         <Tabs
                             value={value}
                             onChange={handleChange}
-                            indicatorColor="secondary"
-                            textColor="inherit"
                             variant="fullWidth"
                             aria-label="tabs"
+                            TabIndicatorProps={{
+                                sx: {
+                                    display: 'none'
+                                }
+                            }}
+
+                            sx={{
+                                background: '#018F8F',
+                                color: '#FFFFFF',
+                                
+                                "& button": {
+                                    color: '#FFFFFF',
+                                    fontWeight: 'bold',
+                                    fontSize: '1rem',
+
+                                    "&:not(last-child)": {
+                                        borderRight: '1px solid #30C3CD'
+                                    }
+                                },
+                                "& button:hover": {
+                                    color: '#FFFFFF',
+                                    background: '#30C3CD'
+                                },
+                                "& button:focus": {
+                                    color: '#FFFFFF',
+                                    background: "#E8804B"
+                                },
+                                "& button:active": {
+                                    color: '#FFFFFF',
+                                    background: "#E8804B"
+                                },
+                                "& button.Mui-selected": {
+                                    color: '#FFFFFF',
+                                    background: "#E8804B"
+                                }
+                            }}
                         >
                             <Tab label="Categories" value="1" />
                             <Tab label="All Sub-Categories" value="2" />
                             <Tab label="Subcategories by Category" value="3" />
                         </Tabs>
                     </Box>
-                    <TabPanel sx={{ padding: 1, paddingTop: '1.5rem' }} value="1"><CategoryTable categories={categories} /></TabPanel>
-                    <TabPanel sx={{ padding: 1, paddingTop: '1.5rem' }} value="2"><SubCategoriesTable subCategories={subCategories} /></TabPanel>
-                    <TabPanel sx={{ padding: 1, paddingTop: '1.5rem' }} value="3"><SubCategoriesByCategory /></TabPanel>
+                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="1"><CategoryTable categories={categories} /></TabPanel>
+                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="2"><SubCategoriesTable subCategories={subCategories} /></TabPanel>
+                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="3"><SubCategoriesByCategory /></TabPanel>
                 </TabContext>
             </div>
         </React.Fragment>

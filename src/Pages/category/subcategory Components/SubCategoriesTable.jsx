@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import * as subcategoriesAPI from "../../../API/subcategory";
-import noImage from '../../../Assets/icons8-no-image-100.png';
+import CategoryImg from "../../../Assets/icons8-diversity.png";
 import ConfrimDeleteDialogue from '../../../Components/ConfrimDeleteDialogue';
 import useInputState from '../../../Hooks/UseInputHook';
 import { StyledTableCell, StyledTableRow } from '../../../Styles/GlobalStyles';
@@ -135,7 +135,7 @@ const SubCategoryTable = (subCategories) => {
                     {row.sub_category_logo_path?.length > 0 ? (
                         <img src={row.sub_category_logo_path} alt="subcategory logo" className={classes.categoryImg} />
                       ) : (
-                        <img src={noImage} alt="category logo" className={classes.categoryImg} />
+                        <img src={CategoryImg} alt="category logo" className={classes.categoryImg} />
                       )
                     }
                     
