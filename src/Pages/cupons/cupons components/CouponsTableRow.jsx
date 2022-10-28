@@ -79,12 +79,6 @@ const Row = (props) => {
         setcoupon_description(event.target.value)
     }
 
-
-    // useEffect(() => {
-    //     console.log(coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date)
-    // }, [coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date]);
-
-
     const deleteForm = async () => {
         const res = await couponsAPI.deleteCoupon(row.history.vid);
         if (res.status === 200) {
@@ -92,7 +86,7 @@ const Row = (props) => {
             window.location.reload();
         }
         else {
-            enqueueSnackbar(`Failed to Deleted`, { variant: 'error' });
+            enqueueSnackbar(`Failed to Deleted - ${res.message}`, { variant: 'error' });
         }
         setDeleteOpen(false);
     }
@@ -111,13 +105,12 @@ const Row = (props) => {
             updateDate,
             coupon_description,
             ).then(res => {
-                console.log(res)
                 if (res.status === 200) {
                     enqueueSnackbar(`Successfully updated`, { variant: 'info' });
                     window.location.reload();
                 }
                 else {
-                    enqueueSnackbar(`Failed to Update`, { variant: 'error' });
+                    enqueueSnackbar(`Failed to Update - ${res.message}`, { variant: 'error' });
                 }
             });
     }

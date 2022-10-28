@@ -72,7 +72,7 @@ const SubCategoryTable = (subCategories) => {
   const updateSubCatgoriesForm = () => {
     subcategoriesAPI.updateSubCategories(categoryID, subCategoryID, subCategory_name, file).then(res => {
       if (res.status !== 200) {
-        enqueueSnackbar(`Failed to update category`, { variant: 'error' });
+        enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
       }
       else {
         window.location.reload();
@@ -83,7 +83,7 @@ const SubCategoryTable = (subCategories) => {
   const deleteForm = () => {
     subcategoriesAPI.deleteSubCategories(subCategoryID).then(res => {
       if (res.status !== 200) {
-        enqueueSnackbar(`Failed to update category`, { variant: 'error' });
+        enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
       }
       else {
         window.location.reload();

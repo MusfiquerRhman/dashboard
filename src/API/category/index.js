@@ -21,7 +21,7 @@ export const addCategories = async (category_name, file) => {
     });
   }
   catch (e) {
-    return -1;
+    return e;
   }
 }
 
@@ -37,7 +37,7 @@ export const updateCategories = async (category_id, category_name, file) => {
     });
   }
   catch (e) {
-    return -1;
+    return e;
   }
 }
 
@@ -51,6 +51,6 @@ export const deleteCategories = async (category_id) => {
     });
   }
   catch (e) {
-    return -1;
+    return e;
   }
 }

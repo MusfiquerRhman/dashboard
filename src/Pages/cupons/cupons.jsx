@@ -115,14 +115,13 @@ const Cupons = () => {
         let flag = 0;
         scid.forEach(item => {
             couponsAPI.addCoupons(vid, item, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, coupnsDescription).then(res => {
-                console.log(res)
                 if (res.status === 200) {
                     enqueueSnackbar(`Successfully Added`, { variant: 'info' });
                     flag++;
                     if (flag === scid.length) window.location.reload();
                 }
                 else {
-                    enqueueSnackbar(`Failed to Add`, { variant: 'error' });
+                    enqueueSnackbar(`Failed to Add - ${res.message}`, { variant: 'error' });
                 }
             });
         })

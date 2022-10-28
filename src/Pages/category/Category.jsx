@@ -64,7 +64,7 @@ const Category = () => {
         else {
             categoriesAPI.addCategories(category_name, file).then(res => {
                 if (res.status !== 200) {
-                    enqueueSnackbar(`Connection Error`, { variant: 'error' });
+                    enqueueSnackbar(`Error - ${res.message}`, { variant: 'error' });
                 }
                 else {
                     window.location.reload();
@@ -85,7 +85,7 @@ const Category = () => {
         else {
             subcategoriesAPI.addSubCategories(selectedCategoriesIdInSubcategory, subCategory_name, fileSub).then(res => {
                 if (res.status !== 200) {
-                    enqueueSnackbar(`Connection Error`, { variant: 'error' });
+                    enqueueSnackbar(`Error - ${res.message}`, { variant: 'error' });
                 }
                 else {
                     window.location.reload();

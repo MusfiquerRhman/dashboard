@@ -49,7 +49,7 @@ export const deleteCoupon = async (coupon_id) => {
       }}
     )} 
     catch (err) {
-    return -1;
+    return err;
   }
 };
 
@@ -72,7 +72,7 @@ export const updateCoupons = async (coupon_id, vendor_id, subcategory_id, coupon
       }}
     )} 
     catch (err) {
-    return -1;
+    return err;
   }
 };
 
@@ -93,7 +93,7 @@ export const addCoupons = async (vendor_id, subcategory_id, coupon_code, percent
       }}
     )} 
     catch (err) {
-    return -1;
+    return err;
   }
 };
 

@@ -87,7 +87,7 @@ const Vendor = () => {
                 window.location.reload();
             }
             else {
-                enqueueSnackbar(`Failes to Add new Vendor`, { variant: 'error' });
+                enqueueSnackbar(`Failed to Add new Vendor - ${res.message}`, { variant: 'error' });
             }
             setupdateAdd(false);
         }

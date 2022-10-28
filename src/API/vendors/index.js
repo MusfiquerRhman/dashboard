@@ -25,7 +25,7 @@ export const deleteVendor = async (vendorId) => {
         "Authorization": `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`,
     }});
   } catch (err) {
-    return -1;
+    return err;
   }
 };
 
@@ -58,7 +58,7 @@ export const updateVendor = async (
             },
         });
     } catch (e) {
-        return -1;
+        return e;
     }
 };
 
@@ -92,6 +92,6 @@ export const addVendor = async (
       });
     } 
     catch (e) {
-        return -1;
+        return e;
     }
 }

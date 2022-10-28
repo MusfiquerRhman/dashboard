@@ -58,7 +58,7 @@ const UpdateVendorDialague = (props) => {
             window.location.reload();
         }
         else {
-            enqueueSnackbar(`Failes to Update`, { variant: 'error' });
+            enqueueSnackbar(`Failes to Update - ${res.message}`, { variant: 'error' });
         }
         props.setupdateOpen(false);
     }

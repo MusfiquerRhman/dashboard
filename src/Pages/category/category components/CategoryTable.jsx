@@ -71,7 +71,7 @@ const CategoryTable = (categories) => {
     else {
       categoriesAPI.updateCategories(categoryID, category_name, file).then(res => {
         if (res.status !== 200) {
-          enqueueSnackbar(`Failed to update category`, { variant: 'error' });
+          enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
         }
         else {
           window.location.reload();
@@ -83,7 +83,7 @@ const CategoryTable = (categories) => {
   const deleteForm = () => {
     categoriesAPI.deleteCategories(categoryID).then(res => {
       if (res.status !== 200) {
-        enqueueSnackbar(`Failed to update category`, { variant: 'error' });
+        enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
       }
       else {
         window.location.reload();

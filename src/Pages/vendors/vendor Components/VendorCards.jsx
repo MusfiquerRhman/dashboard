@@ -66,7 +66,7 @@ export default function VendorCards(props) {
       enqueueSnackbar(`Successfully Deleted`, { variant: 'info' });
     }
     else {
-      enqueueSnackbar(`Failes to Deleted`, { variant: 'error' });
+      enqueueSnackbar(`Failes to Deleted - ${res.message}`, { variant: 'error' });
     }
     setDeleteOpen(false);
     window.location.reload();

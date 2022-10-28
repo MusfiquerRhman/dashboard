@@ -41,7 +41,7 @@ export const updateSubCategories = async (
       }
     );
   } catch (e) {
-    return -1;
+    return e;
   }
 };
 
@@ -63,7 +63,7 @@ export const addSubCategories = async (
       },
     });
   } catch (e) {
-    return -1;
+    return e;
   }
 };
 
@@ -77,6 +77,6 @@ export const deleteSubCategories = async (sub_category_id) => {
       },
     });
   } catch (e) {
-    return -1;
+    return e;
   }
 };

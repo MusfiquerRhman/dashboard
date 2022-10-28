@@ -53,7 +53,6 @@ function Profile() {
 
     const deleteForm = async () => {
         const res = await userAPI.deleteUserProfile();
-        console.log(res);
         if (res === -1) {
             enqueueSnackbar("Error; Try again", { variant: 'error' });
             localStorage.removeItem('userInformations');
