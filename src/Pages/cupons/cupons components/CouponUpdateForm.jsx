@@ -186,7 +186,7 @@ const CouponsForm = (props) => {
                                             label="Select a Vendor"
                                             sx={{backgroundColor: '#30C3CD20'}}
                                         >
-                                            {vendors.map((element, index) => (
+                                            {vendors?.map((element, index) => (
                                                 <MenuItem key={index}
                                                     onClick={() => handleClickItemVendorMenu(element.vid, element.vendor_name)}
                                                     value={element.vendor_name}>{element.vendor_name}
@@ -204,7 +204,7 @@ const CouponsForm = (props) => {
                                             label="Select a Sub-Category"
                                             sx={{backgroundColor: '#30C3CD20'}}
                                         >
-                                            {subCategories.map((element, index) => (
+                                            {subCategories?.map((element, index) => (
                                                 <MenuItem key={index}
                                                     onClick={() => handleClickItemSubctegory(element.scid, element.sub_category_name)}
                                                     value={element.sub_category_name}>{element.sub_category_name}

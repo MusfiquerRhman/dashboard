@@ -93,7 +93,7 @@ const CuponsTable = (data) => {
 
   let rows = [];
 
-  data.data.forEach((element) => {
+  data.data?.forEach((element) => {
     rows.push(createData(
       element.coupon_code.toLowerCase(),
       element.start_date.toLowerCase(),
@@ -125,7 +125,7 @@ const CuponsTable = (data) => {
               headCells={headCells}
             />
             <TableBody>
-              {rows.slice().sort(getComparator(order, orderBy)).map((row, index) => (
+              {rows.slice().sort(getComparator(order, orderBy))?.map((row, index) => (
                 <Row key={index} row={row} />
               ))}
             </TableBody>

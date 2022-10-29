@@ -18,8 +18,8 @@ import { StyledTableCell, StyledTableRow } from '../../../Styles/GlobalStyles';
 import style from "../categoryStyles";
 import CategoriesForm from './CategoriesForm';
 
-function createData(category_logo_path, category_name, cid, created_date, updated_date, is_active) {
-  return { category_logo_path, category_name, cid, created_date, updated_date, is_active };
+function createData(category_logo_path, category_name, cid, created_date, updated_date, is_active, app_order_id) {
+  return { category_logo_path, category_name, cid, created_date, updated_date, is_active, app_order_id };
 }
 
 const CategoryTable = (categories) => {
@@ -33,14 +33,15 @@ const CategoryTable = (categories) => {
 
   let rows = [];
 
-  categories.categories.forEach((element) => {
+  categories.categories?.forEach((element) => {
     rows.push(createData(
       element.category_logo_path,
       element.category_name,
       element.cid,
       element.updated_date,
       element.created_date,
-      element.is_active
+      element.is_active,
+      element.app_order_id
     ))
   })
 
@@ -116,6 +117,7 @@ const CategoryTable = (categories) => {
             <StyledTableRow>
               <StyledTableCell>Logo</StyledTableCell>
               <StyledTableCell align="center">Category Name</StyledTableCell>
+              <StyledTableCell align="center">Order</StyledTableCell>
               <StyledTableCell align="center">Created Date</StyledTableCell>
               <StyledTableCell align="center">Updated Date</StyledTableCell>
               <StyledTableCell align="center">isActive</StyledTableCell>
@@ -124,7 +126,7 @@ const CategoryTable = (categories) => {
             </StyledTableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
+            {rows?.map((row, index) => (
               <StyledTableRow
                 key={index}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -138,6 +140,7 @@ const CategoryTable = (categories) => {
                   }
                 </StyledTableCell>
                 <StyledTableCell align="center">{row.category_name} </StyledTableCell>
+                <StyledTableCell align="center">{row.app_order_id} </StyledTableCell>
                 <StyledTableCell align="center">{row.created_date}</StyledTableCell>
                 <StyledTableCell align="center">{row.updated_date}</StyledTableCell>
                 <StyledTableCell align="center">{row.is_active ? <CheckIcon /> : <CloseIcon />}</StyledTableCell>

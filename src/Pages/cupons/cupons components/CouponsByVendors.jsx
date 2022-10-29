@@ -40,7 +40,7 @@ const CouponsByVendors = () => {
                     label="Select a Vendor"
                     sx={{backgroundColor: '#30C3CD20'}}
                     >
-                    {vendors.map((element, index) => (
+                    {vendors?.map((element, index) => (
                         <MenuItem key={index} onClick={() => handleClickItem(element.vid, element.vendor_name)} value={element.vendor_name}>{element.vendor_name}</MenuItem>
                     ))}
                     </Select>

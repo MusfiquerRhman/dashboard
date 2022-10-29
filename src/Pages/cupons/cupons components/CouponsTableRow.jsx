@@ -80,7 +80,7 @@ const Row = (props) => {
     }
 
     const deleteForm = async () => {
-        const res = await couponsAPI.deleteCoupon(row.history.vid);
+        const res = await couponsAPI.deleteCoupon(row.history.coupon_id);
         if (res.status === 200) {
             enqueueSnackbar(`Successfully Deleted`, { variant: 'info' });
             window.location.reload();

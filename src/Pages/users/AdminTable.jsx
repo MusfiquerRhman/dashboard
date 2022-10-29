@@ -19,7 +19,7 @@ const AdminTable = (admins) => {
     const classes = style();
     let rows = [];
     
-    admins.users.forEach(admin => {
+    admins.users?.forEach(admin => {
         rows.push(
             createData(
                 admin.admin_status,
@@ -50,7 +50,7 @@ const AdminTable = (admins) => {
           </StyledTableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, index) => (
+          {rows?.map((row, index) => (
             <StyledTableRow
               key={index}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

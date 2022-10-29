@@ -134,7 +134,7 @@ const SubCategoriesForm = (props) => {
                                                 label="Select a Category"
                                                 sx={{backgroundColor: '#30C3CD20'}}
                                             >
-                                                {categories.map((element, index) => (
+                                                {categories?.map((element, index) => (
                                                     <MenuItem key={index} 
                                                         onClick={() => handleClickCategory(element)} 
                                                         value={element.category_name}>{element.category_name}

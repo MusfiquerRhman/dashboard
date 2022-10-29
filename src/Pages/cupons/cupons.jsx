@@ -113,7 +113,7 @@ const Cupons = () => {
 
     const addForm = async () => {
         let flag = 0;
-        scid.forEach(item => {
+        scid?.forEach(item => {
             couponsAPI.addCoupons(vid, item, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, coupnsDescription).then(res => {
                 if (res.status === 200) {
                     enqueueSnackbar(`Successfully Added`, { variant: 'info' });
@@ -242,10 +242,10 @@ const Cupons = () => {
                                             }
                                         }}
                                     >
-                                        <Tab label="All Coupons" value="1" />
-                                        <Tab label="Featured Coupons" value="2" />
-                                        <Tab label="Expired Coupons" value="3" />
-                                        <Tab label="Active and future coupons" value="4" />
+                                        <Tab label="Active coupons" value="1" />
+                                        <Tab label="All Coupons" value="2" />
+                                        <Tab label="Featured Coupons" value="3" />
+                                        <Tab label="Expired Coupons" value="4" />
                                         <Tab label="Coupons by Vendors" value="5" />
 
                                     </Tabs>
@@ -253,10 +253,10 @@ const Cupons = () => {
                                     You can sort Coupon Codes, Vendor names, Start dates, End dates, Sub-category names and Deal types by clicking on the column name in the table.
                                     Click on the Pen icon to edit and the trash icon to delete the corresponding coupon.
                                     </i></p>
-                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="1">< AllCupons coupons={cupons} /></TabPanel>
-                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="2">< FeaturedCoupons /></TabPanel>
-                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="3">< ExpiredCoupons /></TabPanel>
-                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="4">< ActiveAndFutureCoupons /></TabPanel>
+                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="1">< AllCupons coupons={cupons} /></TabPanel> {/* Active Cpupons panel */}
+                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="2">< ActiveAndFutureCoupons /></TabPanel> {/* All Coupons panel */}
+                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="3">< FeaturedCoupons /></TabPanel>
+                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="4">< ExpiredCoupons /></TabPanel>
                                     <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="5">< CouponsByVendors /></TabPanel>
                                 </TabContext>
                             </Box>

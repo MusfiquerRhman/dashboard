@@ -36,7 +36,7 @@ const SubCategoryTable = (subCategories) => {
 
   let rows = [];
 
-  subCategories.subCategories.forEach((element) => {
+  subCategories.subCategories?.forEach((element) => {
     rows.push(createData(
       element.sub_category_logo_path,
       element.sub_category_name,
@@ -126,7 +126,7 @@ const SubCategoryTable = (subCategories) => {
               </StyledTableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row, index) => (
+              {rows?.map((row, index) => (
                 <StyledTableRow
                   key={index}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
