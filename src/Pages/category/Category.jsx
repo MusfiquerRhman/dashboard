@@ -26,6 +26,7 @@ import SubCategoriesTable from './subcategory Components/SubCategoriesTable';
 const Category = () => {
     const [category_name, handleChangecategory_name] = useInputState('');
     const [subCategory_name, handleSubChangecategory_name] = useInputState('');
+    const [categoryOrderId, handleSubChangeCategoryOrderId] = useInputState('');
     const [file, setImage] = useState("");
     const [fileSub, setImageSub] = useState("");
     const [value, setValue] = useState('1');
@@ -62,7 +63,7 @@ const Category = () => {
             enqueueSnackbar(`Please Select an image file`, { variant: 'error' });
         }
         else {
-            categoriesAPI.addCategories(category_name, file).then(res => {
+            categoriesAPI.addCategories(category_name, categoryOrderId, file).then(res => {
                 if (res.status !== 200) {
                     enqueueSnackbar(`Error - ${res.message}`, { variant: 'error' });
                 }
@@ -100,6 +101,8 @@ const Category = () => {
             <CategoriesForm
                 category_name={category_name}
                 handleChangecategory_name={handleChangecategory_name}
+                categoryOrderId={categoryOrderId}
+                handleSubChangeCategoryOrderId={handleSubChangeCategoryOrderId}
                 handleCloseAdd={handleCloseAdd}
                 addOpen={addOpen}
                 formType="Add"

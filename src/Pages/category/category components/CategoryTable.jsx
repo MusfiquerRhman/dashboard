@@ -25,6 +25,7 @@ function createData(category_logo_path, category_name, cid, created_date, update
 const CategoryTable = (categories) => {
   const classes = style();
   const [category_name, handleChangecategory_name, setCategory_name] = useInputState('')
+  const [categoryOrderId, handleSubChangeCategoryOrderId, setCategoryOrderId] = useInputState('');
   const [categoryID, setCategoryID] = useState('')
   const [addOpen, setaddOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -61,24 +62,20 @@ const CategoryTable = (categories) => {
 
   const handleClickOpenUpdate = (row) => {
     setCategory_name(row.category_name);
+    setCategoryOrderId(row.app_order_id);
     setCategoryID(row.cid);
     setaddOpen(true);
   }
 
   const updateCatgoriesForm = () => {
-    if (file === "") {
-      enqueueSnackbar(`Please Select an image file`, { variant: 'error' });
-    }
-    else {
-      categoriesAPI.updateCategories(categoryID, category_name, file).then(res => {
-        if (res.status !== 200) {
-          enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
-        }
-        else {
-          window.location.reload();
-        }
-      })
-    }
+    categoriesAPI.updateCategories(categoryID, category_name, categoryOrderId, file).then(res => {
+      if (res.status !== 200) {
+        enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
+      }
+      else {
+        window.location.reload();
+      }
+    })
   }
 
   const deleteForm = () => {
@@ -97,9 +94,11 @@ const CategoryTable = (categories) => {
       <CategoriesForm
         category_name={category_name}
         handleChangecategory_name={handleChangecategory_name}
+        categoryOrderId={categoryOrderId}
+        handleSubChangeCategoryOrderId={handleSubChangeCategoryOrderId}
         handleCloseAdd={handleCloseUpdate}
         addOpen={addOpen}
-        formType="Add"
+        formType="Update"
         setImage={setImage}
         handleClickAction={updateCatgoriesForm}
       />

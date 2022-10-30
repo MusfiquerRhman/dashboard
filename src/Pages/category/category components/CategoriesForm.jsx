@@ -24,6 +24,8 @@ const CategoriesForm = (props) => {
     const {
         category_name,
         handleChangecategory_name,
+        categoryOrderId,
+        handleSubChangeCategoryOrderId,
         handleCloseAdd,
         addOpen,
         formType,
@@ -107,6 +109,18 @@ const CategoriesForm = (props) => {
                                             fullWidth
                                         />
                                     </Grid>
+                                    <Grid item >
+                                        <TextField id="registration-order"
+                                            label="Order Id"
+                                            type="number"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
+                                            value={categoryOrderId}
+                                            onChange={handleSubChangeCategoryOrderId}
+                                            required
+                                            fullWidth
+                                        />
+                                    </Grid>
                                 </Grid>
                                 {imageSelectedMsg}
                                 <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
@@ -126,7 +140,7 @@ const CategoriesForm = (props) => {
                                                     imageSelectHandeler(e.target.files);
                                                 }}
                                                 hidden
-                                                required
+                                                required={formType === "Update" ? false : true}
                                             />
                                         </Button>
                                     </Grid>
