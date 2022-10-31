@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { useSnackbar } from 'notistack';
-import React, { useEffect, useState, useTransition } from 'react';
+import React, { useDeferredValue, useEffect, useState, useTransition } from 'react';
 import * as couponsAPI from '../../API/coupons';
 import * as cuponsAPI from '../../API/coupons';
 import useInputState from '../../Hooks/UseInputHook';
@@ -26,7 +26,7 @@ const Cupons = () => {
     const classes = Style()
     const { enqueueSnackbar } = useSnackbar();
     const [value, setValue] = useState('1');
-    const [isPending, startTransition] = useTransition()
+    // const [isPending, startTransition] = useTransition()
 
     const [cupons, setCupons] = useState([])
 
@@ -64,30 +64,30 @@ const Cupons = () => {
 
     const [searchedTerm, setSearchedTerm] = useState('');
     const [searchResult, setSearchResult] = useState([]);
+    
+    const deferredSearchTerm = useDeferredValue(searchedTerm)
 
     const onChangeSearch = (e) => {
         setSearchedTerm(e.target.value);
 
-        startTransition(() =>{
-            setSearchResult(cupons.filter(item => 
-                item.coupon_code.toLowerCase().includes(searchedTerm) ||
-                item.start_date.toLowerCase().includes(searchedTerm) ||
-                item.end_date.toLowerCase().includes(searchedTerm) ||
-                item.percentage_off.toString().toLowerCase().includes(searchedTerm)
-            ));
-        })
+        // startTransition(() => {
+        //     setSearchResult(cupons.filter(item => 
+        //         item.coupon_code.toLowerCase().includes(deferredSearchTerm) 
+        //         || item.start_date.toLowerCase().includes(deferredSearchTerm) 
+        //         || item.end_date.toLowerCase().includes(deferredSearchTerm) 
+        //         || item.percentage_off.toString().toLowerCase().includes(deferredSearchTerm)
+        //     ));
+        // })
     }
 
-    // const deferreedSearchTearm = useDeferredValue(searchedTerm)
-
-    // useEffect(() => {
-    //     setSearchResult(cupons.filter(item => 
-    //         item.coupon_code.toLowerCase().includes(deferreedSearchTearm) ||
-    //         item.start_date.toLowerCase().includes(deferreedSearchTearm) ||
-    //         item.end_date.toLowerCase().includes(deferreedSearchTearm) ||
-    //         item.percentage_off.toString().toLowerCase().includes(deferreedSearchTearm)
-    //     ));
-    // }, [deferreedSearchTearm, cupons])
+    useEffect(() => {
+        setSearchResult(cupons.filter(item => 
+            item.coupon_code.toLowerCase().includes(deferredSearchTerm) 
+            || item.start_date.toLowerCase().includes(deferredSearchTerm) 
+            || item.end_date.toLowerCase().includes(deferredSearchTerm) 
+            || item.percentage_off.toString().toLowerCase().includes(deferredSearchTerm)
+        ));
+    }, [deferredSearchTerm, cupons])
 
 
     const clearInput = () => {
@@ -188,11 +188,11 @@ const Cupons = () => {
                         </div>
                     ))
                 }
-                {
+                {/* {
                     (isPending && (
-                        <p>Loading...</p>
+                        <p>Searching...</p>
                     ))
-                }
+                } */}
 
                 {
                     searchedTerm === '' && (

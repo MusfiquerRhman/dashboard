@@ -1,5 +1,5 @@
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
 // MaterialUI Elements
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -21,6 +21,8 @@ function Profile() {
     const [email, handleChangeEmail, setEmail] = useInputState("");
     const [fullName, handleChangeFullName, setFullName] = useInputState("");
     const [zip, handleChangeZip, setZip] = useInputState("");
+    const [displayImage, setDisplayImage] = useState("");
+    const [Image, setImage] = useState('');
 
     useEffect(() => {
         userAPI.getUserProfile().then((user) => {
@@ -31,6 +33,26 @@ function Profile() {
         })
     }, [])
 
+    const imageSelectHandeler = (files) => {
+        setImage(files[0]);
+        const reader = new FileReader();
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+                setDisplayImage(reader.result);
+            }
+        };
+        if (files[0] && files[0].type.match("image.*")) {
+            reader.readAsDataURL(files[0]);
+        }
+    };
+
+    let imageSelectedMsg = '';
+    if (displayImage !== "") {
+        imageSelectedMsg = (
+            <img src={displayImage} className={classes.image} alt="product" />
+        );
+    }
+
     const submitForm = async (e) => {
         const res = await userAPI.updateUserProfile(fullName, phoneNo, zip);
         if (res === -1) {
@@ -38,6 +60,16 @@ function Profile() {
         }
         else if (res.status === 200) {
             enqueueSnackbar("Account successfully updated", { variant: 'success' });
+        }
+
+        if(imageSelectedMsg !== ''){
+            const imageUpdateResponse = await userAPI.updateProfilePicture(Image);
+            if(imageUpdateResponse === -1){
+                enqueueSnackbar("Error; Try again", { variant: 'error' });
+            }
+            else if (res.status === 200) {
+                enqueueSnackbar("Profile Picture successfully updated", { variant: 'success' });
+            }
         }
     }
 
@@ -128,6 +160,28 @@ function Profile() {
                                     fullWidth
                                 />
                             </Grid>
+                            {imageSelectedMsg}
+                            <Grid container item direction="column" spacing={2} xs={12}>
+                                    <Grid item>
+                                        <Button
+                                            variant="contained"
+                                            component="label"
+                                            fullWidth
+                                            sx={{ marginTop: "1rem" }}
+                                            startIcon={<CameraAltIcon />}
+                                        >
+                                            Select a profile image
+                                            <input
+                                                name="image"
+                                                type="file"
+                                                onChange={(e) => {
+                                                    imageSelectHandeler(e.target.files);
+                                                }}
+                                                hidden
+                                            />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
                             <Grid item>
                                 <Button fullWidth onClick={submitForm} variant="contained" >Update</Button>
                             </Grid>

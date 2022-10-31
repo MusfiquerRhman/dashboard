@@ -82,18 +82,34 @@ export const updateUserProfile = async (fullname, phone, zip) => {
       return -1;
     }
   };
-  
 
-  export const deleteUserProfile = async () => {
-    try {
-      return await axios.delete(`${API_URL}/user/profile`,{
-        headers: {
-          Authorization: `Bearer ${
-            JSON.parse(localStorage.getItem("userInformations")).access_token
-          }`,
-        },
-      });
+export const updateProfilePicture = async (file) => {
+  try {
+    const formdata = new FormData();
+    formdata.append('file', file)
+    return axios.post(`${API_URL}/category/upload-profile-image`, formdata, {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("userInformations")).access_token
+        }`,
+      },
+    });
     } catch (err) {
       return -1;
     }
-  };
+}
+  
+
+export const deleteUserProfile = async () => {
+  try {
+    return await axios.delete(`${API_URL}/user/profile`,{
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("userInformations")).access_token
+        }`,
+      },
+    });
+  } catch (err) {
+    return -1;
+  }
+};

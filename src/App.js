@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid";
 import { SnackbarProvider } from "notistack";
 import React, { useContext, useEffect } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Routes } from "react-router-dom";
 import * as categoriesAPI from "./API/category";
 import * as subCategoriesAPI from "./API/subcategory";
 import * as userAPI from './API/user';
@@ -36,11 +36,22 @@ function App() {
   let isLoggedin = localStorage.getItem('userInformations') !== null;
 
 
+  // Logout after 6 hours
+  // If the user closes the window
   if(isLoggedin){
     if(new Date().getTime() - localStorage.getItem('last_login') > 21600000){ // 6 Hours
       handleLogOut();
     }
   }
+
+  // If the user dose not closes the window
+  useEffect(() => {
+    const timer =  setTimeout(()=> {
+      handleLogOut();
+      window.location.reload();
+    }, 21600000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     vendorsAPI.getAllVendors().then((result) => {
@@ -87,6 +98,7 @@ function App() {
               <Route exact path="/" element={isLoggedin ? <Cupons /> : <Login />} />
               <Route exact path="/registration" element={<Registration />} />
               <Route exact path="/forgotpassword" element={<ForgotPassword />} />
+              <Route exact path="*" element={<Login />} />
             </Routes>
             }
           </Grid>

@@ -238,7 +238,7 @@ const VendorForm = (props) => {
                                     <Grid item>
                                         <TextField id="registration-hours"
                                             label="Hours"
-                                            type="number"
+                                            type="text"
                                             variant="outlined"
                                             sx={{backgroundColor: '#30C3CD20'}}
                                             value={hours}

@@ -126,7 +126,7 @@ export default function VendorCards(props) {
                     <span className={classes.title}>Website:</span>
                   </Grid>
                   <Grid item xs={7}>
-                    <a href={element.website} className={classes.value}>{element.website}</a>
+                    <a href={element.website} className={classes.website}>{element.website}</a>
                   </Grid>
 
                   <Grid item xs={5}>
