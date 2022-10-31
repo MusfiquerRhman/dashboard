@@ -18,6 +18,16 @@ const Vendor = () => {
     const [value, setValue] = useState('1');
     const classes = style();
 
+    let isLoggedin = localStorage.getItem('userInformations') !== null;
+
+    if(isLoggedin){
+      if(new Date().getTime() - localStorage.getItem('last_login') > 21600000){ // 6 Hours
+        localStorage.removeItem('userInformations');
+        localStorage.removeItem('last_login');
+        window.location.reload();
+      }
+    }
+
     const [name, handleChangeName] = useInputState('');
     const [email, handleChangeEmail] = useInputState('');
     const [phone, handleChangePhone] = useInputState('');

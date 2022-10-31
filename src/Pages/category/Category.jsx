@@ -38,6 +38,16 @@ const Category = () => {
     const [selectedCategoriesIdInSubcategory, setSelectedCategoriesIdInSubcategory] = useState('')
     const { enqueueSnackbar } = useSnackbar();
 
+    let isLoggedin = localStorage.getItem('userInformations') !== null;
+
+    if(isLoggedin){
+      if(new Date().getTime() - localStorage.getItem('last_login') > 21600000){ // 6 Hours
+        localStorage.removeItem('userInformations');
+        localStorage.removeItem('last_login');
+        window.location.reload();
+      }
+    }
+
     const handleClickOpenAdd = () => {
         setaddOpen(true);
     }
