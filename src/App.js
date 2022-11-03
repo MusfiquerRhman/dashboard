@@ -40,15 +40,28 @@ function App() {
   // If the user closes the window
   if(isLoggedin){
     if(new Date().getTime() - localStorage.getItem('last_login') > 21600000){ // 6 Hours
-      handleLogOut();
+      try{
+        handleLogOut();
+      }
+      catch {
+        localStorage.removeItem('userInformations');
+        localStorage.removeItem('last_login');
+        window.location.reload();
+      }
     }
   }
 
   // If the user dose not closes the window
   useEffect(() => {
     const timer =  setTimeout(()=> {
-      handleLogOut();
-      window.location.reload();
+      try{
+        handleLogOut();
+      }
+      catch {
+        localStorage.removeItem('userInformations');
+        localStorage.removeItem('last_login');
+        window.location.reload();
+      }
     }, 21600000);
     return () => clearTimeout(timer);
   }, []);

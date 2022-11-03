@@ -2,14 +2,18 @@ import axios from "axios";
 const API_URL = "http://18.222.199.244/api/v1";
 
 export const getAllCategory = async () => {
+  let source = axios.CancelToken.source();
   try {
-    return await axios.get(`${API_URL}/get/category/all`);
+    return await axios.get(`${API_URL}/get/category/all`, {cancelToken: source.token});
   } catch (err) {
     return -1;
+  } finally {
+    source.cancel();
   }
 };
 
 export const addCategories = async (category_name, categoryOrderId, file) => {
+  let source = axios.CancelToken.source();
   try {
     const formdata = new FormData();
     formdata.append("category_name", category_name);
@@ -24,9 +28,13 @@ export const addCategories = async (category_name, categoryOrderId, file) => {
   catch (e) {
     return e;
   }
+  finally {
+    source.cancel();
+  }
 }
 
 export const updateCategories = async (category_id, category_name, categoryOrderId, file) => {
+  let source = axios.CancelToken.source();
   try {
     const formdata = new FormData();
     formdata.append("category_name", category_name);
@@ -41,10 +49,13 @@ export const updateCategories = async (category_id, category_name, categoryOrder
   catch (e) {
     return e;
   }
+  finally {
+    source.cancel();
+  }
 }
 
-
 export const deleteCategories = async (category_id) => {
+  let source = axios.CancelToken.source();
   try {
     return await axios.delete(`${API_URL}/category/${category_id}`, {
       headers: {
@@ -54,5 +65,8 @@ export const deleteCategories = async (category_id) => {
   }
   catch (e) {
     return e;
+  }
+  finally {
+    source.cancel();
   }
 }

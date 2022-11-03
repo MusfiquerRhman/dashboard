@@ -2,23 +2,32 @@ import axios from "axios";
 const API_URL = "http://18.222.199.244/api/v1";
 
 export const getAllVendors = async () => {
+  let source = axios.CancelToken.source();
   try {
     return await axios.get(`${API_URL}/get/vendor/all`);
   } catch (err) {
     return -1;
   }
+  finally {
+    source.cancel();
+  }
 };
 
 export const getFeaturedVendors = async () => {
+  let source = axios.CancelToken.source();
   try {
     return await axios.get(`${API_URL}/vendor/featured/all`);
   } catch (err) {
     return -1;
   }
+  finally {
+    source.cancel();
+  }
 };
 
 
 export const deleteVendor = async (vendorId) => {
+  let source = axios.CancelToken.source();
   try {
     return await axios.delete(`${API_URL}/vendor/${vendorId}`, {
       headers: {
@@ -27,11 +36,15 @@ export const deleteVendor = async (vendorId) => {
   } catch (err) {
     return err;
   }
+  finally {
+    source.cancel();
+  }
 };
 
 export const updateVendor = async (
     vid, vendor_name, email, phone, description, hours, street1, street2, city, state, zip_code, website, requirements, is_active, feature_vendor, file
 ) => {
+  let source = axios.CancelToken.source();
   const formdata = new FormData();
   formdata.append("file", file);
     try {
@@ -60,12 +73,16 @@ export const updateVendor = async (
     } catch (e) {
         return e;
     }
+    finally {
+      source.cancel();
+    }
 };
 
 
 export const addVendor = async (
   vendor_name, email, phone, description, hours, street1, street2, city, state, zip_code, website, requirements, is_active, feature_vendor, file
 ) => {
+  let source = axios.CancelToken.source();
   const formdata = new FormData();
   formdata.append("file", file);
     try {
@@ -93,5 +110,8 @@ export const addVendor = async (
     } 
     catch (e) {
         return e;
+    }
+    finally {
+      source.cancel();
     }
 }

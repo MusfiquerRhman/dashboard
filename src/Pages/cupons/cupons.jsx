@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { useSnackbar } from 'notistack';
-import React, { useDeferredValue, useEffect, useState, useTransition } from 'react';
+import React, { useDeferredValue, useEffect, useState } from 'react';
 import * as couponsAPI from '../../API/coupons';
 import * as cuponsAPI from '../../API/coupons';
 import useInputState from '../../Hooks/UseInputHook';
@@ -37,7 +37,7 @@ const Cupons = () => {
       }
     }
 
-    const [cupons, setCupons] = useState([])
+    const [cupons, setCupons] = useState([]);
 
     useEffect(() => {
         cuponsAPI.getAllCoupons().then(res => {
@@ -78,15 +78,6 @@ const Cupons = () => {
 
     const onChangeSearch = (e) => {
         setSearchedTerm(e.target.value);
-
-        // startTransition(() => {
-        //     setSearchResult(cupons.filter(item => 
-        //         item.coupon_code.toLowerCase().includes(deferredSearchTerm) 
-        //         || item.start_date.toLowerCase().includes(deferredSearchTerm) 
-        //         || item.end_date.toLowerCase().includes(deferredSearchTerm) 
-        //         || item.percentage_off.toString().toLowerCase().includes(deferredSearchTerm)
-        //     ));
-        // })
     }
 
     useEffect(() => {

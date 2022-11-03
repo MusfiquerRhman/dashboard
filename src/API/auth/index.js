@@ -2,6 +2,7 @@ import axios from "axios";
 const API_URL = "http://18.222.199.244/api/v1/auth";
 
 export const login = async (username, password) => {
+  let source = axios.CancelToken.source();
   try {
     const formdata = new FormData();
     formdata.append("username", username);
@@ -9,10 +10,13 @@ export const login = async (username, password) => {
     return await axios.post(`${API_URL}/admin/login`, formdata);
   } catch (err) {
     return -1;
+  } finally {
+    source.cancel();
   }
 };
 
 export const registration = async (email, password, phone, admin_status) => {
+  let source = axios.CancelToken.source();
   try {
     return await axios.post(`${API_URL}/admin/register`, {
       email: email,
@@ -22,18 +26,23 @@ export const registration = async (email, password, phone, admin_status) => {
     });
   } catch (err) {
     return -1;
+  } finally {
+    source.cancel();
   }
 };
 
 export const forgotPassword = async (email) => {
-    try {
-        return await axios.post(`${API_URL}/forgot-password`, {
-            email: email
-        });
-    }
-    catch (err) {
-        return -1;
-    }
+  let source = axios.CancelToken.source();
+  try {
+    return await axios.post(`${API_URL}/forgot-password`, {
+        email: email
+    });
+  }
+  catch (err) {
+      return -1;
+  } finally {
+    source.cancel();
+  }
 }
 
 // try {
