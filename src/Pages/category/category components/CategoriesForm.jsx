@@ -35,7 +35,7 @@ const CategoriesForm = (props) => {
 
     const [displayImage, setDisplayImage] = useState("");
     
-    const imageSelectHandeler = (files) => {
+    const imageSelectHandler = (files) => {
         setImage(files[0]);
         const reader = new FileReader();
         reader.onload = () => {
@@ -91,7 +91,7 @@ const CategoriesForm = (props) => {
                 <div>
                     <Paper elevation={6} className={classes.formBox} >
                         <form className={classes.form}>
-                            <Typography variant="h4" sx={{ padding: '1rem 3rem' }}>
+                            <Typography variant="h4" sx={{ padding: '1rem 0' }}>
                                 Enter Category Details:
                             </Typography>
 
@@ -137,7 +137,7 @@ const CategoriesForm = (props) => {
                                                 name="image"
                                                 type="file"
                                                 onChange={(e) => {
-                                                    imageSelectHandeler(e.target.files);
+                                                    imageSelectHandler(e.target.files);
                                                 }}
                                                 hidden
                                                 required={formType === "Update" ? false : true}

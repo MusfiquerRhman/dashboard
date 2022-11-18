@@ -104,7 +104,7 @@ const SubCategoriesForm = (props) => {
                 <div>
                     <Paper elevation={6} className={classes.formBox} >
                         <form className={classes.form}>
-                            <Typography variant="h4" sx={{ padding: '1rem 3rem' }}>
+                            <Typography variant="h4" sx={{ padding: '1rem 0' }}>
                                 Enter Sub-Category Details:
                             </Typography>
 

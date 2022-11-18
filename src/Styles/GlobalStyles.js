@@ -5,7 +5,7 @@ import { makeStyles } from "@mui/styles";
 
 const style = makeStyles((theme) => ({
   form: {
-    margin: "3rem 1rem",
+    margin: "1rem 1rem 10rem 1rem",
     padding: "1rem",
     paddingBottom: "1rem",
   },
@@ -14,12 +14,12 @@ const style = makeStyles((theme) => ({
       width: "100%",
     },
     [theme.breakpoints.up("md")]: {
-      marginLeft: "10%",
-      width: "80%",
+      marginLeft: "12.5%",
+      width: "75%",
     },
     [theme.breakpoints.up("lg")]: {
-      marginLeft: "22%",
-      width: "55%",
+      marginLeft: "27.5%",
+      width: "45%",
     },
   },
   image: {

@@ -54,6 +54,8 @@ const CouponsForm = (props) => {
         setScid,
         vid,
         scid,
+        scheduler,
+        handleChangeCouponScheduler,
         coupnsDescription,
         handleChangeCouponDescription,
         handleClickSubmit,
@@ -113,7 +115,7 @@ const CouponsForm = (props) => {
                 <div>
                     <Paper elevation={6} className={classes.formBox} >
                         <form className={classes.form}>
-                            <Typography variant="h4" sx={{ padding: '1rem 3rem' }}>
+                            <Typography variant="h4" sx={{ padding: '1rem 0' }}>
                                 Update Coupon Details:
                             </Typography>
 
@@ -254,6 +256,21 @@ const CouponsForm = (props) => {
                                         />
                                     </Grid>
                                 </Grid>
+
+                                <FormControl fullWidth sx={{ marginBottom: '1.5rem' }}>
+                                    <InputLabel id="demo-simple-select-label">Scheduler</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-scheduler"
+                                        id="demo-simple-scheduler"
+                                        value={scheduler}
+                                        label="Scheduler"
+                                        onChange={handleChangeCouponScheduler}
+                                        sx={{ backgroundColor: '#30C3CD20' }}
+                                    >
+                                        <MenuItem value={'monthly'}>Monthly</MenuItem>
+                                        <MenuItem value={'weekly'}>Weekly</MenuItem>
+                                    </Select>
+                                </FormControl>
 
                                 <Grid item>
                                     <Button fullWidth variant="contained" onClick={handleClickSubmit}>Submit</Button>

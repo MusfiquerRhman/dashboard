@@ -55,7 +55,6 @@ function Registration() {
         <div>
             <Paper elevation={6} className={classes.formBox} >
                 <form className={classes.form}>
-
                     <Typography variant="h3">
                         New Registration:
                     </Typography>

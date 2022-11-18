@@ -3,7 +3,7 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import Typography from '@mui/material/Typography';
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
 import { SubCategoryContext } from "../../../Context APIs/subcategoriesContext";
 import { VendorContext } from "../../../Context APIs/vendorContext";
 import Row from './CouponsTableRow';
@@ -34,6 +34,10 @@ const headCells = [
     id: 'percentage_off',
     label: 'Deal Type'
   },
+  {
+    id: 'scheduler',
+    label: 'Scheduler'
+  }
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -53,7 +57,7 @@ function getComparator(order, orderBy) {
 }
 
 
-function createData(coupon_code, start_date, end_date, is_active, feature_coupon, single_use, coupon_id, vid, scid, sub_category_name, selectedVendor, percentage_off, created_date, updated_date, coupon_description) {
+function createData(coupon_code, start_date, end_date, is_active, feature_coupon, single_use, coupon_id, vid, scid, sub_category_name, selectedVendor, percentage_off, created_date, updated_date, coupon_description, scheduler) {
   return {
     coupon_code,
     start_date,
@@ -65,6 +69,7 @@ function createData(coupon_code, start_date, end_date, is_active, feature_coupon
     selectedVendor,
     percentage_off,
     coupon_description,
+    scheduler,
     history:
     {
       coupon_id: coupon_id,
@@ -110,6 +115,7 @@ const CuponsTable = (data) => {
       element.created_date,
       element.updated_date,
       element.coupon_description,
+      element.scheduler
     ))
   })
 

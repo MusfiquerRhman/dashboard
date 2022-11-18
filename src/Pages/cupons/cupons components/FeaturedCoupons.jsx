@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import * as cuponsAPI from '../../../API/coupons';
+import * as couponsAPI from '../../../API/coupons';
 import CuponsTable from './CuponsTable';
 
 const FeaturedCoupons = () => {
-    const [cupons, setCupons] = useState([])
+    const [coupons, setCoupons] = useState([])
 
     useEffect(() => {
-        cuponsAPI.getAllFeaturedCoupons().then(res => {
+        couponsAPI.getAllFeaturedCoupons().then(res => {
             if(res.status === 200){
-                setCupons(res.data);
+                setCoupons(res.data);
             }
         });
     }, []);
@@ -16,7 +16,7 @@ const FeaturedCoupons = () => {
     return (
         <React.Fragment>
             <div>
-                <CuponsTable data={cupons}/>
+                <CuponsTable data={coupons}/>
             </div>
         </React.Fragment>
     )

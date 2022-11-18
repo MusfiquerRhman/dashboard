@@ -14,7 +14,7 @@ const style = makeStyles((theme) => ({
     }, 
     title: {
         fontSize: "1rem",
-        marginRight: "1rem",
+        paddingRight: "1rem",
     },
     value: {
         fontSize: "1rem",

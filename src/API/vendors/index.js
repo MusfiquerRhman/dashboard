@@ -2,116 +2,107 @@ import axios from "axios";
 const API_URL = "http://18.222.199.244/api/v1";
 
 export const getAllVendors = async () => {
-  let source = axios.CancelToken.source();
-  try {
-    return await axios.get(`${API_URL}/get/vendor/all`);
-  } catch (err) {
-    return -1;
-  }
-  finally {
-    source.cancel();
-  }
+	try {
+		return await axios.get(`${API_URL}/get/vendor/all`);
+	} 
+	catch (err) {
+		return -1;
+	}
 };
 
 export const getFeaturedVendors = async () => {
-  let source = axios.CancelToken.source();
-  try {
-    return await axios.get(`${API_URL}/vendor/featured/all`);
-  } catch (err) {
-    return -1;
-  }
-  finally {
-    source.cancel();
-  }
+	try {
+		return await axios.get(`${API_URL}/vendor/featured/all`);
+	} 
+	catch (err) {
+		return -1;
+	}
 };
 
 
 export const deleteVendor = async (vendorId) => {
-  let source = axios.CancelToken.source();
-  try {
-    return await axios.delete(`${API_URL}/vendor/${vendorId}`, {
-      headers: {
-        "Authorization": `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`,
-    }});
-  } catch (err) {
-    return err;
-  }
-  finally {
-    source.cancel();
-  }
+	try {
+		return await axios.delete(`${API_URL}/vendor/${vendorId}`, {
+			headers: {
+				"Authorization": `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`,
+			}
+		});
+	} 
+	catch (err) {
+		return err;
+	}
 };
 
-export const updateVendor = async (
-    vid, vendor_name, email, phone, description, hours, street1, street2, city, state, zip_code, website, requirements, is_active, feature_vendor, file
-) => {
-  let source = axios.CancelToken.source();
-  const formdata = new FormData();
-  formdata.append("file", file);
+export const updateVendor = async (vid, state, file) => {
+	const formData = new FormData();
+	formData.append("file", file);
     try {
-        return await axios.put(`${API_URL}/vendor/${vid}`, formdata, {
+        return await axios.put(`${API_URL}/vendor/${vid}`, formData, {
             params: {
-              vendor_id: vid,
-              vendor_name: vendor_name,
-              email: email,
-              phone: phone,
-              street1: street1,
-              street2: street2,
-              description: description,
-              city: city,
-              state: state,
-              zip_code: zip_code,
-              website: website,
-              requirements: requirements,
-              is_active: is_active,
-              feature_vendor: feature_vendor,
-              hours: hours,
+				vendor_id: vid,
+				vendor_name: state.name,
+				email: state.email,
+				phone: state.phone,
+				street1: state.street1,
+				street2: state.street2,
+				description: state.description,
+				city: state.city,
+				state: state.state,
+				zip_code: state.zipCode,
+				website: state.website,
+				requirements: state.requirements,
+				is_active: state.isActive,
+				feature_vendor: state.featureVendor,
+				hours: state.hours,
+				facebook: state.facebook,
+				instagram: state.instagram,
+				youtube: state.youtube,
+				twitter: state.twitter,
+				best_of_logan_picks: state.bestOfLoganPicks
             },
             headers: {
                 "Authorization": `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`,
             },
         });
-    } catch (e) {
+    } 
+	catch (e) {
         return e;
-    }
-    finally {
-      source.cancel();
     }
 };
 
 
-export const addVendor = async (
-  vendor_name, email, phone, description, hours, street1, street2, city, state, zip_code, website, requirements, is_active, feature_vendor, file
-) => {
-  let source = axios.CancelToken.source();
-  const formdata = new FormData();
-  formdata.append("file", file);
-    try {
-      return await axios.post(`${API_URL}/vendor`, formdata, {
-        params: {
-          vendor_name: vendor_name,
-          email: email,
-          phone: phone,
-          street1: street1,
-          street2: street2,
-          description: description,
-          city: city,
-          state: state,
-          zip_code: zip_code,
-          website: website,
-          requirements: requirements,
-          is_active: is_active,
-          feature_vendor: feature_vendor,
-          hours: hours,
-        },
-        headers: {
-          "Authorization": `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`,
-        },
-      });
-    } 
-    catch (e) {
-        return e;
-    }
-    finally {
-      source.cancel();
-    }
+export const addVendor = async (state, file) => {
+	const formData = new FormData();
+	formData.append("file", file);
+	try {
+		return await axios.post(`${API_URL}/vendor`, formData, {
+			params: {
+				vendor_name: state.name,
+				email: state.email,
+				phone: state.phone,
+				street1: state.street1,
+				street2: state.street2,
+				description: state.description,
+				city: state.city,
+				state: state.state,
+				zip_code: state.zipCode,
+				website: state.website,
+				requirements: state.requirements,
+				is_active: state.isActive,
+				feature_vendor: state.featureVendor,
+				hours: state.hours,
+				facebook: state.facebook,
+				instagram: state.instagram,
+				youtube: state.youtube,
+				twitter: state.twitter,
+				best_of_logan_picks: state.bestOfLoganPicks
+			},
+			headers: {
+				"Authorization": `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`,
+			},
+		});
+	} 
+	catch (e) {
+		return e;
+	}
 }

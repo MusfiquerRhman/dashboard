@@ -2,19 +2,14 @@ import axios from "axios";
 const API_URL = "http://18.222.199.244/api/v1";
 
 export const logout = async () => {
-  let source = axios.CancelToken.source();
   try {
     return await axios.get(`${API_URL}/user/logout`);
   } catch (err) {
     return -1;
   }
-  finally {
-    source.cancel();
-  }
 };
 
 export const adminUserCount = async () => {
-  let source = axios.CancelToken.source();
   try {
     return await axios.get(`${API_URL}/user/admin/count`, {
       headers: {
@@ -26,13 +21,9 @@ export const adminUserCount = async () => {
   } catch (err) {
     return -1;
   }
-  finally {
-    source.cancel();
-  }
 };
 
 export const userCount = async () => {
-  let source = axios.CancelToken.source();
   try {
     return await axios.get(`${API_URL}/user/count`, {
       headers: {
@@ -44,13 +35,9 @@ export const userCount = async () => {
   } catch (err) {
     return -1;
   }
-  finally {
-    source.cancel();
-  }
 };
 
 export const getAllAdmin = async () => {
-  let source = axios.CancelToken.source();
   try {
     return await axios.get(`${API_URL}/user/admin/all`, {
       headers: {
@@ -62,13 +49,9 @@ export const getAllAdmin = async () => {
   } catch (err) {
     return -1;
   }
-  finally {
-    source.cancel();
-  }
 };
 
 export const getUserProfile = async () => {
-  let source = axios.CancelToken.source();
   try {
     return await axios.get(`${API_URL}/user/profile`, {
       headers: {
@@ -80,13 +63,9 @@ export const getUserProfile = async () => {
   } catch (err) {
     return -1;
   }
-  finally {
-    source.cancel();
-  }
 };
 
 export const updateUserProfile = async (fullname, phone, zip) => {
-  let source = axios.CancelToken.source();
     try {
       return await axios.patch(`${API_URL}/user/profile`, {
         fullname: fullname,
@@ -102,13 +81,9 @@ export const updateUserProfile = async (fullname, phone, zip) => {
     } catch (err) {
       return -1;
     }
-    finally {
-      source.cancel();
-    }
   };
 
 export const updateProfilePicture = async (file) => {
-  let source = axios.CancelToken.source();
   try {
     const formdata = new FormData();
     formdata.append('file', file)
@@ -122,14 +97,10 @@ export const updateProfilePicture = async (file) => {
     } catch (err) {
       return -1;
     }
-    finally {
-      source.cancel();
-    }
 }
   
 
 export const deleteUserProfile = async () => {
-  let source = axios.CancelToken.source();
   try {
     return await axios.delete(`${API_URL}/user/profile`,{
       headers: {
@@ -140,8 +111,5 @@ export const deleteUserProfile = async () => {
     });
   } catch (err) {
     return -1;
-  }
-  finally {
-    source.cancel();
   }
 };

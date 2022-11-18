@@ -2,33 +2,24 @@ import axios from "axios";
 const API_URL = "http://18.222.199.244/api/v1";
 
 export const getAllSubCategory = async () => {
-  let source = axios.CancelToken.source();
   try {
     return await axios.get(`${API_URL}/get/subcategory/all`);
   } 
   catch (err) {
     return -1;
   }
-  finally {
-    source.cancel();
-  }
 };
 
 export const getAllSubCategoryByCategoryID = async (category_id) => {
-  let source = axios.CancelToken.source();
   try {
     return await axios.get(`${API_URL}/${category_id}/sub_categories/all`);
   } 
   catch (err) {
     return -1;
   }
-  finally {
-    source.cancel();
-  }
 };
 
 export const updateSubCategories = async (category_id, sub_category_id, sub_category_name, file) => {
-  let source = axios.CancelToken.source();
   try {
     const formdata = new FormData();
     formdata.append("sub_category_name", sub_category_name);
@@ -43,13 +34,9 @@ export const updateSubCategories = async (category_id, sub_category_id, sub_cate
   catch (e) {
     return e;
   } 
-  finally {
-    source.cancel();
-  }
 };
 
 export const addSubCategories = async (category_id, sub_category_name, file) => {
-  let source = axios.CancelToken.source();
   try {
     const formdata = new FormData();
     formdata.append("sub_category_name", sub_category_name);
@@ -64,13 +51,9 @@ export const addSubCategories = async (category_id, sub_category_name, file) => 
   catch (e) {
     return e;
   }
-  finally {
-    source.cancel();
-  }
 };
 
 export const deleteSubCategories = async (sub_category_id) => {
-  let source = axios.CancelToken.source();
   try {
     return await axios.delete(`${API_URL}/sub_category/${sub_category_id}`, {
       headers: {
@@ -80,8 +63,5 @@ export const deleteSubCategories = async (sub_category_id) => {
   } 
   catch (e) {
     return e;
-  }
-  finally {
-    source.cancel();
   }
 };

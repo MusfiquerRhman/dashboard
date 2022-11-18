@@ -30,38 +30,33 @@ const VendorForm = (props) => {
         updateOpen,
         handleCloseUpdate,
         handleClickVendor,
-        name,
-        handleChangeName,
-        email,
-        handleChangeEmail,
-        phone,
-        handleChangePhone,
-        description,
-        handleChangeDescription,
-        street1,
-        handleChangeStreet1,
-        street2,
-        handleChangeStreet2,
-        city,
-        handleChangeCity,
         state,
-        handleChangeState,
-        hours,
-        handleChangeHours,
-        zip_code,
-        handleChangeZip_code,
-        website,
-        handleChangeWebsite,
-        requirements,
-        handleChangeRequirements,
-        handleChangeis_active,
-        is_active,
-        handleChangefeature_vendor,
-        feature_vendor,
+        dispatch,
+        ACTION_TYPE,
         setImage,
     } = props;
 
-    const imageSelectHandeler = (files) => {
+    const onChangeInput = (event) => {
+        dispatch({
+            type: ACTION_TYPE.CHANGE_INPUT,
+            payload: {
+                name: event.target.name,
+                value: event.target.value
+            }
+        })
+    }
+
+    const handleChangeCheck = (event) => {
+        dispatch({
+            type: ACTION_TYPE.CHANGE_INPUT,
+            payload: {
+                name: event.target.name,
+                value: event.target.checked
+            }
+        })
+    };
+
+    const imageSelectHandler = (files) => {
         setImage(files[0]);
         const reader = new FileReader();
         reader.onload = () => {
@@ -117,7 +112,7 @@ const VendorForm = (props) => {
                 <Box>
                     <Paper elevation={6} className={classes.formBox} >
                         <form className={classes.form}>
-                            <Typography variant="h4" sx={{ padding: '1rem 3rem' }}>
+                            <Typography variant="h4" sx={{ padding: '1rem 0' }}>
                                 Enter Vendor Details:
                             </Typography>
 
@@ -129,8 +124,9 @@ const VendorForm = (props) => {
                                             type="text"
                                             variant="outlined"
                                             sx={{backgroundColor: '#30C3CD20'}}
-                                            value={name}
-                                            onChange={handleChangeName}
+                                            value={state.name}
+                                            onChange={onChangeInput}
+                                            name='name'
                                             required
                                             fullWidth
                                         />
@@ -143,8 +139,9 @@ const VendorForm = (props) => {
                                             type="email"
                                             variant="outlined"
                                             sx={{backgroundColor: '#30C3CD20'}}
-                                            value={email}
-                                            onChange={handleChangeEmail}
+                                            value={state.email}
+                                            onChange={onChangeInput}
+                                            name='email'
                                             required
                                             fullWidth
                                         />
@@ -157,8 +154,9 @@ const VendorForm = (props) => {
                                             type="tel"
                                             variant="outlined"
                                             sx={{backgroundColor: '#30C3CD20'}}
-                                            value={phone}
-                                            onChange={handleChangePhone}
+                                            value={state.phone}
+                                            onChange={onChangeInput}
+                                            name='phone'
                                             required
                                             fullWidth
                                         />
@@ -171,8 +169,9 @@ const VendorForm = (props) => {
                                             type="text"
                                             variant="outlined"
                                             sx={{backgroundColor: '#30C3CD20'}}
-                                            value={description}
-                                            onChange={handleChangeDescription}
+                                            value={state.description}
+                                            onChange={onChangeInput}
+                                            name='description'
                                             required
                                             fullWidth
                                         />
@@ -185,8 +184,9 @@ const VendorForm = (props) => {
                                             type="text"
                                             variant="outlined"
                                             sx={{backgroundColor: '#30C3CD20'}}
-                                            value={street1}
-                                            onChange={handleChangeStreet1}
+                                            value={state.street1}
+                                            onChange={onChangeInput}
+                                            name='street1'
                                             required
                                             fullWidth
                                         />
@@ -199,8 +199,9 @@ const VendorForm = (props) => {
                                             type="text"
                                             variant="outlined"
                                             sx={{backgroundColor: '#30C3CD20'}}
-                                            value={street2}
-                                            onChange={handleChangeStreet2}
+                                            value={state.street2}
+                                            onChange={onChangeInput}
+                                            name='street2'
                                             required
                                             fullWidth
                                         />
@@ -213,8 +214,9 @@ const VendorForm = (props) => {
                                             type="text"
                                             variant="outlined"
                                             sx={{backgroundColor: '#30C3CD20'}}
-                                            value={city}
-                                            onChange={handleChangeCity}
+                                            value={state.city}
+                                            onChange={onChangeInput}
+                                            name='city'
                                             required
                                             fullWidth
                                         />
@@ -227,8 +229,9 @@ const VendorForm = (props) => {
                                             type="text"
                                             variant="outlined"
                                             sx={{backgroundColor: '#30C3CD20'}}
-                                            value={state}
-                                            onChange={handleChangeState}
+                                            value={state.state}
+                                            onChange={onChangeInput}
+                                            name='state'
                                             required
                                             fullWidth
                                         />
@@ -241,8 +244,9 @@ const VendorForm = (props) => {
                                             type="text"
                                             variant="outlined"
                                             sx={{backgroundColor: '#30C3CD20'}}
-                                            value={hours}
-                                            onChange={handleChangeHours}
+                                            value={state.hours}
+                                            name='hours'
+                                            onChange={onChangeInput}
                                             required
                                             fullWidth
                                         />
@@ -255,8 +259,9 @@ const VendorForm = (props) => {
                                             type="number"
                                             variant="outlined"
                                             sx={{backgroundColor: '#30C3CD20'}}
-                                            value={zip_code}
-                                            onChange={handleChangeZip_code}
+                                            value={state.zipCode}
+                                            onChange={onChangeInput}
+                                            name='zipCode'
                                             required
                                             fullWidth
                                         />
@@ -269,8 +274,9 @@ const VendorForm = (props) => {
                                             type="url"
                                             variant="outlined"
                                             sx={{backgroundColor: '#30C3CD20'}}
-                                            value={website}
-                                            onChange={handleChangeWebsite}
+                                            value={state.website}
+                                            onChange={onChangeInput}
+                                            name='website'
                                             required
                                             fullWidth
                                         />
@@ -283,9 +289,80 @@ const VendorForm = (props) => {
                                             type="text"
                                             variant="outlined"
                                             sx={{backgroundColor: '#30C3CD20'}}
-                                            value={requirements}
-                                            onChange={handleChangeRequirements}
+                                            value={state.requirements}
+                                            onChange={onChangeInput}
+                                            name='requirements'
                                             required
+                                            fullWidth
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
+                                    <Grid item>
+                                        <TextField id="registration-facebook"
+                                            label="Facebook"
+                                            type="text"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
+                                            value={state.facebook}
+                                            onChange={onChangeInput}
+                                            name='facebook'
+                                            fullWidth
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
+                                    <Grid item>
+                                        <TextField id="registration-instagram"
+                                            label="Instagram"
+                                            type="text"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
+                                            value={state.instagram}
+                                            onChange={onChangeInput}
+                                            name='instagram'
+                                            fullWidth
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
+                                    <Grid item>
+                                        <TextField id="registration-youtube"
+                                            label="Youtube"
+                                            type="text"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
+                                            value={state.youtube}
+                                            onChange={onChangeInput}
+                                            name='youtube'
+                                            fullWidth
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
+                                    <Grid item>
+                                        <TextField id="registration-twitter"
+                                            label="Twitter"
+                                            type="text"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
+                                            value={state.twitter}
+                                            onChange={onChangeInput}
+                                            name='twitter'
+                                            fullWidth
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
+                                    <Grid item>
+                                        <TextField id="registration-bestOfLoganPicks"
+                                            label="Best of Logan Picks"
+                                            type="text"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
+                                            value={state.bestOfLoganPicks}
+                                            onChange={onChangeInput}
+                                            name='bestOfLoganPicks'
                                             fullWidth
                                         />
                                     </Grid>
@@ -296,17 +373,19 @@ const VendorForm = (props) => {
                                         <Grid item>
                                             <Checkbox
                                                 label="Is Active"
-                                                onChange={handleChangeis_active}
-                                                checked={is_active}
+                                                onChange={handleChangeCheck}
+                                                name='isActive'
+                                                checked={state.isActive}
                                                 /> <span>Active</span>
                                         </Grid>
                                     </Grid>
                                     <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
                                         <Grid item>
                                             <Checkbox
-                                                label="Feture Vendor"
-                                                onChange={handleChangefeature_vendor}
-                                                checked={feature_vendor}
+                                                label="Feature Vendor"
+                                                name='featureVendor'
+                                                onChange={handleChangeCheck}
+                                                checked={state.featureVendor}
                                                 /> <span>Feature Vendor</span>
                                         </Grid>
                                     </Grid>
@@ -326,7 +405,7 @@ const VendorForm = (props) => {
                                                 name="image"
                                                 type="file"
                                                 onChange={(e) => {
-                                                    imageSelectHandeler(e.target.files);
+                                                    imageSelectHandler(e.target.files);
                                                 }}
                                                 hidden
                                                 required

@@ -93,8 +93,8 @@ function App() {
             </Grid>
             {isLoggedin &&
             <Sidebar>
-            <DrawerAppBar />
-            <Grid item  justifyContent={"center"} sx={{width: '100%'}}>
+              <DrawerAppBar />
+              <Grid item justifyContent={"center"} sx={{width: '100%', justifyContent: 'center'}}>
                 <Routes>
                   <Route exact path="/" element={isLoggedin ? <Cupons /> : <Login />} />
                   <Route exact path="/vendors" element={isLoggedin ? <Vendor /> : <Login />} />
@@ -107,12 +107,14 @@ function App() {
             </Sidebar>
             }
             {!isLoggedin && 
-            <Routes>
-              <Route exact path="/" element={isLoggedin ? <Cupons /> : <Login />} />
-              <Route exact path="/registration" element={<Registration />} />
-              <Route exact path="/forgotpassword" element={<ForgotPassword />} />
-              <Route exact path="*" element={<Login />} />
-            </Routes>
+            <Grid item justifyContent={"center"} sx={{width: '100%', justifyContent: 'center'}}>
+              <Routes>
+                <Route exact path="/" element={isLoggedin ? <Cupons /> : <Login />} />
+                <Route exact path="/registration" element={<Registration />} />
+                <Route exact path="/forgotpassword" element={<ForgotPassword />} />
+                <Route exact path="*" element={<Login />} />
+              </Routes>
+            </Grid>
             }
           </Grid>
         </SnackbarProvider>

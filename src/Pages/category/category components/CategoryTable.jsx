@@ -24,10 +24,10 @@ function createData(category_logo_path, category_name, cid, created_date, update
 
 const CategoryTable = (categories) => {
   const classes = style();
-  const [category_name, handleChangecategory_name, setCategory_name] = useInputState('')
+  const [category_name, handleChangeCategoryName, setCategory_name] = useInputState('')
   const [categoryOrderId, handleSubChangeCategoryOrderId, setCategoryOrderId] = useInputState('');
   const [categoryID, setCategoryID] = useState('')
-  const [addOpen, setaddOpen] = useState(false);
+  const [addOpen, setAddOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [file, setImage] = useState("");
   const { enqueueSnackbar } = useSnackbar();
@@ -47,7 +47,7 @@ const CategoryTable = (categories) => {
   })
 
   const handleCloseUpdate = () => {
-    setaddOpen(false);
+    setAddOpen(false);
   }
 
   const handleClickOpenDelete = (row) => {
@@ -64,10 +64,10 @@ const CategoryTable = (categories) => {
     setCategory_name(row.category_name);
     setCategoryOrderId(row.app_order_id);
     setCategoryID(row.cid);
-    setaddOpen(true);
+    setAddOpen(true);
   }
 
-  const updateCatgoriesForm = () => {
+  const updateCategoriesForm = () => {
     categoriesAPI.updateCategories(categoryID, category_name, categoryOrderId, file).then(res => {
       if (res.status !== 200) {
         enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
@@ -93,14 +93,14 @@ const CategoryTable = (categories) => {
     <React.Fragment>
       <CategoriesForm
         category_name={category_name}
-        handleChangecategory_name={handleChangecategory_name}
+        handleChangecategory_name={handleChangeCategoryName}
         categoryOrderId={categoryOrderId}
         handleSubChangeCategoryOrderId={handleSubChangeCategoryOrderId}
         handleCloseAdd={handleCloseUpdate}
         addOpen={addOpen}
         formType="Update"
         setImage={setImage}
-        handleClickAction={updateCatgoriesForm}
+        handleClickAction={updateCategoriesForm}
       />
 
       <ConfrimDeleteDialogue

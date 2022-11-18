@@ -11,11 +11,11 @@ const Users = () => {
     let isLoggedin = localStorage.getItem('userInformations') !== null;
 
     if(isLoggedin){
-      if(new Date().getTime() - localStorage.getItem('last_login') > 21600000){ // 6 Hours
-        localStorage.removeItem('userInformations');
-        localStorage.removeItem('last_login');
-        window.location.reload();
-      }
+        if(new Date().getTime() - parseInt(localStorage.getItem('last_login')) > 21600000){ // 6 Hours
+            localStorage.removeItem('userInformations');
+            localStorage.removeItem('last_login');
+            window.location.reload();
+        }
     }
     
     const classes = style();
