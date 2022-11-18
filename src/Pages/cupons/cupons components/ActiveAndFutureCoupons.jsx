@@ -3,12 +3,12 @@ import * as cuponsAPI from '../../../API/coupons';
 import CuponsTable from './CuponsTable';
 
 const ActiveAndFutureCoupons = () => {
-    const [cupons, setCupons] = useState([])
+    const [coupons, setCoupons] = useState([])
 
     useEffect(() => {
         cuponsAPI.getAllActiveAndFutureCoupons().then(res => {
             if(res.status === 200){
-                setCupons(res.data);
+                setCoupons(res.data);
             }
         });
     }, []);
@@ -17,7 +17,7 @@ const ActiveAndFutureCoupons = () => {
     return (
         <React.Fragment>
             <div>
-                <CuponsTable data={cupons}/>
+                <CuponsTable data={coupons}/>
             </div>
         </React.Fragment>
     )

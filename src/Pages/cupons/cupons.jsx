@@ -8,9 +8,8 @@ import Button from '@mui/material/Button';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { useSnackbar } from 'notistack';
-import React, { useEffect, useState, useTransition } from 'react';
+import React, { useDeferredValue, useEffect, useState } from 'react';
 import * as couponsAPI from '../../API/coupons';
-import * as cuponsAPI from '../../API/coupons';
 import useInputState from '../../Hooks/UseInputHook';
 import Style from '../../Styles/GlobalStyles';
 import ActiveAndFutureCoupons from './cupons components/ActiveAndFutureCoupons';
@@ -26,12 +25,20 @@ const Cupons = () => {
     const classes = Style()
     const { enqueueSnackbar } = useSnackbar();
     const [value, setValue] = useState('1');
-    const [isPending, startTransition] = useTransition()
+    let isLoggedin = localStorage.getItem('userInformations') !== null;
 
-    const [cupons, setCupons] = useState([])
+    if(isLoggedin){
+        if(new Date().getTime() - parseInt(localStorage.getItem('last_login')) > 21600000){ // 6 Hours
+            localStorage.removeItem('userInformations');
+            localStorage.removeItem('last_login');
+            window.location.reload();
+        }
+    }
+
+    const [cupons, setCupons] = useState([]);
 
     useEffect(() => {
-        cuponsAPI.getAllCoupons().then(res => {
+        couponsAPI.getAllCoupons().then(res => {
             if (res.status === 200) {
                 setCupons(res.data);
             }
@@ -57,37 +64,30 @@ const Cupons = () => {
     const [feature_coupon, setFeature_coupon] = useState(false)
     const [isActive, setIsActive] = useState(true)
     const [start_date, setStartDate] = useState(new Date().getTime() + 24 * 60 * 60 * 1000);
-    const [end_date, setEnddate] = useState(new Date().getTime() + 24 * 60 * 60 * 1000);
+    const [end_date, setEndDate] = useState(new Date().getTime() + 24 * 60 * 60 * 1000);
+    const [scheduler, setScheduler] = useState('')
     const [vid, setVid] = useState('');
     const [scid, setScid] = useState([]);
-    const [coupnsDescription, setCoupnsDescription] = useState('')
+    const [couponDescription, setCouponDescription] = useState('')
 
     const [searchedTerm, setSearchedTerm] = useState('');
     const [searchResult, setSearchResult] = useState([]);
+    
+    const deferredSearchTerm = useDeferredValue(searchedTerm)
 
     const onChangeSearch = (e) => {
         setSearchedTerm(e.target.value);
-
-        startTransition(() =>{
-            setSearchResult(cupons.filter(item => 
-                item.coupon_code.toLowerCase().includes(searchedTerm) ||
-                item.start_date.toLowerCase().includes(searchedTerm) ||
-                item.end_date.toLowerCase().includes(searchedTerm) ||
-                item.percentage_off.toString().toLowerCase().includes(searchedTerm)
-            ));
-        })
     }
 
-    // const deferreedSearchTearm = useDeferredValue(searchedTerm)
-
-    // useEffect(() => {
-    //     setSearchResult(cupons.filter(item => 
-    //         item.coupon_code.toLowerCase().includes(deferreedSearchTearm) ||
-    //         item.start_date.toLowerCase().includes(deferreedSearchTearm) ||
-    //         item.end_date.toLowerCase().includes(deferreedSearchTearm) ||
-    //         item.percentage_off.toString().toLowerCase().includes(deferreedSearchTearm)
-    //     ));
-    // }, [deferreedSearchTearm, cupons])
+    useEffect(() => {
+        setSearchResult(cupons.filter(item => 
+            item.coupon_code.toLowerCase().includes(deferredSearchTerm) 
+            || item.start_date.toLowerCase().includes(deferredSearchTerm) 
+            || item.end_date.toLowerCase().includes(deferredSearchTerm) 
+            || item.percentage_off.toString().toLowerCase().includes(deferredSearchTerm)
+            || item.scheduler.toLowerCase().includes(deferredSearchTerm)
+        ));
+    }, [deferredSearchTerm, cupons])
 
 
     const clearInput = () => {
@@ -107,22 +107,24 @@ const Cupons = () => {
     };
 
     const handleChangeCouponDescription = (event) => {
-        setCoupnsDescription(event.target.value)
+        setCouponDescription(event.target.value)
     }
 
+    const handleChangeCouponScheduler = (event) => {
+        setScheduler(event.target.value)
+    }
 
     const addForm = async () => {
         let flag = 0;
-        scid.forEach(item => {
-            couponsAPI.addCoupons(vid, item, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, coupnsDescription).then(res => {
-                console.log(res)
+        scid?.forEach(item => {
+            couponsAPI.addCoupons(vid, item, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, couponDescription, scheduler).then(res => {
                 if (res.status === 200) {
                     enqueueSnackbar(`Successfully Added`, { variant: 'info' });
                     flag++;
                     if (flag === scid.length) window.location.reload();
                 }
                 else {
-                    enqueueSnackbar(`Failed to Add`, { variant: 'error' });
+                    enqueueSnackbar(`Failed to Add - ${res.message}`, { variant: 'error' });
                 }
             });
         })
@@ -145,14 +147,16 @@ const Cupons = () => {
                 handleCloseUpdate={handleCloseAdd}
                 updateOpen={addOpen}
                 setStartDate={setStartDate}
-                setEnddate={setEnddate}
+                setEnddate={setEndDate}
                 isActive={isActive}
                 handleChangeIs_Active={handleChangeIs_Active}
                 setVid={setVid}
                 setScid={setScid}
                 vid=''
                 scid={scid}
-                coupnsDescription={coupnsDescription}
+                scheduler={scheduler}
+                handleChangeCouponScheduler={handleChangeCouponScheduler}
+                coupnsDescription={couponDescription}
                 handleChangeCouponDescription={handleChangeCouponDescription}
                 handleClickSubmit={addForm}
             />
@@ -171,7 +175,7 @@ const Cupons = () => {
                             <ClearIcon className='search__icon' onClick={clearInput} />
                             )}
                     </div>
-                    <p className='search__info'><i>Only Coupon Code, Start Date, End Date and Deal Type.</i></p>
+                    <p className='search__info'><i>Only Coupon Code, Start Date, End Date, Deal Type and Scheduler.</i></p>
                 </div>
                 {
                     (searchedTerm !== '' && (
@@ -187,11 +191,6 @@ const Cupons = () => {
                                 )
                             }
                         </div>
-                    ))
-                }
-                {
-                    (isPending && (
-                        <p>Loading...</p>
                     ))
                 }
 
@@ -243,21 +242,21 @@ const Cupons = () => {
                                             }
                                         }}
                                     >
-                                        <Tab label="All Coupons" value="1" />
-                                        <Tab label="Featured Coupons" value="2" />
-                                        <Tab label="Expired Coupons" value="3" />
-                                        <Tab label="Active and future coupons" value="4" />
+                                        <Tab label="Active coupons" value="1" />
+                                        <Tab label="All Coupons" value="2" />
+                                        <Tab label="Featured Coupons" value="3" />
+                                        <Tab label="Expired Coupons" value="4" />
                                         <Tab label="Coupons by Vendors" value="5" />
 
                                     </Tabs>
                                     <p className='info'><i>
-                                    You can sort Coupon Codes, Vendor names, Start dates, End dates, Sub-category names and Deal types by clicking on the column name in the table.
+                                    You can sort Coupon Codes, Vendor names, Start dates, End dates, Sub-category names Deal types and Scheduler by clicking on the column name in the table.
                                     Click on the Pen icon to edit and the trash icon to delete the corresponding coupon.
                                     </i></p>
-                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="1">< AllCupons coupons={cupons} /></TabPanel>
-                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="2">< FeaturedCoupons /></TabPanel>
-                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="3">< ExpiredCoupons /></TabPanel>
-                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="4">< ActiveAndFutureCoupons /></TabPanel>
+                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="1">< AllCupons coupons={cupons} /></TabPanel> {/* Active Cpupons panel */}
+                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="2">< ActiveAndFutureCoupons /></TabPanel> {/* All Coupons panel */}
+                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="3">< FeaturedCoupons /></TabPanel>
+                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="4">< ExpiredCoupons /></TabPanel>
                                     <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="5">< CouponsByVendors /></TabPanel>
                                 </TabContext>
                             </Box>

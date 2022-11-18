@@ -23,7 +23,7 @@ const ForgotPassword = () => {
     const submitForm = async (e) => {
         const res = await userApi.forgotPassword(userEmail);
         if (res === -1) {
-            enqueueSnackbar("Error Logining in!", { variant: 'error' });
+            enqueueSnackbar("Error Logging in!", { variant: 'error' });
         } else if (res.status === 200) {
             setIsAuthenticated(true);
             enqueueSnackbar(res.data.message, { variant: 'success' });

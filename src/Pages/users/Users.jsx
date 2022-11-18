@@ -8,6 +8,16 @@ import style from '../../Styles/GlobalStyles';
 import AdminTable from './AdminTable';
 
 const Users = () => {
+    let isLoggedin = localStorage.getItem('userInformations') !== null;
+
+    if(isLoggedin){
+        if(new Date().getTime() - parseInt(localStorage.getItem('last_login')) > 21600000){ // 6 Hours
+            localStorage.removeItem('userInformations');
+            localStorage.removeItem('last_login');
+            window.location.reload();
+        }
+    }
+    
     const classes = style();
     const [adminUserCount, setAdminUserCount] = useState(0);
     const [userCount, setUserCount] = useState(0);

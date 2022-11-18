@@ -36,7 +36,7 @@ const SubCategoryTable = (subCategories) => {
 
   let rows = [];
 
-  subCategories.subCategories.forEach((element) => {
+  subCategories.subCategories?.forEach((element) => {
     rows.push(createData(
       element.sub_category_logo_path,
       element.sub_category_name,
@@ -72,7 +72,7 @@ const SubCategoryTable = (subCategories) => {
   const updateSubCatgoriesForm = () => {
     subcategoriesAPI.updateSubCategories(categoryID, subCategoryID, subCategory_name, file).then(res => {
       if (res.status !== 200) {
-        enqueueSnackbar(`Failed to update category`, { variant: 'error' });
+        enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
       }
       else {
         window.location.reload();
@@ -83,7 +83,7 @@ const SubCategoryTable = (subCategories) => {
   const deleteForm = () => {
     subcategoriesAPI.deleteSubCategories(subCategoryID).then(res => {
       if (res.status !== 200) {
-        enqueueSnackbar(`Failed to update category`, { variant: 'error' });
+        enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
       }
       else {
         window.location.reload();
@@ -126,7 +126,7 @@ const SubCategoryTable = (subCategories) => {
               </StyledTableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row, index) => (
+              {rows?.map((row, index) => (
                 <StyledTableRow
                   key={index}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

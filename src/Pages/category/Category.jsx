@@ -26,6 +26,7 @@ import SubCategoriesTable from './subcategory Components/SubCategoriesTable';
 const Category = () => {
     const [category_name, handleChangecategory_name] = useInputState('');
     const [subCategory_name, handleSubChangecategory_name] = useInputState('');
+    const [categoryOrderId, handleSubChangeCategoryOrderId] = useInputState('');
     const [file, setImage] = useState("");
     const [fileSub, setImageSub] = useState("");
     const [value, setValue] = useState('1');
@@ -36,6 +37,16 @@ const Category = () => {
     const { subCategories } = useContext(SubCategoryContext);
     const [selectedCategoriesIdInSubcategory, setSelectedCategoriesIdInSubcategory] = useState('')
     const { enqueueSnackbar } = useSnackbar();
+
+    let isLoggedin = localStorage.getItem('userInformations') !== null;
+
+    if(isLoggedin){
+      if(new Date().getTime() - parseInt(localStorage.getItem('last_login')) > 21600000){ // 6 Hours
+        localStorage.removeItem('userInformations');
+        localStorage.removeItem('last_login');
+        window.location.reload();
+      }
+    }
 
     const handleClickOpenAdd = () => {
         setaddOpen(true);
@@ -62,9 +73,9 @@ const Category = () => {
             enqueueSnackbar(`Please Select an image file`, { variant: 'error' });
         }
         else {
-            categoriesAPI.addCategories(category_name, file).then(res => {
+            categoriesAPI.addCategories(category_name, categoryOrderId, file).then(res => {
                 if (res.status !== 200) {
-                    enqueueSnackbar(`Connection Error`, { variant: 'error' });
+                    enqueueSnackbar(`Error - ${res.message}`, { variant: 'error' });
                 }
                 else {
                     window.location.reload();
@@ -85,7 +96,7 @@ const Category = () => {
         else {
             subcategoriesAPI.addSubCategories(selectedCategoriesIdInSubcategory, subCategory_name, fileSub).then(res => {
                 if (res.status !== 200) {
-                    enqueueSnackbar(`Connection Error`, { variant: 'error' });
+                    enqueueSnackbar(`Error - ${res.message}`, { variant: 'error' });
                 }
                 else {
                     window.location.reload();
@@ -100,6 +111,8 @@ const Category = () => {
             <CategoriesForm
                 category_name={category_name}
                 handleChangecategory_name={handleChangecategory_name}
+                categoryOrderId={categoryOrderId}
+                handleSubChangeCategoryOrderId={handleSubChangeCategoryOrderId}
                 handleCloseAdd={handleCloseAdd}
                 addOpen={addOpen}
                 formType="Add"

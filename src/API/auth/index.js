@@ -22,18 +22,18 @@ export const registration = async (email, password, phone, admin_status) => {
     });
   } catch (err) {
     return -1;
-  }
+  } 
 };
 
 export const forgotPassword = async (email) => {
-    try {
-        return await axios.post(`${API_URL}/forgot-password`, {
-            email: email
-        });
-    }
-    catch (err) {
-        return -1;
-    }
+  try {
+    return await axios.post(`${API_URL}/forgot-password`, {
+        email: email
+    });
+  }
+  catch (err) {
+      return -1;
+  } 
 }
 
 // try {

@@ -6,7 +6,7 @@ export const getAllCoupons = async () => {
     return await axios.get(`${API_URL}/apps/get/coupon/all`);
   } catch (err) {
     return -1;
-  }
+  } 
 };
 
 
@@ -16,5 +16,5 @@ export const getExpiredCoupons = async () => {
   }
   catch (err) {
     return -1;
-  }
+  } 
 }

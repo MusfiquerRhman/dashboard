@@ -14,15 +14,20 @@ const style = makeStyles((theme) => ({
     }, 
     title: {
         fontSize: "1rem",
-        marginRight: "1rem",
+        paddingRight: "1rem",
     },
     value: {
         fontSize: "1rem",
         color: "#263238",
+        overflowWrap: 'break-word',
     }, 
     icon: {
         height: '100%',
-        
+    },
+    website: {
+        fontSize: "1rem",
+        color: "#018F8F",
+        overflowWrap: 'break-word',
     }
 }));
 

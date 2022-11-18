@@ -41,7 +41,7 @@ const SubCategoriesByCategory = () => {
                     label="Select a Category"
                     sx={{backgroundColor: '#30C3CD20'}}
                     >
-                    {categories.map((element, index) => (
+                    {categories?.map((element, index) => (
                         <MenuItem key={index} onClick={() => handleClickItem(element.cid, element.category_name)} value={element.category_name}>{element.category_name}</MenuItem>
                     ))}
                     </Select>

@@ -104,7 +104,7 @@ const SubCategoriesForm = (props) => {
                 <div>
                     <Paper elevation={6} className={classes.formBox} >
                         <form className={classes.form}>
-                            <Typography variant="h4" sx={{ padding: '1rem 3rem' }}>
+                            <Typography variant="h4" sx={{ padding: '1rem 0' }}>
                                 Enter Sub-Category Details:
                             </Typography>
 
@@ -134,7 +134,7 @@ const SubCategoriesForm = (props) => {
                                                 label="Select a Category"
                                                 sx={{backgroundColor: '#30C3CD20'}}
                                             >
-                                                {categories.map((element, index) => (
+                                                {categories?.map((element, index) => (
                                                     <MenuItem key={index} 
                                                         onClick={() => handleClickCategory(element)} 
                                                         value={element.category_name}>{element.category_name}

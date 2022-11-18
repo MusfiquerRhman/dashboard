@@ -9,9 +9,7 @@ import CardHeader from '@mui/material/CardHeader';
 import Collapse from '@mui/material/Collapse';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
-import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import * as vendorAPI from '../../../API/vendors';
@@ -66,7 +64,7 @@ export default function VendorCards(props) {
       enqueueSnackbar(`Successfully Deleted`, { variant: 'info' });
     }
     else {
-      enqueueSnackbar(`Failes to Deleted`, { variant: 'error' });
+      enqueueSnackbar(`Failed to Deleted - ${res.message}`, { variant: 'error' });
     }
     setDeleteOpen(false);
     window.location.reload();
@@ -82,103 +80,89 @@ export default function VendorCards(props) {
       />
 
       <UpdateVendorDialague
-        vid={element.vid}
-        email={element.email}
-        phone={element.phone}
-        description={element.description}
-        hours={element.hours}
-        street1={element.street1}
-        street2={element.street2}
-        city={element.city}
-        state={element.state}
-        zip_code={element.zip_code}
-        website={element.website}
-        requirements={element.requirements}
-        is_active={element.is_active}
-        feature_vendor={element.feature_vendor}
+        element={element}
         updateOpen={updateOpen}
         handleCloseUpdate={handleCloseUpdate}
-        vendor_name={element.vendor_name}
         setupdateOpen={setupdateOpen}
       />
 
-        <Box className={classes.form} >
-          <Box sx={{ width: '100%' }}>
-            <Card sx={{ maxWidth: 345, boxShadow: "0 0 8px #018F8F55" }}>
-              <CardHeader
-                avatar={
-                  <img src={element.vendor_log_path} alt='vendor' className={classes.vendorImg} />
-                }
-                title={element.vendor_name}
-                subheader={element.email}
-              />
+      <Box className={classes.form} >
+        <Box sx={{ width: '100%' }}>
+          <Card sx={{ maxWidth: 345, boxShadow: "0 0 8px #018F8F55" }}>
+            <CardHeader
+              avatar={
+                <img src={element.vendor_log_path} alt='vendor' className={classes.vendorImg} />
+              }
+              title={element.vendor_name}
+              subheader={element.email}
+            />
 
-              <CardContent>
-                <Grid container sx={{ color: 'text.primary', lineHeight: '1.7'}}>
-                  <Grid item xs={5}>
-                    <span className={classes.title}>Phone:</span>
-                  </Grid>
-                  <Grid item xs={7}>
-                    <span className={classes.value}>{element.phone}</span>
-                  </Grid>
-
-                  <Grid item xs={5}>
-                    <span className={classes.title}>Website:</span>
-                  </Grid>
-                  <Grid item xs={7}>
-                    <a href={element.website} className={classes.value}>{element.website}</a>
-                  </Grid>
-
-                  <Grid item xs={5}>
-                    <span className={classes.title}>Active:</span>
-                  </Grid>
-                  <Grid item xs={7}>
-                    <span className={classes.value}>{element.is_active ? "Yes" : "No"}</span>
-                  </Grid>
-
-                  <Grid item xs={5}>
-                    <span className={classes.title}>Feature:</span>
-                  </Grid>
-                  <Grid item xs={7}>
-                    <span className={classes.icon}>{element.feature_vendor ? "Yes" : "No"}</span>
-                  </Grid>
-
-                  <Grid item xs={5}>
-                    <span className={classes.title}>Hours:</span>
-                  </Grid>
-                  <Grid item xs={7}>
-                    <span className={classes.value}>{element.hours}</span>
-                  </Grid>
-
-                  <Grid item xs={5}>
-                    <span className={classes.title}>Requirements:</span>
-                  </Grid>
-                  <Grid item xs={7}>
-                    <span className={classes.value}>{element.requirements}</span>
-                  </Grid>
+            <CardContent>
+              <Grid container sx={{ color: 'text.primary', lineHeight: '1.7' }}>
+                <Grid item xs={5}>
+                  <span className={classes.title}>Phone:</span>
                 </Grid>
-              </CardContent>
+                <Grid item xs={7}>
+                  <span className={classes.value}>{element.phone}</span>
+                </Grid>
 
-              <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites" onClick={handleClickOpenUpdate}>
-                  <EditIcon color="primary"/>
-                </IconButton>
-                <IconButton aria-label="share" onClick={handleClickOpenDelete}>
-                  <DeleteForeverIcon  color="error" />
-                </IconButton>
-                <ExpandMore
-                  expand={expanded}
-                  onClick={handleExpandClick}
-                  aria-expanded={expanded}
-                  aria-label="show more"
-                >
-                  <ExpandMoreIcon />
-                </ExpandMore>
-              </CardActions>
+                <Grid item xs={5}>
+                  <span className={classes.title}>Website:</span>
+                </Grid>
+                <Grid item xs={7}>
+                  <a href={element.website} className={classes.website}>{element.website}</a>
+                </Grid>
 
-              <Collapse in={expanded} timeout="auto" unmountOnExit>
-              <CardContent>
-                <Grid container sx={{ color: 'text.primary', lineHeight: '1.7'}}>
+                <Grid item xs={5}>
+                  <span className={classes.title}>Active:</span>
+                </Grid>
+                <Grid item xs={7}>
+                  <span className={classes.value}>{element.is_active ? "Yes" : "No"}</span>
+                </Grid>
+
+                <Grid item xs={5}>
+                  <span className={classes.title}>Feature:</span>
+                </Grid>
+                <Grid item xs={7}>
+                  <span className={classes.icon}>{element.feature_vendor ? "Yes" : "No"}</span>
+                </Grid>
+
+                <Grid item xs={5}>
+                  <span className={classes.title}>Hours:</span>
+                </Grid>
+                <Grid item xs={7}>
+                  <span className={classes.value}>{element.hours}</span>
+                </Grid>
+
+                <Grid item xs={5}>
+                  <span className={classes.title}>Requirements:</span>
+                </Grid>
+                <Grid item xs={7}>
+                  <span className={classes.value}>{element.requirements}</span>
+                </Grid>
+              </Grid>
+            </CardContent>
+
+            <CardActions disableSpacing>
+              <IconButton aria-label="add to favorites" onClick={handleClickOpenUpdate}>
+                <EditIcon color="primary" />
+              </IconButton>
+              <IconButton aria-label="share" onClick={handleClickOpenDelete}>
+                <DeleteForeverIcon color="error" />
+              </IconButton>
+              <ExpandMore
+                expand={expanded}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </ExpandMore>
+            </CardActions>
+
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+              <CardContent >
+                <Grid container sx={{ color: 'text.primary', lineHeight: '2' }}>
                   <Grid item xs={4}>
                     <span className={classes.title}>Description:</span>
                   </Grid>
@@ -205,14 +189,79 @@ export default function VendorCards(props) {
                   </Grid>
                   <Grid item xs={8}>
                     <span className={classes.value}> {element.state}</span>
-                  </Grid>                  
-                  
+                  </Grid>
+
                   <Grid item xs={4}>
                     <span className={classes.title}>Zip Code:</span>
                   </Grid>
                   <Grid item xs={8}>
                     <span className={classes.value}> {element.zip_code}</span>
                   </Grid>
+
+                  {
+                    (element.facebook !== '' && element.facebook !== null) && (                      
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>Facebook:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}> {element.facebook}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
+
+                  {
+                    (element.facebook !== '' && element.facebook !== null) && (                      
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>Twitter:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}> {element.twitter}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
+
+                {
+                    (element.youtube !== '' && element.youtube !== null) && (                      
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>Youtube:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}> {element.youtube}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
+
+                  {
+                    (element.instagram !== '' && element.instagram !== null) && (                      
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>Instagram:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}> {element.instagram}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
+
+                  {
+                    (element.best_of_logan_picks !== '' && element.best_of_logan_picks !== null) && (                      
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>BL Picks:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}> {element.best_of_logan_picks}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
 
                   <Grid item xs={4}>
                     <span className={classes.title}>Created:</span>
@@ -231,12 +280,13 @@ export default function VendorCards(props) {
                       new Date(element.updated_date).toLocaleDateString() + " " + new Date(element.updated_date).toLocaleTimeString()
                     }</span>
                   </Grid>
+                  <p className='info'>* BL Picks stands for Best of Logan picks<i></i></p>
                 </Grid>
               </CardContent>
-              </Collapse>
-            </Card>
-          </Box>
+            </Collapse>
+          </Card>
         </Box>
+      </Box>
     </>
   );
 }

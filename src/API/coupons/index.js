@@ -49,11 +49,11 @@ export const deleteCoupon = async (coupon_id) => {
       }}
     )} 
     catch (err) {
-    return -1;
+    return err;
   }
 };
 
-export const updateCoupons = async (coupon_id, vendor_id, subcategory_id, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, updateDate, coupon_description) => {
+export const updateCoupons = async (coupon_id, vendor_id, subcategory_id, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, updateDate, coupon_description, scheduler) => {
   try {
     return await axios.put(`${API_URL}/${vendor_id}/coupon/${coupon_id}/${subcategory_id}`, {
       vid: vendor_id,
@@ -66,18 +66,19 @@ export const updateCoupons = async (coupon_id, vendor_id, subcategory_id, coupon
       end_date: end_date,
       updated_date: updateDate, 
       coupon_description: coupon_description,
+      scheduler: scheduler
     }, {
       headers: {
         "Authorization": `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`
       }}
     )} 
     catch (err) {
-    return -1;
+    return err;
   }
 };
 
 
-export const addCoupons = async (vendor_id, subcategory_id, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, coupon_description) => {
+export const addCoupons = async (vendor_id, subcategory_id, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, coupon_description, scheduler) => {
   try {
     return await axios.post(`${API_URL}/${vendor_id}/${subcategory_id}/coupon`, {
       coupon_code: coupon_code,
@@ -86,14 +87,15 @@ export const addCoupons = async (vendor_id, subcategory_id, coupon_code, percent
       feature_coupon: feature_coupon,
       start_date: start_date,
       end_date: end_date,
-      coupon_description: coupon_description
+      coupon_description: coupon_description,
+      scheduler: scheduler
     }, {
       headers: {
         "Authorization": `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`
       }}
     )} 
     catch (err) {
-    return -1;
+    return err;
   }
 };
 

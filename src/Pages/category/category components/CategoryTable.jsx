@@ -18,34 +18,36 @@ import { StyledTableCell, StyledTableRow } from '../../../Styles/GlobalStyles';
 import style from "../categoryStyles";
 import CategoriesForm from './CategoriesForm';
 
-function createData(category_logo_path, category_name, cid, created_date, updated_date, is_active) {
-  return { category_logo_path, category_name, cid, created_date, updated_date, is_active };
+function createData(category_logo_path, category_name, cid, created_date, updated_date, is_active, app_order_id) {
+  return { category_logo_path, category_name, cid, created_date, updated_date, is_active, app_order_id };
 }
 
 const CategoryTable = (categories) => {
   const classes = style();
-  const [category_name, handleChangecategory_name, setCategory_name] = useInputState('')
+  const [category_name, handleChangeCategoryName, setCategory_name] = useInputState('')
+  const [categoryOrderId, handleSubChangeCategoryOrderId, setCategoryOrderId] = useInputState('');
   const [categoryID, setCategoryID] = useState('')
-  const [addOpen, setaddOpen] = useState(false);
+  const [addOpen, setAddOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [file, setImage] = useState("");
   const { enqueueSnackbar } = useSnackbar();
 
   let rows = [];
 
-  categories.categories.forEach((element) => {
+  categories.categories?.forEach((element) => {
     rows.push(createData(
       element.category_logo_path,
       element.category_name,
       element.cid,
       element.updated_date,
       element.created_date,
-      element.is_active
+      element.is_active,
+      element.app_order_id
     ))
   })
 
   const handleCloseUpdate = () => {
-    setaddOpen(false);
+    setAddOpen(false);
   }
 
   const handleClickOpenDelete = (row) => {
@@ -60,30 +62,26 @@ const CategoryTable = (categories) => {
 
   const handleClickOpenUpdate = (row) => {
     setCategory_name(row.category_name);
+    setCategoryOrderId(row.app_order_id);
     setCategoryID(row.cid);
-    setaddOpen(true);
+    setAddOpen(true);
   }
 
-  const updateCatgoriesForm = () => {
-    if (file === "") {
-      enqueueSnackbar(`Please Select an image file`, { variant: 'error' });
-    }
-    else {
-      categoriesAPI.updateCategories(categoryID, category_name, file).then(res => {
-        if (res.status !== 200) {
-          enqueueSnackbar(`Failed to update category`, { variant: 'error' });
-        }
-        else {
-          window.location.reload();
-        }
-      })
-    }
+  const updateCategoriesForm = () => {
+    categoriesAPI.updateCategories(categoryID, category_name, categoryOrderId, file).then(res => {
+      if (res.status !== 200) {
+        enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
+      }
+      else {
+        window.location.reload();
+      }
+    })
   }
 
   const deleteForm = () => {
     categoriesAPI.deleteCategories(categoryID).then(res => {
       if (res.status !== 200) {
-        enqueueSnackbar(`Failed to update category`, { variant: 'error' });
+        enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
       }
       else {
         window.location.reload();
@@ -95,12 +93,14 @@ const CategoryTable = (categories) => {
     <React.Fragment>
       <CategoriesForm
         category_name={category_name}
-        handleChangecategory_name={handleChangecategory_name}
+        handleChangecategory_name={handleChangeCategoryName}
+        categoryOrderId={categoryOrderId}
+        handleSubChangeCategoryOrderId={handleSubChangeCategoryOrderId}
         handleCloseAdd={handleCloseUpdate}
         addOpen={addOpen}
-        formType="Add"
+        formType="Update"
         setImage={setImage}
-        handleClickAction={updateCatgoriesForm}
+        handleClickAction={updateCategoriesForm}
       />
 
       <ConfrimDeleteDialogue
@@ -116,6 +116,7 @@ const CategoryTable = (categories) => {
             <StyledTableRow>
               <StyledTableCell>Logo</StyledTableCell>
               <StyledTableCell align="center">Category Name</StyledTableCell>
+              <StyledTableCell align="center">Order</StyledTableCell>
               <StyledTableCell align="center">Created Date</StyledTableCell>
               <StyledTableCell align="center">Updated Date</StyledTableCell>
               <StyledTableCell align="center">isActive</StyledTableCell>
@@ -124,7 +125,7 @@ const CategoryTable = (categories) => {
             </StyledTableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
+            {rows?.map((row, index) => (
               <StyledTableRow
                 key={index}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -138,6 +139,7 @@ const CategoryTable = (categories) => {
                   }
                 </StyledTableCell>
                 <StyledTableCell align="center">{row.category_name} </StyledTableCell>
+                <StyledTableCell align="center">{row.app_order_id} </StyledTableCell>
                 <StyledTableCell align="center">{row.created_date}</StyledTableCell>
                 <StyledTableCell align="center">{row.updated_date}</StyledTableCell>
                 <StyledTableCell align="center">{row.is_active ? <CheckIcon /> : <CloseIcon />}</StyledTableCell>

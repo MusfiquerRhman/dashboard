@@ -68,6 +68,8 @@ const CouponsForm = (props) => {
         setScid,
         vid,
         scid,
+        scheduler,
+        handleChangeCouponScheduler,
         coupnsDescription,
         handleChangeCouponDescription,
         handleClickSubmit,
@@ -81,8 +83,6 @@ const CouponsForm = (props) => {
 
     useEffect(() => {
         const selectedVendor = vid !== '' ? vendors.find((element) => element.vid === vid)?.vendor_name : '';
-        // const subCategoryName = scid !== '' ? subCategories.find((element) => element.scid === scid)?.sub_category_name : '';
-        // setSelectedSubCategoryName(subCategoryName)
         setSelectedVendorName(selectedVendor)
     }, [vid, vendors])
 
@@ -91,8 +91,8 @@ const CouponsForm = (props) => {
         setVid(vid);
     }
 
-    const handleClickItemSubctegory = (id, sub_category_name) => {
-        if(scid.indexOf(id) === -1){
+    const handleClickItemSubcategory = (id, sub_category_name) => {
+        if (scid.indexOf(id) === -1) {
             setSelectedSubCategoryName(prevName => [...prevName, sub_category_name]);
             setScid(prevScid => [...prevScid, id]);
         }
@@ -135,7 +135,7 @@ const CouponsForm = (props) => {
                 <div>
                     <Paper elevation={6} className={classes.formBox} >
                         <form className={classes.form}>
-                            <Typography variant="h4" sx={{ padding: '1rem 3rem' }}>
+                            <Typography variant="h4" sx={{ padding: '1rem 0' }}>
                                 Enter Coupon Details:
                             </Typography>
 
@@ -150,7 +150,7 @@ const CouponsForm = (props) => {
                                             onChange={handleChangeCoupon_code}
                                             required
                                             fullWidth
-                                            sx={{backgroundColor: '#30C3CD20'}}
+                                            sx={{ backgroundColor: '#30C3CD20' }}
                                         />
                                     </Grid>
                                 </Grid>
@@ -164,19 +164,19 @@ const CouponsForm = (props) => {
                                             required
                                             fullWidth
                                             variant="outlined"
-                                            sx={{backgroundColor: '#30C3CD20'}}
+                                            sx={{ backgroundColor: '#30C3CD20' }}
                                         />
                                     </Grid>
                                 </Grid>
-                                <p style={{fontSize: '1.15rem'}}>Select the appropriate box/s: </p>
-                                <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                                <p style={{ fontSize: '1.15rem' }}>Select the appropriate box/s: </p>
+                                <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
                                     <Grid container item direction="column" spacing={2} xs={12}>
                                         <Grid item>
                                             <Checkbox
                                                 label="Active"
                                                 onChange={handleChangeIs_Active}
                                                 checked={isActive}
-                                                /> <span>Active</span>
+                                            /> <span>Active</span>
                                         </Grid>
                                     </Grid>
                                     <Grid container item direction="column" spacing={2} xs={12}>
@@ -185,16 +185,16 @@ const CouponsForm = (props) => {
                                                 label="Feture Vendor"
                                                 onChange={handleChangeFeature_coupon}
                                                 checked={feature_coupon}
-                                                /> <span>Feature Coupon</span>
+                                            /> <span>Feature Coupon</span>
                                         </Grid>
                                     </Grid>
-                                    <Grid container item direction="column" spacing={2} xs={12}  sx={{ marginBottom: '1.5rem' }}>
+                                    <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
                                         <Grid item>
                                             <Checkbox
                                                 label="Single Use"
                                                 onChange={handleChangeSingle_use}
                                                 checked={single_use}
-                                                /> <span>Single Use</span>
+                                            /> <span>Single Use</span>
                                         </Grid>
                                     </Grid>
                                 </div>
@@ -206,9 +206,9 @@ const CouponsForm = (props) => {
                                             id="demo-simple-select"
                                             value={selectedVendorName}
                                             label="Select a Vendor"
-                                            sx={{backgroundColor: '#30C3CD20'}}
+                                            sx={{ backgroundColor: '#30C3CD20' }}
                                         >
-                                            {vendors.map((element, index) => (
+                                            {vendors?.map((element, index) => (
                                                 <MenuItem key={index}
                                                     onClick={() => handleClickItemVendorMenu(element.vid, element.vendor_name)}
                                                     value={element.vendor_name}>{element.vendor_name}
@@ -219,7 +219,7 @@ const CouponsForm = (props) => {
 
                                     <div className={classes.chip__container}>
                                         <div className='chips'>
-                                            {selectedSubCategoryName.map((value) => (
+                                            {selectedSubCategoryName?.map((value) => (
                                                 <Chip sx={{ marginRight: '0.5rem', marginBottom: '0.5rem', backgroundColor: '#30C3CD30' }}
                                                     key={value}
                                                     label={value}
@@ -248,9 +248,9 @@ const CouponsForm = (props) => {
                                                     'aria-labelledby': 'basic-button',
                                                 }}
                                             >
-                                                {subCategories.map((element, index) => (
+                                                {subCategories?.map((element, index) => (
                                                     <MenuItem key={index}
-                                                        onClick={() => handleClickItemSubctegory(element.scid, element.sub_category_name)}
+                                                        onClick={() => handleClickItemSubcategory(element.scid, element.sub_category_name)}
                                                         value={element.sub_category_name}>{element.sub_category_name}
                                                     </MenuItem>
                                                 ))}
@@ -260,7 +260,7 @@ const CouponsForm = (props) => {
                                     <p className='info'><i>You can add multiplt sub-categories by clicking the + ADD SUB-CATEGGORY button. Click on the X icon in the selected sub-category tags to delete them</i></p>
 
                                 </Box>
-                                <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                                <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
                                     <Box sx={{ marginBottom: "1rem", width: '50%', marginRight: '0.5rem' }}>
                                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                                             <DatePicker
@@ -270,8 +270,8 @@ const CouponsForm = (props) => {
                                                 onChange={(newValue) => {
                                                     setStartDate(new Date(newValue).toISOString().substring(0, 10));
                                                 }}
-                                                renderInput={(params) => <TextField  fullWidth {...params} sx={{backgroundColor: '#30C3CD20'}}/>}
-                                                />
+                                                renderInput={(params) => <TextField fullWidth {...params} sx={{ backgroundColor: '#30C3CD20' }} />}
+                                            />
                                         </LocalizationProvider>
                                     </Box>
                                     <br />
@@ -284,8 +284,8 @@ const CouponsForm = (props) => {
                                                 onChange={(newValue) => {
                                                     setEnddate(new Date(newValue).toISOString().substring(0, 10));
                                                 }}
-                                                renderInput={(params) => <TextField  fullWidth {...params} sx={{backgroundColor: '#30C3CD20'}}/>}
-                                                />
+                                                renderInput={(params) => <TextField fullWidth {...params} sx={{ backgroundColor: '#30C3CD20' }} />}
+                                            />
                                         </LocalizationProvider>
                                     </Box>
                                 </div>
@@ -299,10 +299,25 @@ const CouponsForm = (props) => {
                                             required
                                             fullWidth
                                             variant="outlined"
-                                            sx={{backgroundColor: '#30C3CD20'}}
+                                            sx={{ backgroundColor: '#30C3CD20' }}
                                         />
                                     </Grid>
                                 </Grid>
+                                
+                                <FormControl fullWidth sx={{ marginBottom: '1.5rem' }}>
+                                    <InputLabel id="demo-simple-select-label">Scheduler</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-scheduler"
+                                        id="demo-simple-scheduler"
+                                        value={scheduler}
+                                        label="Scheduler"
+                                        onChange={handleChangeCouponScheduler}
+                                        sx={{ backgroundColor: '#30C3CD20' }}
+                                    >
+                                        <MenuItem value={'monthly'}>Monthly</MenuItem>
+                                        <MenuItem value={'weekly'}>Weekly</MenuItem>
+                                    </Select>
+                                </FormControl>
 
                                 <Grid item>
                                     <Button fullWidth variant="contained" onClick={handleClickSubmit}>Submit</Button>

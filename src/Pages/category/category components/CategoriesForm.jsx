@@ -24,6 +24,8 @@ const CategoriesForm = (props) => {
     const {
         category_name,
         handleChangecategory_name,
+        categoryOrderId,
+        handleSubChangeCategoryOrderId,
         handleCloseAdd,
         addOpen,
         formType,
@@ -33,7 +35,7 @@ const CategoriesForm = (props) => {
 
     const [displayImage, setDisplayImage] = useState("");
     
-    const imageSelectHandeler = (files) => {
+    const imageSelectHandler = (files) => {
         setImage(files[0]);
         const reader = new FileReader();
         reader.onload = () => {
@@ -89,7 +91,7 @@ const CategoriesForm = (props) => {
                 <div>
                     <Paper elevation={6} className={classes.formBox} >
                         <form className={classes.form}>
-                            <Typography variant="h4" sx={{ padding: '1rem 3rem' }}>
+                            <Typography variant="h4" sx={{ padding: '1rem 0' }}>
                                 Enter Category Details:
                             </Typography>
 
@@ -103,6 +105,18 @@ const CategoriesForm = (props) => {
                                             sx={{backgroundColor: '#30C3CD20'}}
                                             value={category_name}
                                             onChange={handleChangecategory_name}
+                                            required
+                                            fullWidth
+                                        />
+                                    </Grid>
+                                    <Grid item >
+                                        <TextField id="registration-order"
+                                            label="Order Id"
+                                            type="number"
+                                            variant="outlined"
+                                            sx={{backgroundColor: '#30C3CD20'}}
+                                            value={categoryOrderId}
+                                            onChange={handleSubChangeCategoryOrderId}
                                             required
                                             fullWidth
                                         />
@@ -123,10 +137,10 @@ const CategoriesForm = (props) => {
                                                 name="image"
                                                 type="file"
                                                 onChange={(e) => {
-                                                    imageSelectHandeler(e.target.files);
+                                                    imageSelectHandler(e.target.files);
                                                 }}
                                                 hidden
-                                                required
+                                                required={formType === "Update" ? false : true}
                                             />
                                         </Button>
                                     </Grid>
