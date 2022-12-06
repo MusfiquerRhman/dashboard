@@ -10,6 +10,7 @@ import Collapse from '@mui/material/Collapse';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
+import Tooltip from '@mui/material/Tooltip';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import * as vendorAPI from '../../../API/vendors';
@@ -40,6 +41,19 @@ export default function VendorCards(props) {
   const { enqueueSnackbar } = useSnackbar();
   const classes = Styles();
   const { element } = props;
+
+  if(element.facebook[0] === 'w') {
+    element.facebook = `http://${element.facebook}`
+  }
+  if(element.twitter[0] === 'w') {
+    element.twitter = `http://${element.twitter}`
+  }
+  if(element.youtube[0] === 'w') {
+    element.youtube = `http://${element.youtube}`
+  }
+  if(element.instagram[0] === 'w') {
+    element.instagram = `http://${element.instagram}`
+  }
 
   const handleClickOpenDelete = () => {
     setDeleteOpen(true);
@@ -110,7 +124,7 @@ export default function VendorCards(props) {
                   <span className={classes.title}>Website:</span>
                 </Grid>
                 <Grid item xs={7}>
-                  <a href={element.website} className={classes.website}>{element.website}</a>
+                  <a target="_blank" href={element.website} className={classes.website} rel="noreferrer">{element.website}</a>
                 </Grid>
 
                 <Grid item xs={5}>
@@ -199,59 +213,75 @@ export default function VendorCards(props) {
                   </Grid>
 
                   {
-                    (element.facebook !== '' && element.facebook !== null) && (                      
+                    (element.facebook.length > 1 && element.facebook !== null) && (                      
                       <>
                         <Grid item xs={4}>
                           <span className={classes.title}>Facebook:</span>
                         </Grid>
                         <Grid item xs={8}>
-                          <span className={classes.value}> {element.facebook}</span>
+                          <span className={classes.value}> 
+                            <Tooltip title={element.facebook}>
+                              <a target="_blank" className={classes.website} href={element.facebook} rel="noreferrer">Click here</a>
+                            </Tooltip>
+                          </span>
                         </Grid>
                       </>
                     )
                   }
 
                   {
-                    (element.facebook !== '' && element.facebook !== null) && (                      
+                    (element.twitter.length > 1 && element.twitter !== null) && (                      
                       <>
                         <Grid item xs={4}>
                           <span className={classes.title}>Twitter:</span>
                         </Grid>
                         <Grid item xs={8}>
-                          <span className={classes.value}> {element.twitter}</span>
+                          <span className={classes.value}> 
+                            <Tooltip title={element.twitter}>
+                              <a target="_blank" className={classes.website} href={element.twitter} rel="noreferrer">Click here</a>
+                            </Tooltip>
+                          </span>
                         </Grid>
                       </>
                     )
                   }
 
                 {
-                    (element.youtube !== '' && element.youtube !== null) && (                      
-                      <>
+                    (element.youtube.length > 1 && element.youtube !== null) && (    
+                      <>           
                         <Grid item xs={4}>
                           <span className={classes.title}>Youtube:</span>
                         </Grid>
                         <Grid item xs={8}>
-                          <span className={classes.value}> {element.youtube}</span>
+                          <span className={classes.value}> 
+                            <Tooltip title={element.youtube}>
+                              <a target="_blank" className={classes.website} href={element.youtube} rel="noreferrer">Click here</a>
+                            </Tooltip>
+                          </span>
                         </Grid>
                       </>
                     )
                   }
 
                   {
-                    (element.instagram !== '' && element.instagram !== null) && (                      
+                    (element.instagram.length > 1 && element.instagram !== null) && (                      
                       <>
                         <Grid item xs={4}>
                           <span className={classes.title}>Instagram:</span>
                         </Grid>
                         <Grid item xs={8}>
-                          <span className={classes.value}> {element.instagram}</span>
+                          <span className={classes.value}> 
+                            <Tooltip title={element.instagram}>
+                              <a target="_blank" className={classes.website} href={element.instagram} rel="noreferrer">Click here</a>
+                            </Tooltip>
+                          </span>
                         </Grid>
                       </>
                     )
                   }
 
                   {
-                    (element.best_of_logan_picks !== '' && element.best_of_logan_picks !== null) && (                      
+                    (element.best_of_logan_picks.length > 1 && element.best_of_logan_picks !== null) && (                      
                       <>
                         <Grid item xs={4}>
                           <span className={classes.title}>BL Picks:</span>

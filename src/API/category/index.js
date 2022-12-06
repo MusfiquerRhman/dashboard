@@ -11,11 +11,11 @@ export const getAllCategory = async () => {
 
 export const addCategories = async (category_name, categoryOrderId, file) => {
   try {
-    const formdata = new FormData();
-    formdata.append("category_name", category_name);
-    formdata.append("app_order_id", parseInt(categoryOrderId));
-    formdata.append("file", file);
-    return await axios.post(`${API_URL}/category`, formdata, {
+    const formData = new FormData();
+    formData.append("category_name", category_name);
+    formData.append("app_order_id", parseInt(categoryOrderId));
+    formData.append("file", file);
+    return await axios.post(`${API_URL}/category`, formData, {
       headers: {
         "Authorization": `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`
       },
@@ -28,11 +28,11 @@ export const addCategories = async (category_name, categoryOrderId, file) => {
 
 export const updateCategories = async (category_id, category_name, categoryOrderId, file) => {
   try {
-    const formdata = new FormData();
-    formdata.append("category_name", category_name);
-    formdata.append("app_order_id", parseInt(categoryOrderId));
-    formdata.append("file", file);
-    return await axios.put(`${API_URL}/category/${category_id}`, formdata, {
+    const formData = new FormData();
+    formData.append("category_name", category_name);
+    formData.append("app_order_id", parseInt(categoryOrderId));
+    formData.append("file", file);
+    return await axios.put(`${API_URL}/category/${category_id}`, formData, {
       headers: {
         "Authorization": `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`
       },

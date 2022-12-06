@@ -15,7 +15,15 @@ import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import imageCompression from 'browser-image-compression';
+import { useSnackbar } from 'notistack';
 import Style from '../../../Styles/GlobalStyles';
+
+const options = {
+    maxSizeMB: 0.4,
+    maxWidthOrHeight: 200,
+    useWebWorker: true
+}
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -24,6 +32,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const VendorForm = (props) => {
     const classes = Style();
     const [displayImage, setDisplayImage] = useState("");
+    const { enqueueSnackbar } = useSnackbar();
+
 
     const {
         formType,
@@ -56,16 +66,22 @@ const VendorForm = (props) => {
         })
     };
 
-    const imageSelectHandler = (files) => {
-        setImage(files[0]);
-        const reader = new FileReader();
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                setDisplayImage(reader.result);
+    const imageSelectHandler = async (files) => {
+        try {
+            const compressedFile = await imageCompression(files[0], options);
+            console.log('originalFile instanceof Blob', files[0] instanceof Blob); // true
+            setImage(compressedFile);
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    setDisplayImage(reader.result);
+                }
+            };
+            if (files[0] && files[0].type.match("image.*")) {
+                reader.readAsDataURL(files[0]);
             }
-        };
-        if (files[0] && files[0].type.match("image.*")) {
-            reader.readAsDataURL(files[0]);
+        } catch (error) {
+            enqueueSnackbar(`Failed to compress image - ${error.message}`, { variant: 'error' });
         }
     };
 

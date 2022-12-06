@@ -251,6 +251,8 @@ const CouponsForm = (props) => {
                                             onChange={handleChangeCouponDescription}
                                             required
                                             fullWidth
+                                            multiline
+                                            rows={7}
                                             variant="outlined"
                                             sx={{backgroundColor: '#30C3CD20'}}
                                         />
