@@ -158,7 +158,6 @@ const VendorForm = (props) => {
                                             value={state.email}
                                             onChange={onChangeInput}
                                             name='email'
-                                            required
                                             fullWidth
                                         />
                                     </Grid>
@@ -173,7 +172,6 @@ const VendorForm = (props) => {
                                             value={state.phone}
                                             onChange={onChangeInput}
                                             name='phone'
-                                            required
                                             fullWidth
                                         />
                                     </Grid>
@@ -188,7 +186,8 @@ const VendorForm = (props) => {
                                             value={state.description}
                                             onChange={onChangeInput}
                                             name='description'
-                                            required
+                                            multiline
+                                            rows={7}
                                             fullWidth
                                         />
                                     </Grid>
@@ -203,7 +202,8 @@ const VendorForm = (props) => {
                                             value={state.street1}
                                             onChange={onChangeInput}
                                             name='street1'
-                                            required
+                                            multiline
+                                            rows={2}
                                             fullWidth
                                         />
                                     </Grid>
@@ -218,7 +218,8 @@ const VendorForm = (props) => {
                                             value={state.street2}
                                             onChange={onChangeInput}
                                             name='street2'
-                                            required
+                                            multiline
+                                            rows={2}
                                             fullWidth
                                         />
                                     </Grid>
@@ -233,7 +234,6 @@ const VendorForm = (props) => {
                                             value={state.city}
                                             onChange={onChangeInput}
                                             name='city'
-                                            required
                                             fullWidth
                                         />
                                     </Grid>
@@ -248,7 +248,6 @@ const VendorForm = (props) => {
                                             value={state.state}
                                             onChange={onChangeInput}
                                             name='state'
-                                            required
                                             fullWidth
                                         />
                                     </Grid>
@@ -263,7 +262,6 @@ const VendorForm = (props) => {
                                             value={state.hours}
                                             name='hours'
                                             onChange={onChangeInput}
-                                            required
                                             fullWidth
                                         />
                                     </Grid>
@@ -278,7 +276,6 @@ const VendorForm = (props) => {
                                             value={state.zipCode}
                                             onChange={onChangeInput}
                                             name='zipCode'
-                                            required
                                             fullWidth
                                         />
                                     </Grid>
@@ -293,7 +290,6 @@ const VendorForm = (props) => {
                                             value={state.website}
                                             onChange={onChangeInput}
                                             name='website'
-                                            required
                                             fullWidth
                                         />
                                     </Grid>
@@ -308,7 +304,6 @@ const VendorForm = (props) => {
                                             value={state.requirements}
                                             onChange={onChangeInput}
                                             name='requirements'
-                                            required
                                             fullWidth
                                         />
                                     </Grid>

@@ -113,20 +113,33 @@ export default function VendorCards(props) {
 
             <CardContent>
               <Grid container sx={{ color: 'text.primary', lineHeight: '1.7' }}>
-                <Grid item xs={5}>
-                  <span className={classes.title}>Phone:</span>
-                </Grid>
-                <Grid item xs={7}>
-                  <span className={classes.value}>{element.phone}</span>
-                </Grid>
+                {
+                    (element.zip_code.length > 1 && element.zip_code !== null) && (
+                      <>
+                        <Grid item xs={5}>
+                          <span className={classes.title}>Phone:</span>
+                        </Grid>
+                        <Grid item xs={7}>
+                          <span className={classes.value}>{element.phone}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
 
-                <Grid item xs={5}>
-                  <span className={classes.title}>Website:</span>
-                </Grid>
-                <Grid item xs={7}>
-                  <a target="_blank" href={element.website} className={classes.website} rel="noreferrer">{element.website}</a>
-                </Grid>
+                {
+                    (element.website.length > 1 && element.website !== null) && (
+                      <>
+                        <Grid item xs={5}>
+                          <span className={classes.title}>Website:</span>
+                        </Grid>
+                        <Grid item xs={7}>
+                          <a target="_blank" href={element.website} className={classes.website} rel="noreferrer">{element.website}</a>
+                        </Grid>
+                      </>
+                    )
+                  }
 
+    
                 <Grid item xs={5}>
                   <span className={classes.title}>Active:</span>
                 </Grid>
@@ -134,26 +147,45 @@ export default function VendorCards(props) {
                   <span className={classes.value}>{element.is_active ? "Yes" : "No"}</span>
                 </Grid>
 
-                <Grid item xs={5}>
-                  <span className={classes.title}>Feature:</span>
-                </Grid>
-                <Grid item xs={7}>
-                  <span className={classes.icon}>{element.feature_vendor ? "Yes" : "No"}</span>
-                </Grid>
 
-                <Grid item xs={5}>
-                  <span className={classes.title}>Hours:</span>
-                </Grid>
-                <Grid item xs={7}>
-                  <span className={classes.value}>{element.hours}</span>
-                </Grid>
+                {
+                    (element.feature_vendor.length > 1 && element.feature_vendor !== null) && (
+                      <>
+                        <Grid item xs={5}>
+                          <span className={classes.title}>Feature:</span>
+                        </Grid>
+                        <Grid item xs={7}>
+                          <span className={classes.icon}>{element.feature_vendor ? "Yes" : "No"}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
 
-                <Grid item xs={5}>
-                  <span className={classes.title}>Requirements:</span>
-                </Grid>
-                <Grid item xs={7}>
-                  <span className={classes.value}>{element.requirements}</span>
-                </Grid>
+                {
+                    (element.hours.length > 1 && element.hours !== null) && (
+                        <>
+                      <Grid item xs={5}>
+                        <span className={classes.title}>Hours:</span>
+                      </Grid>
+                      <Grid item xs={7}>
+                        <span className={classes.value}>{element.hours}</span>
+                      </Grid>
+                      </>
+                    )
+                  }
+                {
+                    (element.requirements.length > 1 && element.requirements !== null) && (
+                      <>
+                        <Grid item xs={5}>
+                          <span className={classes.title}>Requirements:</span>
+                        </Grid>
+                        <Grid item xs={7}>
+                          <span className={classes.value}>{element.requirements}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
+
               </Grid>
             </CardContent>
 
@@ -177,40 +209,74 @@ export default function VendorCards(props) {
             <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent >
                 <Grid container sx={{ color: 'text.primary', lineHeight: '2' }}>
-                  <Grid item xs={4}>
-                    <span className={classes.title}>Description:</span>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <span className={classes.value}>{element.description}</span>
-                  </Grid>
+                {
+                    (element.description.length > 1 && element.description !== null) && (
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>Description:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}>{element.description}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
 
-                  <Grid item xs={4}>
-                    <span className={classes.title}>Address:</span>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <span className={classes.value}>{`${element.street1}, ${element.street2}`}</span>
-                  </Grid>
+                  {
+                    (element.street1.length > 1 && element.street1 !== null) && (
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>Address:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}>{element.street1}</span>
+                          {(element.street2.length > 1 && element.street2 !== null) && (
+                            <span className={classes.value}>{element.street2}</span>
+                          )}
+                        </Grid>
+                      </>
+                    )
+                  }
 
-                  <Grid item xs={4}>
-                    <span className={classes.title}>City:</span>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <span className={classes.value}> {element.city}</span>
-                  </Grid>
 
-                  <Grid item xs={4}>
-                    <span className={classes.title}>State:</span>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <span className={classes.value}> {element.state}</span>
-                  </Grid>
+                  {
+                    (element.city.length > 1 && element.city !== null) && (
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>City:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}> {element.city}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
 
-                  <Grid item xs={4}>
-                    <span className={classes.title}>Zip Code:</span>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <span className={classes.value}> {element.zip_code}</span>
-                  </Grid>
+                  {
+                    (element.state.length > 1 && element.state !== null) && (
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>State:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}> {element.state}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
+
+                  {
+                    (element.zip_code.length > 1 && element.zip_code !== null) && (
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>Zip Code:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}> {element.zip_code}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
 
                   {
                     (element.facebook.length > 1 && element.facebook !== null) && (                      
