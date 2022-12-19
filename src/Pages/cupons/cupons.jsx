@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { useSnackbar } from 'notistack';
-import React, { useDeferredValue, useEffect, useState } from 'react';
+import React, { useCallback, useDeferredValue, useEffect, useState } from 'react';
 import * as couponsAPI from '../../API/coupons';
 import useInputState from '../../Hooks/UseInputHook';
 import Style from '../../Styles/GlobalStyles';
@@ -94,25 +94,25 @@ const Cupons = () => {
         setSearchedTerm('')
     }
 
-    const handleChangeSingle_use = (event) => {
+    const handleChangeSingle_use = useCallback((event) => {
         setSingle_use(event.target.checked);
-    };
+    }, []);
 
-    const handleChangeFeature_coupon = (event) => {
+    const handleChangeFeature_coupon = useCallback((event) => {
         setFeature_coupon(event.target.checked);
-    };
+    }, []);
 
-    const handleChangeIs_Active = (event) => {
+    const handleChangeIs_Active = useCallback((event) => {
         setIsActive(event.target.checked);
-    };
+    }, []);
 
-    const handleChangeCouponDescription = (event) => {
+    const handleChangeCouponDescription = useCallback((event) => {
         setCouponDescription(event.target.value)
-    }
+    }, [])
 
-    const handleChangeCouponScheduler = (event) => {
+    const handleChangeCouponScheduler = useCallback((event) => {
         setScheduler(event.target.value)
-    }
+    }, [])
 
     const addForm = async () => {
         let flag = 0;

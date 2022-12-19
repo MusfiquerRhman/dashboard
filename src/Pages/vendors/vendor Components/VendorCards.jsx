@@ -12,7 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import * as vendorAPI from '../../../API/vendors';
 import ConfrimDeleteDialogue from '../../../Components/ConfrimDeleteDialogue';
 import Styles from "../vendorsStyle";
@@ -29,7 +29,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function VendorCards(props) {
+const VendorCards = React.memo((props) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -68,11 +68,11 @@ export default function VendorCards(props) {
     setupdateOpen(true);
   }
 
-  const handleCloseUpdate = () => {
+  const handleCloseUpdate = useCallback(() => {
     setupdateOpen(false);
-  }
+  }, [])
 
-  const deleteForm = async () => {
+  const deleteForm = useCallback(async () => {
     const res = await vendorAPI.deleteVendor(element.vid);
     if (res.status === 200) {
       enqueueSnackbar(`Successfully Deleted`, { variant: 'info' });
@@ -82,7 +82,7 @@ export default function VendorCards(props) {
     }
     setDeleteOpen(false);
     window.location.reload();
-  }
+  }, [element.vid, enqueueSnackbar])
 
   return (
     <>
@@ -385,4 +385,6 @@ export default function VendorCards(props) {
       </Box>
     </>
   );
-}
+})
+
+export default VendorCards;

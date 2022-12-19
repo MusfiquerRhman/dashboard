@@ -33,7 +33,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const SubCategoriesForm = (props) => {
+const SubCategoriesForm = React.memo((props) => {
     const {
         category_name,
         handleSubChangecategory_name,
@@ -190,6 +190,6 @@ const SubCategoriesForm = (props) => {
             </DialogContent>
         </Dialog>
     )
-}
+})
 
 export default SubCategoriesForm;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as couponsAPI from '../../../API/coupons';
 import CuponsTable from './CuponsTable';
 
-const FeaturedCoupons = () => {
+const FeaturedCoupons = React.memo(() => {
     const [coupons, setCoupons] = useState([])
 
     useEffect(() => {
@@ -20,6 +20,6 @@ const FeaturedCoupons = () => {
             </div>
         </React.Fragment>
     )
-}
+})
 
 export default FeaturedCoupons;

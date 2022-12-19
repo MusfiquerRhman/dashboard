@@ -28,7 +28,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CategoriesForm = (props) => {
+const CategoriesForm = React.memo((props) => {
     const {
         category_name,
         handleChangecategory_name,
@@ -171,6 +171,6 @@ const CategoriesForm = (props) => {
             </DialogContent>
         </Dialog>
     )
-}
+})
 
 export default CategoriesForm;

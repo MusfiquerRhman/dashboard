@@ -9,7 +9,7 @@ import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import * as categoriesAPI from "../../../API/category";
 import CategoryImg from "../../../Assets/icons8-diversity.png";
 import ConfrimDeleteDialogue from '../../../Components/ConfrimDeleteDialogue';
@@ -22,7 +22,7 @@ function createData(category_logo_path, category_name, cid, created_date, update
   return { category_logo_path, category_name, cid, created_date, updated_date, is_active, app_order_id };
 }
 
-const CategoryTable = (categories) => {
+const CategoryTable = React.memo((categories) => {
   const classes = style();
   const [category_name, handleChangeCategoryName, setCategory_name] = useInputState('')
   const [categoryOrderId, handleSubChangeCategoryOrderId, setCategoryOrderId] = useInputState('');
@@ -67,7 +67,7 @@ const CategoryTable = (categories) => {
     setAddOpen(true);
   }
 
-  const updateCategoriesForm = () => {
+  const updateCategoriesForm = useCallback(() => {
     categoriesAPI.updateCategories(categoryID, category_name, categoryOrderId, file).then(res => {
       if (res.status !== 200) {
         enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
@@ -76,9 +76,9 @@ const CategoryTable = (categories) => {
         window.location.reload();
       }
     })
-  }
+  }, [categoryID, categoryOrderId, category_name, enqueueSnackbar, file])
 
-  const deleteForm = () => {
+  const deleteForm = useCallback(() => {
     categoriesAPI.deleteCategories(categoryID).then(res => {
       if (res.status !== 200) {
         enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
@@ -87,7 +87,7 @@ const CategoryTable = (categories) => {
         window.location.reload();
       }
     })
-  }
+  }, [categoryID, enqueueSnackbar])
 
   return (
     <React.Fragment>
@@ -163,7 +163,7 @@ const CategoryTable = (categories) => {
       </TableContainer>
     </React.Fragment>
   );
-}
+})
 
 export default CategoryTable;
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as cuponsAPI from '../../../API/coupons';
 import CuponsTable from './CuponsTable';
 
-const ActiveAndFutureCoupons = () => {
+const ActiveAndFutureCoupons = React.memo(() => {
     const [coupons, setCoupons] = useState([])
 
     useEffect(() => {
@@ -21,6 +21,6 @@ const ActiveAndFutureCoupons = () => {
             </div>
         </React.Fragment>
     )
-}
+})
 
 export default ActiveAndFutureCoupons;

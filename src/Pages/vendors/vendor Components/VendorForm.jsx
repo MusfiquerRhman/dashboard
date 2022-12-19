@@ -29,7 +29,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const VendorForm = (props) => {
+const VendorForm = React.memo((props) => {
     const classes = Style();
     const [displayImage, setDisplayImage] = useState("");
     const { enqueueSnackbar } = useSnackbar();
@@ -434,6 +434,6 @@ const VendorForm = (props) => {
             </DialogContent>
         </Dialog>
     )
-}
+})
 
 export default VendorForm;

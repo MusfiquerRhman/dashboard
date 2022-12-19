@@ -141,7 +141,7 @@ const CuponsTable = (data) => {
 
       {rows.length === 0 &&
         <Typography variant="h5" gutterBottom sx={{ textAlign: 'center' }}>
-          No Data
+          No Data Available
         </Typography>
       }
     </>
