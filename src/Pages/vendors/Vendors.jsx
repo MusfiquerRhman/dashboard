@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { useSnackbar } from 'notistack';
-import React, { useReducer, useState } from 'react';
+import React, { useCallback, useReducer, useState } from 'react';
 import * as vendorAPI from '../../API/vendors';
 import style from '../../Styles/GlobalStyles';
 import FeaturedVendors from './FeaturedVendors';
@@ -46,7 +46,7 @@ const Vendor = () => {
         setUpdateAdd(true);
     }
 
-    const handleClickAddVendor = async () => {
+    const handleClickAddVendor = useCallback(async () => {
         if(file === ""){
             enqueueSnackbar(`Please Select an image file`, { variant: 'error' });
         }
@@ -61,7 +61,7 @@ const Vendor = () => {
             }
             setUpdateAdd(false);
         }
-    }
+    }, [enqueueSnackbar, file, state])
 
     return (
         <React.Fragment>

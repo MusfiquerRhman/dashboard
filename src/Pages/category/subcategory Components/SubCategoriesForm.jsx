@@ -18,14 +18,22 @@ import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import imageCompression from 'browser-image-compression';
+import { useSnackbar } from 'notistack';
 import { CategoryContext } from '../../../Context APIs/categoryContext';
 import Style from '../../../Styles/GlobalStyles';
+
+const options = {
+    maxSizeMB: 0.4,
+    maxWidthOrHeight: 200,
+    useWebWorker: true
+}
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const SubCategoriesForm = (props) => {
+const SubCategoriesForm = React.memo((props) => {
     const {
         category_name,
         handleSubChangecategory_name,
@@ -39,26 +47,30 @@ const SubCategoriesForm = (props) => {
 
     const [displayImage, setDisplayImage] = useState("");
     const { categories } = useContext(CategoryContext);
-    const [categoryName, setcategoryName] = useState('');
-
+    const [categoryName, setCategoryName] = useState('');
+    const { enqueueSnackbar } = useSnackbar();
     const classes = Style();
-
 
     const handleClickCategory = (category) => {
         setCategoriesId(category.cid);
-        setcategoryName(category.category_name);
+        setCategoryName(category.category_name);
     };
 
-    const imageSelectHandeler = (files) => {
-        setImage(files[0]);
-        const reader = new FileReader();
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                setDisplayImage(reader.result);
+    const imageSelectHandler = async (files) => {
+        try {
+            const compressedFile = await imageCompression(files[0], options);
+            setImage(compressedFile);
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    setDisplayImage(reader.result);
+                }
+            };
+            if (files[0] && files[0].type.match("image.*")) {
+                reader.readAsDataURL(files[0]);
             }
-        };
-        if (files[0] && files[0].type.match("image.*")) {
-            reader.readAsDataURL(files[0]);
+        } catch (error) {
+            enqueueSnackbar(`Failed to compress image - ${error.message}`, { variant: 'error' });
         }
     };
 
@@ -160,7 +172,7 @@ const SubCategoriesForm = (props) => {
                                                 name="image"
                                                 type="file"
                                                 onChange={(e) => {
-                                                    imageSelectHandeler(e.target.files);
+                                                    imageSelectHandler(e.target.files);
                                                 }}
                                                 hidden
                                                 required
@@ -178,6 +190,6 @@ const SubCategoriesForm = (props) => {
             </DialogContent>
         </Dialog>
     )
-}
+})
 
 export default SubCategoriesForm;

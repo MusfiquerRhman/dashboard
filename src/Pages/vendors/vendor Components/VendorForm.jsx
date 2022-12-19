@@ -15,15 +15,25 @@ import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import imageCompression from 'browser-image-compression';
+import { useSnackbar } from 'notistack';
 import Style from '../../../Styles/GlobalStyles';
+
+const options = {
+    maxSizeMB: 0.4,
+    maxWidthOrHeight: 200,
+    useWebWorker: true
+}
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const VendorForm = (props) => {
+const VendorForm = React.memo((props) => {
     const classes = Style();
     const [displayImage, setDisplayImage] = useState("");
+    const { enqueueSnackbar } = useSnackbar();
+
 
     const {
         formType,
@@ -56,16 +66,22 @@ const VendorForm = (props) => {
         })
     };
 
-    const imageSelectHandler = (files) => {
-        setImage(files[0]);
-        const reader = new FileReader();
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                setDisplayImage(reader.result);
+    const imageSelectHandler = async (files) => {
+        try {
+            const compressedFile = await imageCompression(files[0], options);
+            console.log('originalFile instanceof Blob', files[0] instanceof Blob); // true
+            setImage(compressedFile);
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    setDisplayImage(reader.result);
+                }
+            };
+            if (files[0] && files[0].type.match("image.*")) {
+                reader.readAsDataURL(files[0]);
             }
-        };
-        if (files[0] && files[0].type.match("image.*")) {
-            reader.readAsDataURL(files[0]);
+        } catch (error) {
+            enqueueSnackbar(`Failed to compress image - ${error.message}`, { variant: 'error' });
         }
     };
 
@@ -142,7 +158,6 @@ const VendorForm = (props) => {
                                             value={state.email}
                                             onChange={onChangeInput}
                                             name='email'
-                                            required
                                             fullWidth
                                         />
                                     </Grid>
@@ -157,7 +172,6 @@ const VendorForm = (props) => {
                                             value={state.phone}
                                             onChange={onChangeInput}
                                             name='phone'
-                                            required
                                             fullWidth
                                         />
                                     </Grid>
@@ -172,7 +186,8 @@ const VendorForm = (props) => {
                                             value={state.description}
                                             onChange={onChangeInput}
                                             name='description'
-                                            required
+                                            multiline
+                                            rows={7}
                                             fullWidth
                                         />
                                     </Grid>
@@ -187,7 +202,8 @@ const VendorForm = (props) => {
                                             value={state.street1}
                                             onChange={onChangeInput}
                                             name='street1'
-                                            required
+                                            multiline
+                                            rows={2}
                                             fullWidth
                                         />
                                     </Grid>
@@ -202,7 +218,8 @@ const VendorForm = (props) => {
                                             value={state.street2}
                                             onChange={onChangeInput}
                                             name='street2'
-                                            required
+                                            multiline
+                                            rows={2}
                                             fullWidth
                                         />
                                     </Grid>
@@ -217,7 +234,6 @@ const VendorForm = (props) => {
                                             value={state.city}
                                             onChange={onChangeInput}
                                             name='city'
-                                            required
                                             fullWidth
                                         />
                                     </Grid>
@@ -232,7 +248,6 @@ const VendorForm = (props) => {
                                             value={state.state}
                                             onChange={onChangeInput}
                                             name='state'
-                                            required
                                             fullWidth
                                         />
                                     </Grid>
@@ -247,7 +262,6 @@ const VendorForm = (props) => {
                                             value={state.hours}
                                             name='hours'
                                             onChange={onChangeInput}
-                                            required
                                             fullWidth
                                         />
                                     </Grid>
@@ -262,7 +276,6 @@ const VendorForm = (props) => {
                                             value={state.zipCode}
                                             onChange={onChangeInput}
                                             name='zipCode'
-                                            required
                                             fullWidth
                                         />
                                     </Grid>
@@ -277,7 +290,6 @@ const VendorForm = (props) => {
                                             value={state.website}
                                             onChange={onChangeInput}
                                             name='website'
-                                            required
                                             fullWidth
                                         />
                                     </Grid>
@@ -292,7 +304,6 @@ const VendorForm = (props) => {
                                             value={state.requirements}
                                             onChange={onChangeInput}
                                             name='requirements'
-                                            required
                                             fullWidth
                                         />
                                     </Grid>
@@ -423,6 +434,6 @@ const VendorForm = (props) => {
             </DialogContent>
         </Dialog>
     )
-}
+})
 
 export default VendorForm;

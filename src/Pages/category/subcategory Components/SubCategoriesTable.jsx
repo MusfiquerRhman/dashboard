@@ -10,7 +10,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import * as subcategoriesAPI from "../../../API/subcategory";
 import CategoryImg from "../../../Assets/icons8-diversity.png";
 import ConfrimDeleteDialogue from '../../../Components/ConfrimDeleteDialogue';
@@ -23,7 +23,7 @@ function createData(sub_category_logo_path, sub_category_name, cid, scid, create
   return { sub_category_logo_path, sub_category_name, cid, scid, created_date, updated_date, is_active };
 }
 
-const SubCategoryTable = (subCategories) => {
+const SubCategoryTable = React.memo((subCategories) => {
   const classes = style();
   const [subCategory_name, handleSubChangecategory_name, setSubCategory_name] = useInputState('')
 
@@ -69,7 +69,7 @@ const SubCategoryTable = (subCategories) => {
     setaddOpen(true);
   }
 
-  const updateSubCatgoriesForm = () => {
+  const updateSubCatgoriesForm = useCallback(() => {
     subcategoriesAPI.updateSubCategories(categoryID, subCategoryID, subCategory_name, file).then(res => {
       if (res.status !== 200) {
         enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
@@ -78,9 +78,9 @@ const SubCategoryTable = (subCategories) => {
         window.location.reload();
       }
     })
-  }
+  }, [categoryID, enqueueSnackbar, file, subCategoryID, subCategory_name])
 
-  const deleteForm = () => {
+  const deleteForm = useCallback(() => {
     subcategoriesAPI.deleteSubCategories(subCategoryID).then(res => {
       if (res.status !== 200) {
         enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
@@ -89,7 +89,7 @@ const SubCategoryTable = (subCategories) => {
         window.location.reload();
       }
     })
-  }
+  }, [enqueueSnackbar, subCategoryID])
 
   return (
     <React.Fragment>
@@ -170,6 +170,6 @@ const SubCategoryTable = (subCategories) => {
       }
     </React.Fragment>
   );
-}
+})
 
 export default SubCategoryTable;

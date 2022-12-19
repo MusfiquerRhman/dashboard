@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import * as couponsAPI from '../../../API/coupons';
 import CuponsTable from './CuponsTable';
 
-const ExpiredCoupons = () => {
+const ExpiredCoupons = React.memo(() => {
     const [cupons, setCupons] = useState([])
 
     useEffect(() => {
@@ -21,6 +21,6 @@ const ExpiredCoupons = () => {
             </div>
         </React.Fragment>
     )
-}
+})
 
 export default ExpiredCoupons;

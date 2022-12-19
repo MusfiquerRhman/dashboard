@@ -10,8 +10,9 @@ import Collapse from '@mui/material/Collapse';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
+import Tooltip from '@mui/material/Tooltip';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import * as vendorAPI from '../../../API/vendors';
 import ConfrimDeleteDialogue from '../../../Components/ConfrimDeleteDialogue';
 import Styles from "../vendorsStyle";
@@ -28,7 +29,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function VendorCards(props) {
+const VendorCards = React.memo((props) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -40,6 +41,19 @@ export default function VendorCards(props) {
   const { enqueueSnackbar } = useSnackbar();
   const classes = Styles();
   const { element } = props;
+
+  if(element.facebook[0] === 'w') {
+    element.facebook = `http://${element.facebook}`
+  }
+  if(element.twitter[0] === 'w') {
+    element.twitter = `http://${element.twitter}`
+  }
+  if(element.youtube[0] === 'w') {
+    element.youtube = `http://${element.youtube}`
+  }
+  if(element.instagram[0] === 'w') {
+    element.instagram = `http://${element.instagram}`
+  }
 
   const handleClickOpenDelete = () => {
     setDeleteOpen(true);
@@ -54,11 +68,11 @@ export default function VendorCards(props) {
     setupdateOpen(true);
   }
 
-  const handleCloseUpdate = () => {
+  const handleCloseUpdate = useCallback(() => {
     setupdateOpen(false);
-  }
+  }, [])
 
-  const deleteForm = async () => {
+  const deleteForm = useCallback(async () => {
     const res = await vendorAPI.deleteVendor(element.vid);
     if (res.status === 200) {
       enqueueSnackbar(`Successfully Deleted`, { variant: 'info' });
@@ -68,7 +82,7 @@ export default function VendorCards(props) {
     }
     setDeleteOpen(false);
     window.location.reload();
-  }
+  }, [element.vid, enqueueSnackbar])
 
   return (
     <>
@@ -99,20 +113,33 @@ export default function VendorCards(props) {
 
             <CardContent>
               <Grid container sx={{ color: 'text.primary', lineHeight: '1.7' }}>
-                <Grid item xs={5}>
-                  <span className={classes.title}>Phone:</span>
-                </Grid>
-                <Grid item xs={7}>
-                  <span className={classes.value}>{element.phone}</span>
-                </Grid>
+                {
+                    (element.zip_code.length > 1 && element.zip_code !== null) && (
+                      <>
+                        <Grid item xs={5}>
+                          <span className={classes.title}>Phone:</span>
+                        </Grid>
+                        <Grid item xs={7}>
+                          <span className={classes.value}>{element.phone}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
 
-                <Grid item xs={5}>
-                  <span className={classes.title}>Website:</span>
-                </Grid>
-                <Grid item xs={7}>
-                  <a href={element.website} className={classes.website}>{element.website}</a>
-                </Grid>
+                {
+                    (element.website.length > 1 && element.website !== null) && (
+                      <>
+                        <Grid item xs={5}>
+                          <span className={classes.title}>Website:</span>
+                        </Grid>
+                        <Grid item xs={7}>
+                          <a target="_blank" href={element.website} className={classes.website} rel="noreferrer">{element.website}</a>
+                        </Grid>
+                      </>
+                    )
+                  }
 
+    
                 <Grid item xs={5}>
                   <span className={classes.title}>Active:</span>
                 </Grid>
@@ -120,26 +147,45 @@ export default function VendorCards(props) {
                   <span className={classes.value}>{element.is_active ? "Yes" : "No"}</span>
                 </Grid>
 
-                <Grid item xs={5}>
-                  <span className={classes.title}>Feature:</span>
-                </Grid>
-                <Grid item xs={7}>
-                  <span className={classes.icon}>{element.feature_vendor ? "Yes" : "No"}</span>
-                </Grid>
 
-                <Grid item xs={5}>
-                  <span className={classes.title}>Hours:</span>
-                </Grid>
-                <Grid item xs={7}>
-                  <span className={classes.value}>{element.hours}</span>
-                </Grid>
+                {
+                    (element.feature_vendor.length > 1 && element.feature_vendor !== null) && (
+                      <>
+                        <Grid item xs={5}>
+                          <span className={classes.title}>Feature:</span>
+                        </Grid>
+                        <Grid item xs={7}>
+                          <span className={classes.icon}>{element.feature_vendor ? "Yes" : "No"}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
 
-                <Grid item xs={5}>
-                  <span className={classes.title}>Requirements:</span>
-                </Grid>
-                <Grid item xs={7}>
-                  <span className={classes.value}>{element.requirements}</span>
-                </Grid>
+                {
+                    (element.hours.length > 1 && element.hours !== null) && (
+                        <>
+                      <Grid item xs={5}>
+                        <span className={classes.title}>Hours:</span>
+                      </Grid>
+                      <Grid item xs={7}>
+                        <span className={classes.value}>{element.hours}</span>
+                      </Grid>
+                      </>
+                    )
+                  }
+                {
+                    (element.requirements.length > 1 && element.requirements !== null) && (
+                      <>
+                        <Grid item xs={5}>
+                          <span className={classes.title}>Requirements:</span>
+                        </Grid>
+                        <Grid item xs={7}>
+                          <span className={classes.value}>{element.requirements}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
+
               </Grid>
             </CardContent>
 
@@ -163,95 +209,145 @@ export default function VendorCards(props) {
             <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent >
                 <Grid container sx={{ color: 'text.primary', lineHeight: '2' }}>
-                  <Grid item xs={4}>
-                    <span className={classes.title}>Description:</span>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <span className={classes.value}>{element.description}</span>
-                  </Grid>
-
-                  <Grid item xs={4}>
-                    <span className={classes.title}>Address:</span>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <span className={classes.value}>{`${element.street1}, ${element.street2}`}</span>
-                  </Grid>
-
-                  <Grid item xs={4}>
-                    <span className={classes.title}>City:</span>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <span className={classes.value}> {element.city}</span>
-                  </Grid>
-
-                  <Grid item xs={4}>
-                    <span className={classes.title}>State:</span>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <span className={classes.value}> {element.state}</span>
-                  </Grid>
-
-                  <Grid item xs={4}>
-                    <span className={classes.title}>Zip Code:</span>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <span className={classes.value}> {element.zip_code}</span>
-                  </Grid>
-
-                  {
-                    (element.facebook !== '' && element.facebook !== null) && (                      
+                {
+                    (element.description.length > 1 && element.description !== null) && (
                       <>
                         <Grid item xs={4}>
-                          <span className={classes.title}>Facebook:</span>
+                          <span className={classes.title}>Description:</span>
                         </Grid>
                         <Grid item xs={8}>
-                          <span className={classes.value}> {element.facebook}</span>
+                          <span className={classes.value}>{element.description}</span>
                         </Grid>
                       </>
                     )
                   }
 
                   {
-                    (element.facebook !== '' && element.facebook !== null) && (                      
+                    (element.street1.length > 1 && element.street1 !== null) && (
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>Address:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}>{element.street1}</span>
+                          {(element.street2.length > 1 && element.street2 !== null) && (
+                            <span className={classes.value}>{element.street2}</span>
+                          )}
+                        </Grid>
+                      </>
+                    )
+                  }
+
+
+                  {
+                    (element.city.length > 1 && element.city !== null) && (
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>City:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}> {element.city}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
+
+                  {
+                    (element.state.length > 1 && element.state !== null) && (
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>State:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}> {element.state}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
+
+                  {
+                    (element.zip_code.length > 1 && element.zip_code !== null) && (
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>Zip Code:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}> {element.zip_code}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
+
+                  {
+                    (element.facebook.length > 1 && element.facebook !== null) && (                      
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>Facebook:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}> 
+                            <Tooltip title={element.facebook}>
+                              <a target="_blank" className={classes.website} href={element.facebook} rel="noreferrer">Click here</a>
+                            </Tooltip>
+                          </span>
+                        </Grid>
+                      </>
+                    )
+                  }
+
+                  {
+                    (element.twitter.length > 1 && element.twitter !== null) && (                      
                       <>
                         <Grid item xs={4}>
                           <span className={classes.title}>Twitter:</span>
                         </Grid>
                         <Grid item xs={8}>
-                          <span className={classes.value}> {element.twitter}</span>
+                          <span className={classes.value}> 
+                            <Tooltip title={element.twitter}>
+                              <a target="_blank" className={classes.website} href={element.twitter} rel="noreferrer">Click here</a>
+                            </Tooltip>
+                          </span>
                         </Grid>
                       </>
                     )
                   }
 
                 {
-                    (element.youtube !== '' && element.youtube !== null) && (                      
-                      <>
+                    (element.youtube.length > 1 && element.youtube !== null) && (    
+                      <>           
                         <Grid item xs={4}>
                           <span className={classes.title}>Youtube:</span>
                         </Grid>
                         <Grid item xs={8}>
-                          <span className={classes.value}> {element.youtube}</span>
+                          <span className={classes.value}> 
+                            <Tooltip title={element.youtube}>
+                              <a target="_blank" className={classes.website} href={element.youtube} rel="noreferrer">Click here</a>
+                            </Tooltip>
+                          </span>
                         </Grid>
                       </>
                     )
                   }
 
                   {
-                    (element.instagram !== '' && element.instagram !== null) && (                      
+                    (element.instagram.length > 1 && element.instagram !== null) && (                      
                       <>
                         <Grid item xs={4}>
                           <span className={classes.title}>Instagram:</span>
                         </Grid>
                         <Grid item xs={8}>
-                          <span className={classes.value}> {element.instagram}</span>
+                          <span className={classes.value}> 
+                            <Tooltip title={element.instagram}>
+                              <a target="_blank" className={classes.website} href={element.instagram} rel="noreferrer">Click here</a>
+                            </Tooltip>
+                          </span>
                         </Grid>
                       </>
                     )
                   }
 
                   {
-                    (element.best_of_logan_picks !== '' && element.best_of_logan_picks !== null) && (                      
+                    (element.best_of_logan_picks.length > 1 && element.best_of_logan_picks !== null) && (                      
                       <>
                         <Grid item xs={4}>
                           <span className={classes.title}>BL Picks:</span>
@@ -289,4 +385,6 @@ export default function VendorCards(props) {
       </Box>
     </>
   );
-}
+})
+
+export default VendorCards;

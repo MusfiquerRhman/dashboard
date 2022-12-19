@@ -1,3 +1,4 @@
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -5,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import * as userApi from '../../API/auth';
@@ -33,39 +34,60 @@ const ForgotPassword = () => {
         }
     }
 
-    useEffect(() => {
-        if (isAuthenticated) {
-            navigate('/');
-        }
-    });
+    const goBack = () => {
+        navigate('/');
+    }
 
     return (
         <div>
-            <Paper elevation={6} className={classes.formBox}>
-                <form className={classes.form}>
-                    <Typography variant="h3">
-                        Reset Your Password:
-                    </Typography>
+            {!isAuthenticated ? (
+                <Paper elevation={6} className={classes.formBox}>
+                    <form className={classes.form}>
+                        <Typography variant="h3">
+                            Reset Your Password:
+                        </Typography>
 
-                    <Box sx={{ width: '100%' }} >
-                        <Grid container item direction="column" spacing={2} xs={12} >
-                            <Grid item>
-                                <TextField id="login-name"
-                                    label="Email Address"
-                                    variant="standard"
-                                    value={userEmail}
-                                    onChange={handleChangeUserEmail}
-                                    required
-                                    fullWidth
-                                />
+                        <Box sx={{ width: '100%' }} >
+                            <Grid container item direction="column" spacing={2} xs={12} >
+                                <Grid item>
+                                    <TextField id="login-name"
+                                        label="Email Address"
+                                        variant="standard"
+                                        value={userEmail}
+                                        onChange={handleChangeUserEmail}
+                                        required
+                                        fullWidth
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <Button fullWidth onClick={submitForm} variant="contained">Submit</Button>
+                                </Grid>
                             </Grid>
-                            <Grid item>
-                                <Button fullWidth onClick={submitForm} variant="contained" >Submit</Button>
-                            </Grid>
-                        </Grid>
+                        </Box>
+                    </form>
+                </Paper>
+            ) : (
+                <React.Fragment>
+                    <Box sx={{
+                        textAlign: 'center',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexDirection: 'column',
+                        height: '90vh'
+                    }}>
+                        <Typography variant="h2">
+                            Check your Inbox
+                        </Typography>
+                        <Typography variant="subtitle">
+                            {userEmail}
+                        </Typography>
+                        <div style={{width: '15rem', padding: '2rem'}}>
+                            <Button fullWidth onClick={goBack} variant="outlined"  startIcon={<KeyboardBackspaceIcon/>}>Go Back</Button>
+                        </div>
                     </Box>
-                </form>
-            </Paper>
+                </React.Fragment>
+            )}
         </div>
     )
 }

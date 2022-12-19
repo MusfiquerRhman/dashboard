@@ -32,7 +32,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CouponsForm = (props) => {
+const CouponsForm = React.memo((props) => {
     const classes = Style();
 
     const [anchorElSubCategory, setAnchorElSubCategory] = React.useState(null);
@@ -298,6 +298,8 @@ const CouponsForm = (props) => {
                                             onChange={handleChangeCouponDescription}
                                             required
                                             fullWidth
+                                            multiline
+                                            rows={7}
                                             variant="outlined"
                                             sx={{ backgroundColor: '#30C3CD20' }}
                                         />
@@ -329,6 +331,6 @@ const CouponsForm = (props) => {
             </DialogContent>
         </Dialog>
     )
-}
+})
 
 export default CouponsForm;

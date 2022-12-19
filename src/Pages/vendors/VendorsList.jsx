@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { VendorContext } from '../../Context APIs/vendorContext';
 import VendorCards from './vendor Components/VendorCards';
 
-const VendorsList = () => {
+const VendorsList = React.memo(() => {
     const { vendors } = useContext(VendorContext)
 
     return (
@@ -17,6 +17,6 @@ const VendorsList = () => {
             </Grid>
         </React.Fragment>
     )
-}
+})
 
 export default VendorsList;

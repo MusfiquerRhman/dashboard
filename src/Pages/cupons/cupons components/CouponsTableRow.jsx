@@ -4,14 +4,14 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import * as couponsAPI from '../../../API/coupons';
 import ConfrimDeleteDialogue from '../../../Components/ConfrimDeleteDialogue';
 import useInputState from '../../../Hooks/UseInputHook';
 import { StyledTableCell, StyledTableRow } from '../../../Styles/GlobalStyles';
 import CouponsForm from './CouponUpdateForm';
 
-const Row = (props) => {
+const Row = React.memo((props) => {
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [updateOpen, setUpdateOpen] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
@@ -43,7 +43,7 @@ const Row = (props) => {
     const [scid, setScid] = useState('');
     const updateDate = new Date();
 
-    const handleClickOpenUpdate = (row) => {
+    const handleClickOpenUpdate = useCallback((row) => {
         setCouponCode(row.coupon_code);
         setPercentageOff(row.percentage_off);
         setSingle_use(row.single_use);
@@ -56,23 +56,23 @@ const Row = (props) => {
         setcoupon_description(row.coupon_description)
         setScheduler(row.scheduler);
         setUpdateOpen(true);
-    }
+    }, [setCouponCode, setPercentageOff, setScheduler])
 
-    const handleChangeSingle_use = (event) => {
+    const handleChangeSingle_use = useCallback((event) => {
         setSingle_use(event.target.checked);
-    };
+    }, []);
 
-    const handleChangeFeature_coupon = (event) => {
+    const handleChangeFeature_coupon = useCallback((event) => {
         setFeature_coupon(event.target.checked);
-    };
+    }, []);
 
-    const handleChangeIs_Active = (event) => {
+    const handleChangeIs_Active = useCallback((event) => {
         setIsActive(event.target.checked);
-    };
+    }, []);
 
-    const handleChangeCouponDescription = (event) => {
+    const handleChangeCouponDescription = useCallback((event) => {
         setcoupon_description(event.target.value)
-    }
+    }, []);
 
     const deleteForm = async () => {
         const res = await couponsAPI.deleteCoupon(row.history.coupon_id);
@@ -166,7 +166,7 @@ const Row = (props) => {
             </StyledTableRow>
         </React.Fragment>
     );
-}
+})
 
 
 

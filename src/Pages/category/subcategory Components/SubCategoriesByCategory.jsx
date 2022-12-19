@@ -9,7 +9,7 @@ import { CategoryContext } from '../../../Context APIs/categoryContext';
 import SubCategoryTable from './SubCategoriesTable';
 
 
-const SubCategoriesByCategory = () => {
+const SubCategoriesByCategory = React.memo(() => {
     const {categories} = useContext(CategoryContext);
     const { enqueueSnackbar } = useSnackbar();
     const [selectedCategoryName, setSelectedCategoryName] = useState("")
@@ -52,6 +52,6 @@ const SubCategoriesByCategory = () => {
             </div>
         </>
     )
-}
+})
 
 export default SubCategoriesByCategory;

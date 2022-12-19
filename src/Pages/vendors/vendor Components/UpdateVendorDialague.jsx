@@ -1,10 +1,10 @@
 import { useSnackbar } from 'notistack';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import * as vendorAPI from '../../../API/vendors';
 import { ACTION_TYPE, INITIAL_STATE, vendorReducer } from '../vendorReducer';
 import VendorForm from './VendorForm';
 
-const UpdateVendorDialague = (props) => {
+const UpdateVendorDialague = React.memo((props) => {
     const { enqueueSnackbar } = useSnackbar();
     const [state, dispatch] = useReducer(vendorReducer, INITIAL_STATE);
 
@@ -20,7 +20,7 @@ const UpdateVendorDialague = (props) => {
         })
     }, [props])
 
-    const handleClickUpdateVendor = async () => {
+    const handleClickUpdateVendor = useCallback(async () => {
         const res = await vendorAPI.updateVendor(vid, state, file);
         if (res.status === 200) {
             enqueueSnackbar(`Successfully Updated Vendor`, { variant: 'info' });
@@ -30,7 +30,7 @@ const UpdateVendorDialague = (props) => {
             enqueueSnackbar(`Failes to Update - ${res.message}`, { variant: 'error' });
         }
         props.setupdateOpen(false);
-    }
+    }, [enqueueSnackbar, file, props, state, vid])
 
     return (
         <>
@@ -46,6 +46,6 @@ const UpdateVendorDialague = (props) => {
             />
         </>
     )
-}
+})
 
 export default UpdateVendorDialague;

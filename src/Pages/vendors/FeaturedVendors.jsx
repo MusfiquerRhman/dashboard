@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import * as vendorsAPI from '../../API/vendors';
 import VendorCards from './vendor Components/VendorCards';
 
-const FeaturedVendors = () => {
+const FeaturedVendors = React.memo(() => {
     const [vendors, setVendors] = useState([]);
     useEffect(() => {
         vendorsAPI.getFeaturedVendors().then(result => {
@@ -22,6 +22,6 @@ const FeaturedVendors = () => {
             </Grid>
         </React.Fragment>
     )
-}
+})
 
 export default FeaturedVendors;

@@ -3,18 +3,18 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useSnackbar } from 'notistack';
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import * as couponsAPI from '../../../API/coupons';
 import { VendorContext } from '../../../Context APIs/vendorContext';
 import CuponsTable from './CuponsTable';
 
-const CouponsByVendors = () => {
+const CouponsByVendors = React.memo(() => {
     const [selectedVendorName, setSelectedVendorName] = useState("")
     const [coupons, setCoupons] = useState([])
     const { enqueueSnackbar } = useSnackbar();
     const { vendors } = useContext(VendorContext)
 
-    const handleClickItem = (vid, vendorName) => {
+    const handleClickItem = useCallback((vid, vendorName) => {
         setSelectedVendorName(vendorName);
 
         couponsAPI.getCouponsByVendor(vid).then(
@@ -25,7 +25,7 @@ const CouponsByVendors = () => {
                 }
             }
         );
-    }
+    }, [enqueueSnackbar])
 
     return (
         <React.Fragment>
@@ -51,6 +51,6 @@ const CouponsByVendors = () => {
             </div>
         </React.Fragment>
     )
-}
+})
 
 export default CouponsByVendors;

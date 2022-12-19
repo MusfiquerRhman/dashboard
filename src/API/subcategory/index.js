@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://18.222.199.244/api/v1";
+const API_URL = "http://3.131.82.99/api/v1";
 
 export const getAllSubCategory = async () => {
   try {
@@ -21,10 +21,10 @@ export const getAllSubCategoryByCategoryID = async (category_id) => {
 
 export const updateSubCategories = async (category_id, sub_category_id, sub_category_name, file) => {
   try {
-    const formdata = new FormData();
-    formdata.append("sub_category_name", sub_category_name);
-    formdata.append("file", file);
-    return await axios.put(`${API_URL}/${category_id}/subcategory/${sub_category_id}`, formdata, {
+    const formData = new FormData();
+    formData.append("sub_category_name", sub_category_name);
+    formData.append("file", file);
+    return await axios.put(`${API_URL}/${category_id}/subcategory/${sub_category_id}`, formData, {
         headers: {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`,
         },
@@ -38,11 +38,11 @@ export const updateSubCategories = async (category_id, sub_category_id, sub_cate
 
 export const addSubCategories = async (category_id, sub_category_name, file) => {
   try {
-    const formdata = new FormData();
-    formdata.append("sub_category_name", sub_category_name);
-    formdata.append("category_id", category_id);
-    formdata.append("file", file);
-    return await axios.post(`${API_URL}/subcategory`, formdata, {
+    const formData = new FormData();
+    formData.append("sub_category_name", sub_category_name);
+    formData.append("category_id", category_id);
+    formData.append("file", file);
+    return await axios.post(`${API_URL}/subcategory`, formData, {
       headers: {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("userInformations")).access_token}`,
       },
