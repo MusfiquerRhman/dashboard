@@ -54,10 +54,7 @@ function TableHeadSort(props) {
                     Coupon Description
                 </StyledTableCell>
                 <StyledTableCell align='center'>
-                    Update
-                </StyledTableCell>
-                <StyledTableCell align='center'>
-                    Delete
+                    Update / Delete
                 </StyledTableCell>
             </StyledTableRow>
         </TableHead>

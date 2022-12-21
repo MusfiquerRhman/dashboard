@@ -112,7 +112,7 @@ const SubCategoryTable = React.memo((subCategories) => {
       />
 
       {rows.length > 0 &&
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{boxShadow: "2px 2px 5px #01010144"}}>
           <Table sx={{ minWidth: 750 }} aria-label="simple table">
             <TableHead>
               <StyledTableRow>

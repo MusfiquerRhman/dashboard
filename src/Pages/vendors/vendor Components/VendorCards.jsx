@@ -42,16 +42,16 @@ const VendorCards = React.memo((props) => {
   const classes = Styles();
   const { element } = props;
 
-  if(element.facebook[0] === 'w') {
+  if(element.facebook[0] !== 'h') {
     element.facebook = `http://${element.facebook}`
   }
-  if(element.twitter[0] === 'w') {
+  if(element.twitter[0] !== 'h') {
     element.twitter = `http://${element.twitter}`
   }
-  if(element.youtube[0] === 'w') {
+  if(element.youtube[0] !== 'h') {
     element.youtube = `http://${element.youtube}`
   }
-  if(element.instagram[0] === 'w') {
+  if(element.instagram[0] !== 'h') {
     element.instagram = `http://${element.instagram}`
   }
 
@@ -102,7 +102,7 @@ const VendorCards = React.memo((props) => {
 
       <Box className={classes.form} >
         <Box sx={{ width: '100%' }}>
-          <Card sx={{ maxWidth: 345, boxShadow: "0 0 8px #018F8F55" }}>
+          <Card sx={{ maxWidth: 345, boxShadow: "2px 2px 6px #01010144" }}>
             <CardHeader
               avatar={
                 <img src={element.vendor_log_path} alt='vendor' className={classes.vendorImg} />
@@ -113,7 +113,7 @@ const VendorCards = React.memo((props) => {
 
             <CardContent>
               <Grid container sx={{ color: 'text.primary', lineHeight: '1.7' }}>
-                {
+                  {
                     (element.zip_code.length > 1 && element.zip_code !== null) && (
                       <>
                         <Grid item xs={5}>
@@ -126,7 +126,7 @@ const VendorCards = React.memo((props) => {
                     )
                   }
 
-                {
+                  {
                     (element.website.length > 1 && element.website !== null) && (
                       <>
                         <Grid item xs={5}>
@@ -138,7 +138,6 @@ const VendorCards = React.memo((props) => {
                       </>
                     )
                   }
-
     
                 <Grid item xs={5}>
                   <span className={classes.title}>Active:</span>
@@ -147,8 +146,7 @@ const VendorCards = React.memo((props) => {
                   <span className={classes.value}>{element.is_active ? "Yes" : "No"}</span>
                 </Grid>
 
-
-                {
+                  {
                     (element.feature_vendor.length > 1 && element.feature_vendor !== null) && (
                       <>
                         <Grid item xs={5}>
@@ -161,7 +159,7 @@ const VendorCards = React.memo((props) => {
                     )
                   }
 
-                {
+                  {
                     (element.hours.length > 1 && element.hours !== null) && (
                         <>
                       <Grid item xs={5}>
@@ -173,7 +171,7 @@ const VendorCards = React.memo((props) => {
                       </>
                     )
                   }
-                {
+                  {
                     (element.requirements.length > 1 && element.requirements !== null) && (
                       <>
                         <Grid item xs={5}>
@@ -209,7 +207,7 @@ const VendorCards = React.memo((props) => {
             <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent >
                 <Grid container sx={{ color: 'text.primary', lineHeight: '2' }}>
-                {
+                  {
                     (element.description.length > 1 && element.description !== null) && (
                       <>
                         <Grid item xs={4}>

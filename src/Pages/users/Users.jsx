@@ -66,7 +66,7 @@ const Users = () => {
         <div className={classes.form}>
             <Grid container spacing={2} sx={{justifyContent: 'center', marginBottom: '2rem'}}>
                 <Grid item xs={3}>
-                    <Card>
+                    <Card sx={{boxShadow: "2px 2px 5px #01010144"}}>
                         <CardContent>
                             <Typography variant="h6" color="text.secondary">
                                 Total Admins: {adminUserCount}
@@ -75,7 +75,7 @@ const Users = () => {
                     </Card>
                 </Grid>
                 <Grid item xs={3}>
-                    <Card>
+                    <Card sx={{boxShadow: "2px 2px 5px #01010144"}}>
                         <CardContent>
                             <Typography variant="h6" color="text.secondary">
                                 Total Users: {userCount}
