@@ -69,7 +69,6 @@ const VendorForm = React.memo((props) => {
     const imageSelectHandler = async (files) => {
         try {
             const compressedFile = await imageCompression(files[0], options);
-            console.log('originalFile instanceof Blob', files[0] instanceof Blob); // true
             setImage(compressedFile);
             const reader = new FileReader();
             reader.onload = () => {

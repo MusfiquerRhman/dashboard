@@ -42,7 +42,7 @@ export const sendOTP = async (email) => {
 
 export const verifyOTP = async (email, sessionId, optCode) => {
   try {
-    return await axios.post(`${API_URL}/otp/verify`, {
+    return await axios.post(`${API_URL}/otp/forgot-password/verify`, {
       recipient_id: email,
       session_id: sessionId,
       otp_code: optCode
