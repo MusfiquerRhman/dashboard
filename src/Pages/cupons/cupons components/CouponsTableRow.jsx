@@ -161,8 +161,10 @@ const Row = React.memo((props) => {
                 <StyledTableCell align="center">{row.is_active ? <CheckIcon /> : <CloseIcon />}</StyledTableCell>
                 <StyledTableCell align="center">{row.single_use ? <CheckIcon /> : <CloseIcon />}</StyledTableCell>
                 <StyledTableCell align="center" sx={{textTransform: 'capitalize'}}>{row.coupon_description}</StyledTableCell>
-                <StyledTableCell align="center"><Button variant="text" onClick={() => handleClickOpenUpdate(row)}><EditIcon /></Button></StyledTableCell>
-                <StyledTableCell align="center"><Button variant="text" onClick={handleClickOpenDelete} color="error"><DeleteForeverIcon /></Button></StyledTableCell>
+                <StyledTableCell align="center" sx={{display: 'flex'}}>
+                    <Button variant="text" onClick={() => handleClickOpenUpdate(row)}><EditIcon /></Button>
+                    <Button variant="text" onClick={handleClickOpenDelete} color="error"><DeleteForeverIcon /></Button>
+                </StyledTableCell>
             </StyledTableRow>
         </React.Fragment>
     );

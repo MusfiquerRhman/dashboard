@@ -97,12 +97,12 @@ function App() {
               <DrawerAppBar />
               <Grid item justifyContent={"center"} sx={{width: '100%', justifyContent: 'center'}}>
                 <Routes>
-                  <Route exact path="/" element={isLoggedin ? <Cupons /> : <Login />} />
-                  <Route exact path="/vendors" element={isLoggedin ? <Vendor /> : <Login />} />
-                  <Route exact path="/login" element={isLoggedin ?  <Cupons /> : <Login />} />
-                  <Route exact path="/category" element={isLoggedin ? <Category /> : <Login />} />
-                  <Route exact path="/users" element={isLoggedin ? <Users /> : <Login />} />
-                  <Route exact path="/profile" element={isLoggedin ? <Profile /> : <Login />} />
+                  <Route exact path="/" element={<Cupons />} />
+                  <Route exact path="/vendors" element={<Vendor />} />
+                  <Route exact path="/login" element={<Cupons />} />
+                  <Route exact path="/category" element={<Category />} />
+                  <Route exact path="/users" element={<Users />} />
+                  <Route exact path="/profile" element={<Profile />} />
                 </Routes>
               </Grid>
             </Sidebar>
@@ -110,7 +110,7 @@ function App() {
             {!isLoggedin && 
             <Grid item justifyContent={"center"} sx={{width: '100%', justifyContent: 'center'}}>
               <Routes>
-                <Route exact path="/" element={isLoggedin ? <Cupons /> : <Login />} />
+                <Route exact path="/" element={<Login />} />
                 <Route exact path="/registration" element={<Registration />} />
                 <Route exact path="/forgotpassword" element={<ForgotPassword />} />
                 <Route exact path='/user/forgot-password' element={<ResetPassword />} />

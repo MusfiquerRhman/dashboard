@@ -36,7 +36,7 @@ const AdminTable = (admins) => {
     })
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{boxShadow: "2px 2px 5px #01010144"}}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <StyledTableRow>

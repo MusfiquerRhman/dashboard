@@ -122,7 +122,7 @@ const CuponsTable = (data) => {
   return (
     <>
       {rows.length > 0 &&
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{boxShadow: "2px 2px 5px #01010144"}}>
           <Table aria-label="collapsible table">
             <TableHeadSort
               order={order}
