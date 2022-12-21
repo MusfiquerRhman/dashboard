@@ -24,6 +24,7 @@ const ForgotPassword = () => {
     const [newPassword, handleChangeNewPassword] = useInputState("");
     const [confirmPassword, handleChangeConfirmPassword] = useInputState("");
     const [passwordResetDone, setPasswordResetDone] = useState(false)
+    const [resetPasswordToken, setResetPasswordToken] = useState('')
 
     const classes = style();
     const navigate = useNavigate();
@@ -38,7 +39,6 @@ const ForgotPassword = () => {
             setSessionId(res.data.session_id)
             setOtp(res.data.otp_code)
             enqueueSnackbar(res.data.message, { variant: 'success' });
-            console.log(res.data)
         }
         else if (res.status === 422) {
             enqueueSnackbar("Validation Error!", { variant: 'error' });
@@ -46,7 +46,6 @@ const ForgotPassword = () => {
     }
 
     const submitOTPForm = async (e) => {
-        console.log({otp, userOTP})
         if(otp !== userOTP){
             enqueueSnackbar("Error OTP not matched!", { variant: 'error' });
         }
@@ -56,6 +55,7 @@ const ForgotPassword = () => {
                 enqueueSnackbar("Error OTP not matched!", { variant: 'error' });
             }
             else if (res.status === 200){
+                setResetPasswordToken(res.data.reset_password_token)
                 setIsVerified(true);
             }
         }
@@ -63,7 +63,7 @@ const ForgotPassword = () => {
 
     const resetPassword = async () => {
         if(newPassword === confirmPassword){
-            const res = await userApi.resetPassword(sessionId, newPassword, confirmPassword);
+            const res = await userApi.resetPassword(resetPasswordToken, newPassword, confirmPassword);
             if (res === -1) {
                 enqueueSnackbar("Error Changing Password", { variant: 'error' });
             } else if (res.status === 200) {

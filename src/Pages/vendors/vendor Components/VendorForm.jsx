@@ -69,7 +69,6 @@ const VendorForm = React.memo((props) => {
     const imageSelectHandler = async (files) => {
         try {
             const compressedFile = await imageCompression(files[0], options);
-            console.log('originalFile instanceof Blob', files[0] instanceof Blob); // true
             setImage(compressedFile);
             const reader = new FileReader();
             reader.onload = () => {
@@ -308,7 +307,7 @@ const VendorForm = React.memo((props) => {
                                         />
                                     </Grid>
                                 </Grid>
-                                <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
+                                <Grid container item direction="column" spacing={2} xs={12}>
                                     <Grid item>
                                         <TextField id="registration-facebook"
                                             label="Facebook"
@@ -322,7 +321,10 @@ const VendorForm = React.memo((props) => {
                                         />
                                     </Grid>
                                 </Grid>
-                                <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
+                                <p className='info' style={{marginBottom: '.5rem'}}><i>
+                                    Append www before the URl, ex: www.facebook.com/abc
+                                </i></p>
+                                <Grid container item direction="column" spacing={2} xs={12}>
                                     <Grid item>
                                         <TextField id="registration-instagram"
                                             label="Instagram"
@@ -336,7 +338,10 @@ const VendorForm = React.memo((props) => {
                                         />
                                     </Grid>
                                 </Grid>
-                                <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
+                                <p className='info' style={{marginBottom: '.5rem'}}><i>
+                                    Append www before the URl, ex: www.instagram.com/abc
+                                </i></p>
+                                <Grid container item direction="column" spacing={2} xs={12}>
                                     <Grid item>
                                         <TextField id="registration-youtube"
                                             label="Youtube"
@@ -350,7 +355,10 @@ const VendorForm = React.memo((props) => {
                                         />
                                     </Grid>
                                 </Grid>
-                                <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
+                                <p className='info' style={{marginBottom: '.5rem'}}><i>
+                                    Append www before the URl, ex: www.youtube.com/abc
+                                </i></p>
+                                <Grid container item direction="column" spacing={2} xs={12}>
                                     <Grid item>
                                         <TextField id="registration-twitter"
                                             label="Twitter"
@@ -364,6 +372,9 @@ const VendorForm = React.memo((props) => {
                                         />
                                     </Grid>
                                 </Grid>
+                                <p className='info' style={{marginBottom: '.5rem'}}><i>
+                                    Append www before the URl, ex: www.twitter.com/abc
+                                </i></p>
                                 <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
                                     <Grid item>
                                         <TextField id="registration-bestOfLoganPicks"

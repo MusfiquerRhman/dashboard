@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid";
 import { SnackbarProvider } from "notistack";
 import React, { useContext, useEffect } from "react";
-import { BrowserRouter, Redirect, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import * as categoriesAPI from "./API/category";
 import * as subCategoriesAPI from "./API/subcategory";
 import * as userAPI from './API/user';
@@ -15,7 +15,6 @@ import { VendorContext } from "./Context APIs/vendorContext";
 import Category from "./Pages/category/Category";
 import Cupons from "./Pages/cupons/cupons";
 import ForgotPassword from "./Pages/forgotPassword/ForgotPassword";
-import ResetPassword from "./Pages/forgotPassword/ResetPassword";
 import Login from "./Pages/login/Login";
 import DrawerAppBar from "./Pages/navbar/NavBar";
 import Profile from "./Pages/profile/Profile";
@@ -113,7 +112,6 @@ function App() {
                 <Route exact path="/" element={<Login />} />
                 <Route exact path="/registration" element={<Registration />} />
                 <Route exact path="/forgotpassword" element={<ForgotPassword />} />
-                <Route exact path='/user/forgot-password' element={<ResetPassword />} />
                 <Route exact path="*" element={<Login />} />
               </Routes>
             </Grid>
