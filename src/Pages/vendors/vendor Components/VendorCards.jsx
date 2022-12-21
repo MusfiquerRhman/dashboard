@@ -42,16 +42,16 @@ const VendorCards = React.memo((props) => {
   const classes = Styles();
   const { element } = props;
 
-  if(element.facebook[0] !== 'h') {
+  if(element.facebook.length > 0 && element.facebook[0] !== 'h') {
     element.facebook = `http://${element.facebook}`
   }
-  if(element.twitter[0] !== 'h') {
+  if(element.twitter.length > 0 && element.twitter[0] !== 'h') {
     element.twitter = `http://${element.twitter}`
   }
-  if(element.youtube[0] !== 'h') {
+  if(element.youtube.length > 0 && element.youtube[0] !== 'h') {
     element.youtube = `http://${element.youtube}`
   }
-  if(element.instagram[0] !== 'h') {
+  if(element.instagram.length > 0 && element.instagram[0] !== 'h') {
     element.instagram = `http://${element.instagram}`
   }
 
