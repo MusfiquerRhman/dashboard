@@ -34,7 +34,6 @@ const VendorForm = React.memo((props) => {
     const [displayImage, setDisplayImage] = useState("");
     const { enqueueSnackbar } = useSnackbar();
 
-
     const {
         formType,
         updateOpen,
@@ -45,6 +44,31 @@ const VendorForm = React.memo((props) => {
         ACTION_TYPE,
         setImage,
     } = props;
+    
+
+    const validateForm = () => {
+        if(state.name.length < 2) {
+            enqueueSnackbar("Enter a valid Name", { variant: 'error' });
+            return;
+        }
+        
+        if(state.email !== '' && !(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(state.email))) {
+            enqueueSnackbar("Enter a valid Email", { variant: 'error' });
+            return;
+        }
+        
+        if(state.phone !== '' && !(/^(1\s?)?((\([0-9]{3}\))|[0-9]{3})[\s-]?[\0-9]{3}[\s-]?[0-9]{4}$/.test(state.phone))){
+            enqueueSnackbar("Enter a valid Phone Number", { variant: 'error' });
+            return;
+        }
+        
+        if(state.zipCode !== '' && state.zipCode.length !== 5){
+            enqueueSnackbar("Enter a valid Zip Code", { variant: 'error' });
+            return;
+        }
+    
+        handleClickVendor();
+    }
 
     const onChangeInput = (event) => {
         dispatch({
@@ -118,7 +142,7 @@ const VendorForm = React.memo((props) => {
                     <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="span">
                         {formType} Vendor
                     </Typography>
-                    <Button autoFocus color="inherit" onClick={handleClickVendor}>
+                    <Button autoFocus color="inherit" onClick={validateForm}>
                         save
                     </Button>
                 </Toolbar>
@@ -436,7 +460,7 @@ const VendorForm = React.memo((props) => {
                                     </Grid>
                                 </Grid>
                                 <Grid item>
-                                    <Button fullWidth variant="contained" onClick={handleClickVendor}>Submit</Button>
+                                    <Button fullWidth variant="contained" onClick={validateForm}>Submit</Button>
                                 </Grid>
                             </Box>
                         </form>

@@ -17,7 +17,7 @@ const ConfrimDeleteDialogue = (props) => {
                 Are you sure you want to delete - {`${name}`}?
             </DialogTitle>
             <DialogActions>
-                <Button onClick={handleCloseDelete}>Cancle</Button>
+                <Button onClick={handleCloseDelete}>Cancel</Button>
                 <Button onClick={deleteForm} autoFocus color="error">
                     Delete
                 </Button>

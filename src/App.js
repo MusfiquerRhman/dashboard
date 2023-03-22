@@ -12,13 +12,13 @@ import { CategoryContext } from "./Context APIs/categoryContext";
 import { SubCategoryContext } from "./Context APIs/subcategoriesContext";
 import { UserProvider } from "./Context APIs/userContext";
 import { VendorContext } from "./Context APIs/vendorContext";
+import Registration from "./Pages/Registration/Registration";
 import Category from "./Pages/category/Category";
 import Cupons from "./Pages/cupons/cupons";
 import ForgotPassword from "./Pages/forgotPassword/ForgotPassword";
 import Login from "./Pages/login/Login";
 import DrawerAppBar from "./Pages/navbar/NavBar";
 import Profile from "./Pages/profile/Profile";
-import Registration from "./Pages/Registration/Registration";
 import Users from "./Pages/users/Users";
 import Vendor from "./Pages/vendors/Vendors";
 
@@ -51,7 +51,7 @@ function App() {
     }
   }
 
-  // If the user dose not closes the window
+  // If the user dose not close the window
   useEffect(() => {
     const timer =  setTimeout(()=> {
       try{
