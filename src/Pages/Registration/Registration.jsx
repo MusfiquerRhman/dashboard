@@ -30,7 +30,7 @@ function Registration() {
         if (password === confrimPassword) {
             const res = await authApi.registration(email, password, phoneNo, admin_status);
             if (res === -1) {
-                enqueueSnackbar("Error; Try again", { variant: 'error' });
+                enqueueSnackbar("Error: Try again", { variant: 'error' });
             }
             else if (res.status === 200) {
                 setIsRegistrated(true);

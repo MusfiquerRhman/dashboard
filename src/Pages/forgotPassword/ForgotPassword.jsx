@@ -68,7 +68,7 @@ const ForgotPassword = () => {
                 enqueueSnackbar("Error Changing Password", { variant: 'error' });
             } else if (res.status === 200) {
                 setPasswordResetDone(true)
-                enqueueSnackbar(res.data.message, { variant: 'success' });
+                enqueueSnackbar("Password changed successfully", { variant: 'success' });
             }
         }
         else {
