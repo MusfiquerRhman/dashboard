@@ -33,7 +33,7 @@ const ForgotPassword = () => {
     const submitForm = async () => {
         const res = await userApi.sendOTP(userEmail);
         if (res === -1) {
-            enqueueSnackbar("Error Logging in!", { variant: 'error' });
+            enqueueSnackbar("Error Sending OTP", { variant: 'error' });
         } else if (res.status === 200) {
             setIsOTPSent(true);
             setSessionId(res.data.session_id)
