@@ -38,7 +38,7 @@ const ForgotPassword = () => {
             setIsOTPSent(true);
             setSessionId(res.data.session_id)
             setOtp(res.data.otp_code)
-            enqueueSnackbar(res.data.message, { variant: 'success' });
+            enqueueSnackbar("OTP sent!", { variant: 'success' });
         }
         else if (res.status === 422) {
             enqueueSnackbar("Validation Error!", { variant: 'error' });
