@@ -81,7 +81,7 @@ const Row = React.memo((props) => {
             window.location.reload();
         }
         else {
-            enqueueSnackbar(`Failed to Deleted - ${res.message}`, { variant: 'error' });
+            enqueueSnackbar(`Failed to Delete`, { variant: 'error' });
         }
         setDeleteOpen(false);
     }
@@ -106,7 +106,7 @@ const Row = React.memo((props) => {
                     window.location.reload();
                 }
                 else {
-                    enqueueSnackbar(`Failed to Update - ${res.message}`, { variant: 'error' });
+                    enqueueSnackbar(`Failed to Update`, { variant: 'error' });
                 }
             });
     }

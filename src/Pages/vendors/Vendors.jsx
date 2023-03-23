@@ -10,9 +10,9 @@ import React, { useCallback, useReducer, useState } from 'react';
 import * as vendorAPI from '../../API/vendors';
 import style from '../../Styles/GlobalStyles';
 import FeaturedVendors from './FeaturedVendors';
+import VendorsList from './VendorsList';
 import VendorForm from './vendor Components/VendorForm';
 import { ACTION_TYPE, INITIAL_STATE, vendorReducer } from './vendorReducer';
-import VendorsList from './VendorsList';
 
 const Vendor = () => {
     const classes = style();
@@ -57,7 +57,7 @@ const Vendor = () => {
                 window.location.reload();
             }
             else {
-                enqueueSnackbar(`Failed to Add new Vendor - ${res.message}`, { variant: 'error' });
+                enqueueSnackbar(`Failed to Add new Vendor`, { variant: 'error' });
             }
             setUpdateAdd(false);
         }

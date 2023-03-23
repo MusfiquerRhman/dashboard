@@ -64,20 +64,20 @@ const Users = () => {
 
     return (
         <div className={classes.form}>
-            <Grid container spacing={2} sx={{justifyContent: 'center', marginBottom: '2rem'}}>
-                <Grid item xs={3}>
-                    <Card sx={{boxShadow: "2px 2px 5px #01010144"}}>
+            <Grid container spacing={4} sx={{justifyContent: 'center', marginBottom: '2rem'}}>
+                <Grid item xs={6}>
+                    <Card sx={{boxShadow: "1px 1px 3px #01010144", textAlign: 'center', padding: '0.5rem 0'}}>
                         <CardContent>
-                            <Typography variant="h6" color="text.secondary">
+                            <Typography variant="h5" color="text.secondary">
                                 Total Admins: {adminUserCount}
                             </Typography>
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={3}>
-                    <Card sx={{boxShadow: "2px 2px 5px #01010144"}}>
+                <Grid item xs={6}>
+                    <Card sx={{boxShadow: "1px 1px 3px #01010144", textAlign: 'center', padding: '0.5rem 0'}}>
                         <CardContent>
-                            <Typography variant="h6" color="text.secondary">
+                            <Typography variant="h5" color="text.secondary">
                                 Total Users: {userCount}
                             </Typography>
                         </CardContent>

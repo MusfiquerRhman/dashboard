@@ -80,7 +80,7 @@ const VendorCards = React.memo((props) => {
       enqueueSnackbar(`Successfully Deleted`, { variant: 'info' });
     }
     else {
-      enqueueSnackbar(`Failed to Deleted - ${res.message}`, { variant: 'error' });
+      enqueueSnackbar(`Failed to Delete`, { variant: 'error' });
     }
     setDeleteOpen(false);
     window.location.reload();

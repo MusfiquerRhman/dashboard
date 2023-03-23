@@ -43,6 +43,8 @@ const CategoriesForm = React.memo((props) => {
 
     const [displayImage, setDisplayImage] = useState("");
     const { enqueueSnackbar } = useSnackbar();
+    const classes = Style();
+
 
     
     const imageSelectHandler = async (files) => {
@@ -59,11 +61,23 @@ const CategoriesForm = React.memo((props) => {
                 reader.readAsDataURL(files[0]);
             }
         } catch (error) {
-            enqueueSnackbar(`Failed to compress image - ${error.message}`, { variant: 'error' });
+            enqueueSnackbar(`Failed to compress image`, { variant: 'error' });
         }
     };
 
-    const classes = Style();
+    const validateCategory = () => {
+        if(category_name.length < 1){
+            enqueueSnackbar(`Enter a valid name`, { variant: 'error' });
+            return;
+        }
+
+        if(categoryOrderId.length < 1){
+            enqueueSnackbar(`Enter a valid order id`, { variant: 'error' });
+            return;
+        }
+
+        handleClickAction();
+    }
 
     let imageSelectedMsg = (
         <Typography variant="h6" className={classes.imagetext}>
@@ -98,7 +112,7 @@ const CategoriesForm = React.memo((props) => {
                     <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                         {formType} Category
                     </Typography>
-                    <Button autoFocus color="inherit" onClick={handleClickAction}>
+                    <Button autoFocus color="inherit" onClick={validateCategory}>
                         save
                     </Button>
                 </Toolbar>
@@ -162,7 +176,7 @@ const CategoriesForm = React.memo((props) => {
                                     </Grid>
                                 </Grid>
                                 <Grid item>
-                                    <Button fullWidth variant="contained" onClick={handleClickAction}>Submit</Button>
+                                    <Button fullWidth variant="contained" onClick={validateCategory}>Submit</Button>
                                 </Grid>
                             </Box>
                         </form>

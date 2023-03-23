@@ -31,6 +31,11 @@ const ForgotPassword = () => {
     const { enqueueSnackbar } = useSnackbar();
 
     const submitForm = async () => {
+        if(!(/^\w+([.-/+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(userEmail))){
+            enqueueSnackbar("Enter a valid email", { variant: 'error' });
+            return;
+        }
+
         const res = await userApi.sendOTP(userEmail);
         if (res === -1) {
             enqueueSnackbar("Error Sending OTP", { variant: 'error' });
@@ -47,12 +52,12 @@ const ForgotPassword = () => {
 
     const submitOTPForm = async (e) => {
         if(otp !== userOTP){
-            enqueueSnackbar("Error OTP not matched!", { variant: 'error' });
+            enqueueSnackbar("Error: OTP not matched!", { variant: 'error' });
         }
         else {
             const res = await userApi.verifyOTP(userEmail, sessionId, userOTP);
             if(res === -1){
-                enqueueSnackbar("Error OTP not matched!", { variant: 'error' });
+                enqueueSnackbar("Error: OTP not matched!", { variant: 'error' });
             }
             else if (res.status === 200){
                 setResetPasswordToken(res.data.reset_password_token)
@@ -62,6 +67,11 @@ const ForgotPassword = () => {
     }
 
     const resetPassword = async () => {
+        if(newPassword.length < 5){
+            enqueueSnackbar("Enter a strong password", { variant: 'error' });
+            return;
+        }
+
         if(newPassword === confirmPassword){
             const res = await userApi.resetPassword(resetPasswordToken, newPassword, confirmPassword);
             if (res === -1) {

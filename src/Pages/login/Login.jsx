@@ -13,15 +13,25 @@ import useInputState from '../../Hooks/UseInputHook';
 import style from '../../Styles/GlobalStyles';
 
 const Login = () => {
-    const [userName, handleChangeUserName] = useInputState("");
+    const [userEmail, handleChangeUserEmail] = useInputState("");
     const [password, handleChangePassword] = useInputState("");
     const classes = style();
     const { enqueueSnackbar } = useSnackbar();
 
     const submitForm = async (e) => {
-        const res = await userApi.login(userName, password);
+        if(!(/^\w+([.-/+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(userEmail))) {
+            enqueueSnackbar("Enter a valid email", { variant: 'error' });
+            return;
+        }
+
+        if(password.length < 1){
+            enqueueSnackbar("Enter a valid password", { variant: 'error' });
+            return;
+        }
+
+        const res = await userApi.login(userEmail, password);
         if (res === -1) {
-            enqueueSnackbar("Error Logining in!", { variant: 'error' });
+            enqueueSnackbar("Error Logging in!", { variant: 'error' });
         } else if (res.status === 200) {
             localStorage.setItem('userInformations', JSON.stringify(res.data));
             localStorage.setItem('last_login', new Date().getTime());
@@ -44,10 +54,10 @@ const Login = () => {
                         <Grid container item direction="column" spacing={2} xs={12} >
                             <Grid item>
                                 <TextField id="login-name"
-                                    label="User Name"
+                                    label="User Email"
                                     variant="standard"
-                                    value={userName}
-                                    onChange={handleChangeUserName}
+                                    value={userEmail}
+                                    onChange={handleChangeUserEmail}
                                     required
                                     fullWidth
                                 />

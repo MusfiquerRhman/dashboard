@@ -52,7 +52,7 @@ const VendorForm = React.memo((props) => {
             return;
         }
         
-        if(state.email !== '' && !(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(state.email))) {
+        if(state.email !== '' && !(/^\w+([.-/+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(state.email))) {
             enqueueSnackbar("Enter a valid Email", { variant: 'error' });
             return;
         }
@@ -104,7 +104,7 @@ const VendorForm = React.memo((props) => {
                 reader.readAsDataURL(files[0]);
             }
         } catch (error) {
-            enqueueSnackbar(`Failed to compress image - ${error.message}`, { variant: 'error' });
+            enqueueSnackbar(`Failed to compress image`, { variant: 'error' });
         }
     };
 

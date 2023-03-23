@@ -54,9 +54,29 @@ function Profile() {
     }
 
     const submitForm = async (e) => {
+        if(fullName.length < 1) {
+            enqueueSnackbar("Enter a valid name", { variant: 'error' });
+            return;
+        }
+
+        if(zip.length !== 5) {
+            enqueueSnackbar("Enter a valid zip code", { variant: 'error' });
+            return;
+        }
+
+        if(!(/^\w+([.-/+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
+            enqueueSnackbar("Enter a valid email", { variant: 'error' });
+            return;
+        }
+
+        if(!(/^(1\s?)?((\([0-9]{3}\))|[0-9]{3})[\s-]?[\0-9]{3}[\s-]?[0-9]{4}$/.test(phoneNo))){
+            enqueueSnackbar("Enter a valid Phone Number", { variant: 'error' });
+            return;
+        }
+
         const res = await userAPI.updateUserProfile(fullName, phoneNo, zip);
         if (res === -1) {
-            enqueueSnackbar("Error; Try again", { variant: 'error' });
+            enqueueSnackbar("Connection Error, Try again", { variant: 'error' });
         }
         else if (res.status === 200) {
             enqueueSnackbar("Account successfully updated", { variant: 'success' });
@@ -65,7 +85,7 @@ function Profile() {
         if(imageSelectedMsg !== ''){
             const imageUpdateResponse = await userAPI.updateProfilePicture(Image);
             if(imageUpdateResponse === -1){
-                enqueueSnackbar("Error; Try again", { variant: 'error' });
+                enqueueSnackbar("Connection Error, Try again", { variant: 'error' });
             }
             else if (res.status === 200) {
                 enqueueSnackbar("Profile Picture successfully updated", { variant: 'success' });
@@ -86,7 +106,7 @@ function Profile() {
     const deleteForm = async () => {
         const res = await userAPI.deleteUserProfile();
         if (res === -1) {
-            enqueueSnackbar("Error; Try again", { variant: 'error' });
+            enqueueSnackbar("Connection Error, Try again", { variant: 'error' });
             localStorage.removeItem('userInformations');
             window.location.reload();
         }

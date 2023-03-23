@@ -21,6 +21,7 @@ import Typography from '@mui/material/Typography';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { useSnackbar } from 'notistack';
 import { SubCategoryContext } from '../../../Context APIs/subcategoriesContext';
 import { VendorContext } from '../../../Context APIs/vendorContext';
 import Style from '../../../Styles/GlobalStyles';
@@ -31,6 +32,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const CouponsForm = React.memo((props) => {
     const classes = Style();
+    const { enqueueSnackbar } = useSnackbar();
 
     const {
         coupon_code,
@@ -66,6 +68,38 @@ const CouponsForm = React.memo((props) => {
 
     const { subCategories } = useContext(SubCategoryContext);
     const { vendors } = useContext(VendorContext);
+
+
+    const validateCoupons = () => {
+        if(coupon_code.length < 1) {
+            enqueueSnackbar(`Enter a valid coupon code`, { variant: 'error' });
+            return;
+        }
+
+        if(percentage_off.length < 1) {
+            enqueueSnackbar(`Enter a valid deal type`, { variant: 'error' });
+            return;
+        }
+
+
+        if(selectedVendorName.length < 1) {
+            enqueueSnackbar(`Enter a valid vendor`, { variant: 'error' });
+            return;
+        }
+
+        if(selectedSubCategoryName.length < 1) {
+            enqueueSnackbar(`Enter a valid subcategory`, { variant: 'error' });
+            return;
+        }
+
+        if(coupnsDescription.length < 1) {
+            enqueueSnackbar(`Enter a valid description`, { variant: 'error' });
+            return;
+        }
+
+        handleClickSubmit();
+    }
+
 
     useEffect(() => {
         const selectedVendor = vid !== '' ? vendors.find((element) => element.vid === vid)?.vendor_name : '';
@@ -106,7 +140,7 @@ const CouponsForm = React.memo((props) => {
                     <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                         {formType} Coupons
                     </Typography>
-                    <Button autoFocus color="inherit" onClick={handleClickSubmit}>
+                    <Button autoFocus color="inherit" onClick={validateCoupons}>
                         save
                     </Button>
                 </Toolbar>
@@ -275,7 +309,7 @@ const CouponsForm = React.memo((props) => {
                                 </FormControl>
 
                                 <Grid item>
-                                    <Button fullWidth variant="contained" onClick={handleClickSubmit}>Submit</Button>
+                                    <Button fullWidth variant="contained" onClick={validateCoupons}>Submit</Button>
                                 </Grid>
                             </Box>
                         </form>

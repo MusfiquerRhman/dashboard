@@ -124,7 +124,7 @@ const Cupons = () => {
                     if (flag === scid.length) window.location.reload();
                 }
                 else {
-                    enqueueSnackbar(`Failed to Add - ${res.message}`, { variant: 'error' });
+                    enqueueSnackbar(`Failed to Add coupon, try again later`, { variant: 'error' });
                 }
             });
         })

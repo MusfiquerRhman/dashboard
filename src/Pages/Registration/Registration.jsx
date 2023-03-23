@@ -18,7 +18,7 @@ function Registration() {
     const classes = style();
 
     const [password, handleChangePassword] = useInputState("");
-    const [confrimPassword, handleChangeConfrimPassword] = useInputState("");
+    const [confirmPassword, handleChangeConfirmPassword] = useInputState("");
     const [phoneNo, handleChangePhoneNo] = useInputState("");
     const [email, handleChangeEmail] = useInputState("");
     const [isRegistrated, setIsRegistrated] = useState(false);
@@ -26,8 +26,23 @@ function Registration() {
     const admin_status = 'True';
 
     const submitForm = async (e) => {
+        if(!(/^\w+([.-/+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
+            enqueueSnackbar("Enter a valid email", { variant: 'error' });
+            return;
+        }
+
+        if(!(/^(1\s?)?((\([0-9]{3}\))|[0-9]{3})[\s-]?[\0-9]{3}[\s-]?[0-9]{4}$/.test(phoneNo))){
+            enqueueSnackbar("Enter a valid Phone Number", { variant: 'error' });
+            return;
+        }
+
+        if(password.length < 5) {
+            enqueueSnackbar("Enter a strong password", { variant: 'error'});
+            return;
+        }
+
         e.preventDefault();
-        if (password === confrimPassword) {
+        if (password === confirmPassword) {
             const res = await authApi.registration(email, password, phoneNo, admin_status);
             if (res === -1) {
                 enqueueSnackbar("Error: Try again", { variant: 'error' });
@@ -98,15 +113,15 @@ function Registration() {
                                 <TextField id="registration-confrimPass"
                                     label="Confrim Password"
                                     variant="standard"
-                                    value={confrimPassword}
-                                    onChange={handleChangeConfrimPassword}
+                                    value={confirmPassword}
+                                    onChange={handleChangeConfirmPassword}
                                     type="password"
                                     required
                                     fullWidth
                                 />
                             </Grid>
                             <Grid item>
-                                <Button fullWidth onClick={submitForm} variant="contained" >Registration</Button>
+                                <Button fullWidth onClick={submitForm} variant="contained" >Submit</Button>
                             </Grid>
                             <Grid item>
                                 <Typography variant="subtitle1">
