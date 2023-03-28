@@ -117,29 +117,19 @@ const VendorCards = React.memo((props) => {
               <Grid container sx={{ color: 'text.primary', lineHeight: '1.7', minHeight: '10rem'}}>
                   {
                     (element.phone.length > 1 && element.phone !== null) && (
-                      <>
-                        <Grid item xs={12} sx={{height: 'fit-content'}}>
-                          <span className={classes.title}>Phone:</span>
-                          <span className={classes.value}>{element.phone}</span>
-                        </Grid>
-                        {/* <Grid item xs={7.5} sx={{height: 'fit-content'}}>
-                          <span className={classes.value}>{element.phone}</span>
-                        </Grid> */}
-                      </>
+                      <Grid item xs={12} sx={{height: 'fit-content'}}>
+                        <span className={classes.title}>Phone:</span>
+                        <span className={classes.value}>{element.phone}</span>
+                      </Grid>
                     )
                   }
 
                   {
                     (element.website.length > 1 && element.website !== null) && (
-                      <>
-                        <Grid item xs={12}>
-                          <span className={classes.title}>Website:</span>
-                          <a target="_blank" href={element.website} className={classes.website} rel="noreferrer">{element.website}</a>
-                        </Grid>
-                        {/* <Grid item xs={7.5}>
-                          <a target="_blank" href={element.website} className={classes.website} rel="noreferrer">{element.website}</a>
-                        </Grid> */}
-                      </>
+                      <Grid item xs={12}>
+                        <span className={classes.title}>Website:</span>
+                        <a target="_blank" href={element.website} className={classes.website} rel="noreferrer">{element.website}</a>
+                      </Grid>
                     )
                   }
     
@@ -147,48 +137,30 @@ const VendorCards = React.memo((props) => {
                   <span className={classes.title}>Active:</span>
                   <span className={classes.value}>{element.is_active ? "Yes" : "No"}</span>
                 </Grid>
-                {/* <Grid item xs={7.5}>
-                  <span className={classes.value}>{element.is_active ? "Yes" : "No"}</span>
-                </Grid> */}
 
                   {
                     (element.feature_vendor.length > 1 && element.feature_vendor !== null) && (
-                      <>
-                        <Grid item xs={12}>
-                          <span className={classes.title}>Feature:</span>
-                          <span className={classes.icon}>{element.feature_vendor ? "Yes" : "No"}</span>
-                        </Grid>
-                        {/* <Grid item xs={7.5}>
-                          <span className={classes.icon}>{element.feature_vendor ? "Yes" : "No"}</span>
-                        </Grid> */}
-                      </>
+                      <Grid item xs={12}>
+                        <span className={classes.title}>Feature:</span>
+                        <span className={classes.icon}>{element.feature_vendor ? "Yes" : "No"}</span>
+                      </Grid>
                     )
                   }
 
                   {
                     (element.hours.length > 1 && element.hours !== null) && (
-                        <>
                       <Grid item xs={12}>
                         <span className={classes.title}>Hours:</span>
                         <span className={classes.value}>{element.hours}</span>
                       </Grid>
-                      {/* <Grid item xs={7.5}>
-                        <span className={classes.value}>{element.hours}</span>
-                      </Grid> */}
-                      </>
                     )
                   }
                   {
                     (element.requirements.length > 1 && element.requirements !== null) && (
-                      <>
                         <Grid item xs={12}>
                           <span className={classes.title}>Requirements:</span>
                           <span className={classes.value}>{element.requirements}</span>
                         </Grid>
-                        {/* <Grid item xs={7.5}>
-                          <span className={classes.value}>{element.requirements}</span>
-                        </Grid> */}
-                      </>
                     )
                   }
 

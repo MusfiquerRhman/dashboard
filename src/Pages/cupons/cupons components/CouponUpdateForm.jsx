@@ -98,7 +98,16 @@ const CouponsForm = React.memo((props) => {
             return;
         }
 
+        if(new Date(end_date) < new Date(start_date)){
+            enqueueSnackbar(`End Date must be equal or greater than start date`, { variant: 'error' });
+            return;
+        }
+
         handleClickSubmit();
+    }
+
+    function disableDays(date) {
+        return date < new Date(start_date).getTime() - 24 * 60 * 60 * 1000;
     }
 
 
@@ -258,9 +267,10 @@ const CouponsForm = React.memo((props) => {
                                                 value={start_date}
                                                 onChange={(newValue) => {
                                                     setStartDate(new Date(newValue).toISOString().substring(0, 10));
+                                                    setEnddate(new Date(newValue).toISOString().substring(0, 10));
                                                 }}
                                                 renderInput={(params) => <TextField fullWidth {...params} sx={{backgroundColor: '#30C3CD20'}}/>}
-                                                />
+                                            />
                                         </LocalizationProvider>
                                     </Box>
                                     <br />
@@ -269,11 +279,12 @@ const CouponsForm = React.memo((props) => {
                                             <DatePicker
                                                 label="End Date"
                                                 value={end_date}
+                                                shouldDisableDate={disableDays}
                                                 onChange={(newValue) => {
                                                     setEnddate(new Date(newValue).toISOString().substring(0, 10));
                                                 }}
                                                 renderInput={(params) => <TextField fullWidth {...params} sx={{backgroundColor: '#30C3CD20'}}/>}
-                                                />
+                                            />
                                         </LocalizationProvider>
                                     </Box>
                                 </div>

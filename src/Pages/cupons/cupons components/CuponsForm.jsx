@@ -48,6 +48,8 @@ const CouponsForm = React.memo((props) => {
         setAnchorElSubCategory(null);
     };
 
+    const [value, setValue] = React.useState([null, null]);
+
     const {
         coupon_code,
         handleChangeCoupon_code,
@@ -117,11 +119,16 @@ const CouponsForm = React.memo((props) => {
             return;
         }
 
+        if(new Date(end_date) < new Date(start_date)){
+            enqueueSnackbar(`End Date must be equal or greater than start date`, { variant: 'error' });
+            return;
+        }
+        
         if(coupnsDescription.length < 1) {
             enqueueSnackbar(`Enter a valid description`, { variant: 'error' });
             return;
         }
-
+        
         handleClickSubmit();
     }
 
@@ -138,6 +145,11 @@ const CouponsForm = React.memo((props) => {
         setSelectedSubCategoryName(prevName => prevName.filter(item => item !== value));
         setScid(prevScid => prevScid.filter(item => item !== id));
     }
+
+    function disableDays(date) {
+        return date < new Date(start_date).getTime() - 24 * 60 * 60 * 1000;
+    }
+
 
     return (
         <Dialog
@@ -304,6 +316,7 @@ const CouponsForm = React.memo((props) => {
                                                 disablePast
                                                 onChange={(newValue) => {
                                                     setStartDate(new Date(newValue).toISOString().substring(0, 10));
+                                                    setEnddate(new Date(newValue).toISOString().substring(0, 10));
                                                 }}
                                                 renderInput={(params) => <TextField fullWidth {...params} sx={{ backgroundColor: '#30C3CD20' }} />}
                                             />
@@ -315,7 +328,7 @@ const CouponsForm = React.memo((props) => {
                                             <DatePicker
                                                 label="End Date"
                                                 value={end_date}
-                                                disablePast
+                                                shouldDisableDate={disableDays}
                                                 onChange={(newValue) => {
                                                     setEnddate(new Date(newValue).toISOString().substring(0, 10));
                                                 }}
