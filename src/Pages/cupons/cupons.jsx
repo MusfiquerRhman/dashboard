@@ -253,7 +253,7 @@ const Cupons = () => {
                                     You can sort Coupon Codes, Vendor names, Start dates, End dates, Sub-category names Deal types and Scheduler by clicking on the column name in the table.
                                     Click on the Pen icon to edit and the trash icon to delete the corresponding coupon.
                                     </i></p>
-                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="1">< AllCupons coupons={cupons} /></TabPanel> {/* Active Cpupons panel */}
+                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="1">< AllCupons coupons={cupons} /></TabPanel> {/* Active Coupons panel */}
                                     <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="2">< ActiveAndFutureCoupons /></TabPanel> {/* All Coupons panel */}
                                     <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="3">< FeaturedCoupons /></TabPanel>
                                     <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="4">< ExpiredCoupons /></TabPanel>

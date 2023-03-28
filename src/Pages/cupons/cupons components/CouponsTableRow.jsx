@@ -108,7 +108,8 @@ const Row = React.memo((props) => {
                 else {
                     enqueueSnackbar(`Failed to Update`, { variant: 'error' });
                 }
-            });
+            }
+        );
     }
 
     return (
@@ -169,7 +170,5 @@ const Row = React.memo((props) => {
         </React.Fragment>
     );
 })
-
-
 
 export default Row;

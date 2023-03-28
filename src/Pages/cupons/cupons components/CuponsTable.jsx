@@ -101,8 +101,8 @@ const CuponsTable = (data) => {
   data.data?.forEach((element) => {
     rows.push(createData(
       element.coupon_code.toLowerCase(),
-      element.start_date.toLowerCase(),
-      element.end_date.toLowerCase(),
+      element.start_date,
+      element.end_date,
       element.is_active,
       element.feature_coupon,
       element.single_use,

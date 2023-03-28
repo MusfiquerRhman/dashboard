@@ -45,6 +45,7 @@ const VendorForm = React.memo((props) => {
         setImage,
     } = props;
     
+    //(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})
 
     const validateForm = () => {
         if(state.name.length < 2) {
@@ -64,6 +65,31 @@ const VendorForm = React.memo((props) => {
         
         if(state.zipCode !== '' && state.zipCode.length !== 5){
             enqueueSnackbar("Enter a valid Zip Code", { variant: 'error' });
+            return;
+        }
+
+        if(state.website !== '' && !(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/.test(state.website))){
+            enqueueSnackbar("Enter a valid Website URL", { variant: 'error' });
+            return;
+        }
+
+        if(state.facebook !== '' && !(/https?:\/\/((?:www.)?facebook.com)\/[a-zA-Z0-9/]/.test(state.facebook))){
+            enqueueSnackbar("Enter a valid facebook URL", { variant: 'error' });
+            return;
+        }
+
+        if(state.youtube !== '' && !(/https?:\/\/((?:www.)?youtube.com)\/[@a-zA-Z0-9/]/.test(state.youtube))){
+            enqueueSnackbar("Enter a valid Youtube URL", { variant: 'error' });
+            return;
+        }
+
+        if(state.instagram !== '' && !(/https?:\/\/((?:www.)?instagram.com)\/[a-zA-Z0-9/]/.test(state.instagram))){
+            enqueueSnackbar("Enter a valid Instagram URL", { variant: 'error' });
+            return;
+        }
+
+        if(state.twitter !== '' && !(/https?:\/\/((?:www.)?twitter.com)\/[a-zA-Z0-9/]/.test(state.twitter))){
+            enqueueSnackbar("Enter a valid twitter URL", { variant: 'error' });
             return;
         }
     
@@ -303,7 +329,7 @@ const VendorForm = React.memo((props) => {
                                         />
                                     </Grid>
                                 </Grid>
-                                <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
+                                <Grid container item direction="column" spacing={2} xs={12}>
                                     <Grid item>
                                         <TextField id="registration-website"
                                             label="Website"
@@ -317,6 +343,9 @@ const VendorForm = React.memo((props) => {
                                         />
                                     </Grid>
                                 </Grid>
+                                <p className='info' style={{marginBottom: '1rem'}}><i>
+                                    Append https://www before the URl, ex: https://www.bestoflagoon.com
+                                </i></p>
                                 <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
                                     <Grid item>
                                         <TextField id="registration-requirements"
@@ -341,12 +370,13 @@ const VendorForm = React.memo((props) => {
                                             value={state.facebook}
                                             onChange={onChangeInput}
                                             name='facebook'
+                                            placeholder='https://www.facebook.com/abc'
                                             fullWidth
                                         />
                                     </Grid>
                                 </Grid>
-                                <p className='info' style={{marginBottom: '.5rem'}}><i>
-                                    Append www before the URl, ex: www.facebook.com/abc
+                                <p className='info' style={{marginBottom: '1rem'}}><i>
+                                    Append https://www before the URl, ex: https://www.facebook.com/abc
                                 </i></p>
                                 <Grid container item direction="column" spacing={2} xs={12}>
                                     <Grid item>
@@ -358,12 +388,13 @@ const VendorForm = React.memo((props) => {
                                             value={state.instagram}
                                             onChange={onChangeInput}
                                             name='instagram'
+                                            placeholder='https://www.instagram.com/abc'
                                             fullWidth
                                         />
                                     </Grid>
                                 </Grid>
-                                <p className='info' style={{marginBottom: '.5rem'}}><i>
-                                    Append www before the URl, ex: www.instagram.com/abc
+                                <p className='info' style={{marginBottom: '1rem'}}><i>
+                                    Append https://www before the URl, ex: https://www.instagram.com/abc
                                 </i></p>
                                 <Grid container item direction="column" spacing={2} xs={12}>
                                     <Grid item>
@@ -375,12 +406,13 @@ const VendorForm = React.memo((props) => {
                                             value={state.youtube}
                                             onChange={onChangeInput}
                                             name='youtube'
+                                            placeholder='https://www.youtube.com/@abc'
                                             fullWidth
                                         />
                                     </Grid>
                                 </Grid>
-                                <p className='info' style={{marginBottom: '.5rem'}}><i>
-                                    Append www before the URl, ex: www.youtube.com/abc
+                                <p className='info' style={{marginBottom: '1rem'}}><i>
+                                    Append https://www before the URl, ex: https://www.youtube.com/@abc
                                 </i></p>
                                 <Grid container item direction="column" spacing={2} xs={12}>
                                     <Grid item>
@@ -392,12 +424,13 @@ const VendorForm = React.memo((props) => {
                                             value={state.twitter}
                                             onChange={onChangeInput}
                                             name='twitter'
+                                            placeholder='https://twitter.com/abc'
                                             fullWidth
                                         />
                                     </Grid>
                                 </Grid>
-                                <p className='info' style={{marginBottom: '.5rem'}}><i>
-                                    Append www before the URl, ex: www.twitter.com/abc
+                                <p className='info' style={{marginBottom: '1rem'}}><i>
+                                    Append https://www before the URl, ex: https://twitter.com/abc
                                 </i></p>
                                 <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
                                     <Grid item>

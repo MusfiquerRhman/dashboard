@@ -15,6 +15,7 @@ const style = makeStyles((theme) => ({
     title: {
         fontSize: "1rem",
         paddingRight: "1rem",
+        color: '#e65100'
     },
     value: {
         fontSize: "1rem",
@@ -28,6 +29,7 @@ const style = makeStyles((theme) => ({
         fontSize: "1rem",
         color: "#018F8F",
         overflowWrap: 'break-word',
+        textDecoration: 'underline'
     }
 }));
 

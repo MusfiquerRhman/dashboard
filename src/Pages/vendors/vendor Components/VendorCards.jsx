@@ -42,8 +42,6 @@ const VendorCards = React.memo((props) => {
   const classes = Styles();
   const { element } = props;
 
-  console.log(element);
-
   if(element.facebook.length > 0 && element.facebook[0] !== 'h') {
     element.facebook = `http://${element.facebook}`
   }
@@ -104,26 +102,29 @@ const VendorCards = React.memo((props) => {
 
       <Box className={classes.form} >
         <Box sx={{ width: '100%' }}>
-          <Card sx={{ maxWidth: 400, boxShadow: "2px 2px 6px #01010144" }}>
+          <Card sx={{ maxWidth: 400, boxShadow: "1px 1px 6px #01010144"}}>
             <CardHeader
               avatar={
                 <img src={element.vendor_log_path} alt='vendor' className={classes.vendorImg} />
               }
               title={element.vendor_name}
               subheader={element.email}
+              sx={{color:'#e65100'}}
+              titleTypographyProps={{variant:'h5' }}
             />
 
             <CardContent>
-              <Grid container sx={{ color: 'text.primary', lineHeight: '1.7' }}>
+              <Grid container sx={{ color: 'text.primary', lineHeight: '1.7', minHeight: '10rem'}}>
                   {
-                    (element.zip_code.length > 1 && element.zip_code !== null) && (
+                    (element.phone.length > 1 && element.phone !== null) && (
                       <>
-                        <Grid item xs={4}>
+                        <Grid item xs={12} sx={{height: 'fit-content'}}>
                           <span className={classes.title}>Phone:</span>
-                        </Grid>
-                        <Grid item xs={8}>
                           <span className={classes.value}>{element.phone}</span>
                         </Grid>
+                        {/* <Grid item xs={7.5} sx={{height: 'fit-content'}}>
+                          <span className={classes.value}>{element.phone}</span>
+                        </Grid> */}
                       </>
                     )
                   }
@@ -131,32 +132,35 @@ const VendorCards = React.memo((props) => {
                   {
                     (element.website.length > 1 && element.website !== null) && (
                       <>
-                        <Grid item xs={4}>
+                        <Grid item xs={12}>
                           <span className={classes.title}>Website:</span>
-                        </Grid>
-                        <Grid item xs={8}>
                           <a target="_blank" href={element.website} className={classes.website} rel="noreferrer">{element.website}</a>
                         </Grid>
+                        {/* <Grid item xs={7.5}>
+                          <a target="_blank" href={element.website} className={classes.website} rel="noreferrer">{element.website}</a>
+                        </Grid> */}
                       </>
                     )
                   }
     
-                <Grid item xs={4}>
+                <Grid item xs={12}>
                   <span className={classes.title}>Active:</span>
-                </Grid>
-                <Grid item xs={8}>
                   <span className={classes.value}>{element.is_active ? "Yes" : "No"}</span>
                 </Grid>
+                {/* <Grid item xs={7.5}>
+                  <span className={classes.value}>{element.is_active ? "Yes" : "No"}</span>
+                </Grid> */}
 
                   {
                     (element.feature_vendor.length > 1 && element.feature_vendor !== null) && (
                       <>
-                        <Grid item xs={4}>
+                        <Grid item xs={12}>
                           <span className={classes.title}>Feature:</span>
-                        </Grid>
-                        <Grid item xs={8}>
                           <span className={classes.icon}>{element.feature_vendor ? "Yes" : "No"}</span>
                         </Grid>
+                        {/* <Grid item xs={7.5}>
+                          <span className={classes.icon}>{element.feature_vendor ? "Yes" : "No"}</span>
+                        </Grid> */}
                       </>
                     )
                   }
@@ -164,24 +168,26 @@ const VendorCards = React.memo((props) => {
                   {
                     (element.hours.length > 1 && element.hours !== null) && (
                         <>
-                      <Grid item xs={4}>
+                      <Grid item xs={12}>
                         <span className={classes.title}>Hours:</span>
-                      </Grid>
-                      <Grid item xs={8}>
                         <span className={classes.value}>{element.hours}</span>
                       </Grid>
+                      {/* <Grid item xs={7.5}>
+                        <span className={classes.value}>{element.hours}</span>
+                      </Grid> */}
                       </>
                     )
                   }
                   {
                     (element.requirements.length > 1 && element.requirements !== null) && (
                       <>
-                        <Grid item xs={4}>
+                        <Grid item xs={12}>
                           <span className={classes.title}>Requirements:</span>
-                        </Grid>
-                        <Grid item xs={8}>
                           <span className={classes.value}>{element.requirements}</span>
                         </Grid>
+                        {/* <Grid item xs={7.5}>
+                          <span className={classes.value}>{element.requirements}</span>
+                        </Grid> */}
                       </>
                     )
                   }
@@ -376,7 +382,11 @@ const VendorCards = React.memo((props) => {
                       new Date(element.updated_date).toLocaleDateString() + " " + new Date(element.updated_date).toLocaleTimeString()
                     }</span>
                   </Grid>
-                  <p className='info'>* BL Picks stands for Best of Logan picks<i></i></p>
+                  {
+                    (element.best_of_logan_picks.length > 1 && element.best_of_logan_picks !== null) && (                      
+                      <p className='info'>* BL Picks stands for Best of Logan picks<i></i></p>
+                    )
+                  }
                 </Grid>
               </CardContent>
             </Collapse>

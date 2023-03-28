@@ -55,7 +55,7 @@ export const deleteCoupon = async (coupon_id) => {
 
 export const updateCoupons = async (coupon_id, vendor_id, subcategory_id, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, updateDate, coupon_description, scheduler) => {
   try {
-    return await axios.put(`${API_URL}/${vendor_id}/coupon/${coupon_id}/${subcategory_id}`, {
+    return await axios.put(`${API_URL}/${vendor_id}/coupon/${coupon_id}/${subcategory_id}/`, {
       vid: vendor_id,
       scid: subcategory_id,
       coupon_code: coupon_code,
@@ -64,7 +64,7 @@ export const updateCoupons = async (coupon_id, vendor_id, subcategory_id, coupon
       feature_coupon: feature_coupon,
       start_date: start_date,
       end_date: end_date,
-      updated_date: updateDate, 
+      updated_date: updateDate.toISOString(), 
       coupon_description: coupon_description,
       scheduler: scheduler
     }, {
@@ -98,10 +98,3 @@ export const addCoupons = async (vendor_id, subcategory_id, coupon_code, percent
     return err;
   }
 };
-
-// "coupon_code": "string",
-// "percentage_off": 0,
-// "single_use": false,
-// "feature_coupon": false,
-// "start_date": "2022-08-15",
-// "end_date": "2022-08-15"
