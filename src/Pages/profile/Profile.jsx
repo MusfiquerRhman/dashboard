@@ -93,6 +93,7 @@ function Profile() {
         }
     }
 
+    const [submitted, setSubmitted] = useState(false)
     const [deleteOpen, setDeleteOpen] = useState(false);
 
     const handleClickOpenDelete = () => {
@@ -104,6 +105,8 @@ function Profile() {
     }
 
     const deleteForm = async () => {
+        setSubmitted(true)
+
         const res = await userAPI.deleteUserProfile();
         if (res === -1) {
             enqueueSnackbar("Connection Error, Try again", { variant: 'error' });
@@ -209,7 +212,7 @@ function Profile() {
                                 <Typography variant="subtitle1">
                                     Caution, Action can't be reversed
                                 </Typography>
-                                <Button fullWidth variant="contained" color="error" onClick={handleClickOpenDelete}>Delete Account</Button>
+                                <Button disabled={submitted} fullWidth variant="contained" color="error" onClick={handleClickOpenDelete}>Delete Account</Button>
                             </Grid>
                         </Grid>
                     </Box>

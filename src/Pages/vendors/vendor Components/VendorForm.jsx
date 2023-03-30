@@ -33,6 +33,7 @@ const VendorForm = React.memo((props) => {
     const classes = Style();
     const [displayImage, setDisplayImage] = useState("");
     const { enqueueSnackbar } = useSnackbar();
+    const [submitted, setSubmitted] = useState(false)
 
     const {
         formType,
@@ -92,6 +93,8 @@ const VendorForm = React.memo((props) => {
             enqueueSnackbar("Enter a valid twitter URL", { variant: 'error' });
             return;
         }
+
+        setSubmitted(true)
     
         handleClickVendor();
     }
@@ -493,7 +496,7 @@ const VendorForm = React.memo((props) => {
                                     </Grid>
                                 </Grid>
                                 <Grid item>
-                                    <Button fullWidth variant="contained" onClick={validateForm}>Submit</Button>
+                                    <Button disabled={submitted} fullWidth variant="contained" onClick={validateForm}>Submit</Button>
                                 </Grid>
                             </Box>
                         </form>

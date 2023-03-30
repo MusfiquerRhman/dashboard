@@ -58,14 +58,21 @@ const Cupons = () => {
         setAddOpen(true);
     }
 
+    let date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    if(month < 10) month = `0${month}`;
+    let year = date.getFullYear();
+    let today = `${year}-${month}-${day}`
+
     const [coupon_code, handleChangeCoupon_code] = useInputState('')
     const [percentage_off, handleChangePercentage_off] = useInputState('');
     const [single_use, setSingle_use] = useState(false)
     const [feature_coupon, setFeature_coupon] = useState(false)
     const [isActive, setIsActive] = useState(true)
-    const [start_date, setStartDate] = useState(new Date().getTime());
-    const [end_date, setEndDate] = useState(new Date().getTime() + 24 * 60 * 60 * 1000);
-    const [scheduler, setScheduler] = useState('')
+    const [start_date, setStartDate] = useState(today);
+    const [end_date, setEndDate] = useState(today);
+    const [scheduler, setScheduler] = useState('weekly')
     const [vid, setVid] = useState('');
     const [scid, setScid] = useState([]);
     const [couponDescription, setCouponDescription] = useState('')
@@ -116,6 +123,7 @@ const Cupons = () => {
 
     const addForm = async () => {
         let flag = 0;
+        console.log({start_date, end_date})
         scid?.forEach(item => {
             couponsAPI.addCoupons(vid, item, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, couponDescription, scheduler).then(res => {
                 if (res.status === 200) {

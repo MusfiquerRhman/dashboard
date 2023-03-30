@@ -21,9 +21,6 @@ import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { useSnackbar } from 'notistack';
 import { SubCategoryContext } from '../../../Context APIs/subcategoriesContext';
 import { VendorContext } from '../../../Context APIs/vendorContext';
@@ -47,8 +44,6 @@ const CouponsForm = React.memo((props) => {
     const handleCloseSubCategory = () => {
         setAnchorElSubCategory(null);
     };
-
-    const [value, setValue] = React.useState([null, null]);
 
     const {
         coupon_code,
@@ -79,9 +74,17 @@ const CouponsForm = React.memo((props) => {
         handleClickSubmit,
     } = props;
 
+    let date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    if(month < 10) month = `0${month}`;
+    let year = date.getFullYear();
+    let today = `${year}-${month}-${day}`
+
 
     const [selectedVendorName, setSelectedVendorName] = useState('')
     const [selectedSubCategoryName, setSelectedSubCategoryName] = useState([])
+    const [submitted, setSubmitted] = useState(false)
 
     const { subCategories } = useContext(SubCategoryContext);
     const { vendors } = useContext(VendorContext);
@@ -98,37 +101,39 @@ const CouponsForm = React.memo((props) => {
 
 
     const validateCoupons = () => {
-        if(coupon_code.length < 1) {
+        if (coupon_code.length < 1) {
             enqueueSnackbar(`Enter a valid coupon code`, { variant: 'error' });
             return;
         }
 
-        if(percentage_off.length < 1) {
+        if (percentage_off.length < 1) {
             enqueueSnackbar(`Enter a valid deal type`, { variant: 'error' });
             return;
         }
 
 
-        if(selectedVendorName.length < 1) {
+        if (selectedVendorName.length < 1) {
             enqueueSnackbar(`Enter a valid vendor`, { variant: 'error' });
             return;
         }
 
-        if(selectedSubCategoryName.length < 1) {
+        if (selectedSubCategoryName.length < 1) {
             enqueueSnackbar(`Enter a valid subcategory`, { variant: 'error' });
             return;
         }
 
-        if(new Date(end_date) < new Date(start_date)){
+        if (new Date(end_date) < new Date(start_date)) {
             enqueueSnackbar(`End Date must be equal or greater than start date`, { variant: 'error' });
             return;
         }
-        
-        if(coupnsDescription.length < 1) {
+
+        if (coupnsDescription.length < 1) {
             enqueueSnackbar(`Enter a valid description`, { variant: 'error' });
             return;
         }
-        
+
+        setSubmitted(true)
+
         handleClickSubmit();
     }
 
@@ -146,8 +151,12 @@ const CouponsForm = React.memo((props) => {
         setScid(prevScid => prevScid.filter(item => item !== id));
     }
 
-    function disableDays(date) {
-        return date < new Date(start_date).getTime() - 24 * 60 * 60 * 1000;
+    const handleChangeStartDate = (e) => {
+        setStartDate(e.target.value);
+    }
+
+    const handleChangeEndDate = (e) => {
+        setEnddate(e.target.value);
     }
 
 
@@ -305,36 +314,32 @@ const CouponsForm = React.memo((props) => {
                                         </div>
                                     </div>
                                     <p className='info'><i>You can add multiple sub-categories by clicking the + ADD SUB-CATEGORY button. Click on the X icon in the selected sub-category tags to delete them</i></p>
-
                                 </Box>
                                 <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
                                     <Box sx={{ marginBottom: "1rem", width: '50%', marginRight: '0.5rem' }}>
-                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                            <DatePicker
-                                                label="Start Date"
+                                        <div className='input--container'>
+                                            <label htmlFor='date'>Start Date</label>
+                                            <input id='date' className='input--date'
+                                                type="date"
+                                                name={'Start Date'}
+                                                min={today}
                                                 value={start_date}
-                                                disablePast
-                                                onChange={(newValue) => {
-                                                    setStartDate(new Date(newValue).toISOString().substring(0, 10));
-                                                    setEnddate(new Date(newValue).toISOString().substring(0, 10));
-                                                }}
-                                                renderInput={(params) => <TextField fullWidth {...params} sx={{ backgroundColor: '#30C3CD20' }} />}
+                                                onChange={handleChangeStartDate}
                                             />
-                                        </LocalizationProvider>
+                                        </div>
                                     </Box>
                                     <br />
                                     <Box sx={{ marginBottom: "1rem", width: '50%', marginLeft: '0.5rem' }}>
-                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                            <DatePicker
-                                                label="End Date"
+                                    <div className='input--container'>
+                                            <label htmlFor='date'>End Date</label>
+                                            <input id='date' className='input--date'
+                                                type="date"
+                                                name={'end Date'}
+                                                min={start_date}
                                                 value={end_date}
-                                                shouldDisableDate={disableDays}
-                                                onChange={(newValue) => {
-                                                    setEnddate(new Date(newValue).toISOString().substring(0, 10));
-                                                }}
-                                                renderInput={(params) => <TextField fullWidth {...params} sx={{ backgroundColor: '#30C3CD20' }} />}
+                                                onChange={handleChangeEndDate}
                                             />
-                                        </LocalizationProvider>
+                                        </div>
                                     </Box>
                                 </div>
                                 <Grid container item direction="column" spacing={2} lg={12} sx={{ marginBottom: '1.5rem' }}>
@@ -353,7 +358,7 @@ const CouponsForm = React.memo((props) => {
                                         />
                                     </Grid>
                                 </Grid>
-                                
+
                                 <FormControl fullWidth sx={{ marginBottom: '1.5rem' }}>
                                     <InputLabel id="demo-simple-select-label">Scheduler</InputLabel>
                                     <Select
@@ -370,7 +375,7 @@ const CouponsForm = React.memo((props) => {
                                 </FormControl>
 
                                 <Grid item>
-                                    <Button fullWidth variant="contained" onClick={validateCoupons}>Submit</Button>
+                                    <Button disabled={submitted} fullWidth variant="contained" onClick={validateCoupons}>Submit</Button>
                                 </Grid>
                             </Box>
                         </form>

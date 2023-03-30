@@ -28,7 +28,7 @@ function Sidebar({ children }) {
                             <CustomNavLinks link='/profile' text="Profile"/>
                         </div>
                     </div>
-                    <main style={{ width: '100%', marginLeft: '270px' }}>{children}</main>
+                    <main style={{ width: '100%' }}>{children}</main>
                 </div>
             }
         </>

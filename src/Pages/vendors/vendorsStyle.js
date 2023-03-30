@@ -21,10 +21,15 @@ const style = makeStyles((theme) => ({
         fontSize: "1rem",
         color: "#263238",
         overflowWrap: 'break-word',
+        textAlign: 'center'
     }, 
     icon: {
         height: '100%',
     },
+    // emptyIcon: {
+    //     margin: '0',
+    //     paddingTop: '10px'
+    // },
     website: {
         fontSize: "1rem",
         color: "#018F8F",

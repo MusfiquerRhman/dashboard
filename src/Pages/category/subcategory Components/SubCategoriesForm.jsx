@@ -49,6 +49,7 @@ const SubCategoriesForm = React.memo((props) => {
     const { categories } = useContext(CategoryContext);
     const [categoryName, setCategoryName] = useState('');
     const { enqueueSnackbar } = useSnackbar();
+    const [submitted, setSubmitted] = useState(false)
     const classes = Style();
 
     const handleClickCategory = (category) => {
@@ -84,6 +85,8 @@ const SubCategoriesForm = React.memo((props) => {
             enqueueSnackbar(`Enter a valid category`, { variant: 'error' });
             return;
         }
+
+        setSubmitted(true)
 
         handleClickAction();
     }
@@ -195,7 +198,7 @@ const SubCategoriesForm = React.memo((props) => {
                                     </Grid>
                                 </Grid>
                                 <Grid item>
-                                    <Button fullWidth variant="contained" onClick={validateSubCategory}>Submit</Button>
+                                    <Button disabled={submitted} fullWidth variant="contained" onClick={validateSubCategory}>Submit</Button>
                                 </Grid>
                             </Box>
                         </form>

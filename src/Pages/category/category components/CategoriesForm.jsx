@@ -44,7 +44,7 @@ const CategoriesForm = React.memo((props) => {
     const [displayImage, setDisplayImage] = useState("");
     const { enqueueSnackbar } = useSnackbar();
     const classes = Style();
-
+    const [submitted, setSubmitted] = useState(false)
 
     
     const imageSelectHandler = async (files) => {
@@ -75,6 +75,8 @@ const CategoriesForm = React.memo((props) => {
             enqueueSnackbar(`Enter a valid order id`, { variant: 'error' });
             return;
         }
+
+        setSubmitted(true)
 
         handleClickAction();
     }
@@ -176,7 +178,7 @@ const CategoriesForm = React.memo((props) => {
                                     </Grid>
                                 </Grid>
                                 <Grid item>
-                                    <Button fullWidth variant="contained" onClick={validateCategory}>Submit</Button>
+                                    <Button disabled={submitted} fullWidth variant="contained" onClick={validateCategory}>Submit</Button>
                                 </Grid>
                             </Box>
                         </form>

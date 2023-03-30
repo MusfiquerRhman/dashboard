@@ -8,7 +8,6 @@ const style = makeStyles((theme) => ({
     margin: "1rem 1rem 10rem 1rem",
     padding: "1rem",
     paddingBottom: "1rem",
-
   },
   formBox: {
     [theme.breakpoints.up("xl")]: {

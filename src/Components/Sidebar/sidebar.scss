@@ -1,5 +1,5 @@
 :root {
-    --color-sidebar: #018f8f70;
+    --color-sidebar: #018f8fA0;
     --color-text: #000000;
     --color-card: #ffffff;
     --color-text--light: #018f8f;
@@ -16,8 +16,8 @@
     color: var(--color--text);
     height: 100vh;
     width: 270px;
-    
-    position: fixed;
+    top: 0;
+    position: sticky;
     overflow-y: scroll;
     overflow-x: hidden;
 
@@ -71,10 +71,9 @@
 
     .active {
         transition: var(--transition);
-        border-left: 5px solid var(--color-text--light);
+        border-left: 5px solid var( --color-text--light);
         padding: 0 1rem;
         background: var(--color-card);
-        box-shadow: 2px 2px 5px #01010144;
 
 
         .sidebar__link--text {

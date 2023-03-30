@@ -24,6 +24,7 @@ function Registration() {
     const [isRegistrated, setIsRegistrated] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const admin_status = 'True';
+    const [submitted, setSubmitted] = useState(false)
 
     const submitForm = async (e) => {
         if(!(/^\w+([.-/+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
@@ -40,6 +41,8 @@ function Registration() {
             enqueueSnackbar("Enter a strong password", { variant: 'error'});
             return;
         }
+
+        setSubmitted(true)
 
         e.preventDefault();
         if (password === confirmPassword) {
@@ -121,7 +124,7 @@ function Registration() {
                                 />
                             </Grid>
                             <Grid item>
-                                <Button fullWidth onClick={submitForm} variant="contained" >Submit</Button>
+                                <Button disabled={submitted} fullWidth onClick={submitForm} variant="contained" >Submit</Button>
                             </Grid>
                             <Grid item>
                                 <Typography variant="subtitle1">
