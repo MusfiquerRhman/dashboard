@@ -37,3 +37,32 @@
     font-size: 0.75rem;
     margin: 0.5rem 0 2rem 0;
 }
+
+.input--container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex: 1;
+
+    &:not(:last-child){
+        margin-right: 1rem;
+    }
+
+    .input--date {
+        width: 100%;
+        border-radius: .5rem;
+        border: 1px solid #018F8F;
+    }
+
+    .input--date {
+        padding-left: 1rem;
+        font-size: 1.15rem;
+        
+
+        &::-webkit-calendar-picker-indicator {
+            font-size: 1.15rem;
+            padding: 1rem;
+        }
+    }
+}

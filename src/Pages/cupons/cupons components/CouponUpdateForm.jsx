@@ -21,6 +21,7 @@ import Typography from '@mui/material/Typography';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { useSnackbar } from 'notistack';
 import { SubCategoryContext } from '../../../Context APIs/subcategoriesContext';
 import { VendorContext } from '../../../Context APIs/vendorContext';
 import Style from '../../../Styles/GlobalStyles';
@@ -31,6 +32,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const CouponsForm = React.memo((props) => {
     const classes = Style();
+    const { enqueueSnackbar } = useSnackbar();
 
     const {
         coupon_code,
@@ -61,11 +63,58 @@ const CouponsForm = React.memo((props) => {
         handleClickSubmit,
     } = props;
 
+
+    let date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    if (month < 10) month = `0${month}`;
+    let year = date.getFullYear();
+    let today = `${year}-${month}-${day}`
+
+    const [submitted, setSubmitted] = useState(false)
     const [selectedVendorName, setSelectedVendorName] = useState('')
     const [selectedSubCategoryName, setSelectedSubCategoryName] = useState('')
 
     const { subCategories } = useContext(SubCategoryContext);
     const { vendors } = useContext(VendorContext);
+
+
+    const validateCoupons = () => {
+        if (coupon_code.length < 1) {
+            enqueueSnackbar(`Enter a valid coupon code`, { variant: 'error' });
+            return;
+        }
+
+        if (percentage_off.length < 1) {
+            enqueueSnackbar(`Enter a valid deal type`, { variant: 'error' });
+            return;
+        }
+
+
+        if (selectedVendorName.length < 1) {
+            enqueueSnackbar(`Enter a valid vendor`, { variant: 'error' });
+            return;
+        }
+
+        if (selectedSubCategoryName.length < 1) {
+            enqueueSnackbar(`Enter a valid subcategory`, { variant: 'error' });
+            return;
+        }
+
+        if (coupnsDescription.length < 1) {
+            enqueueSnackbar(`Enter a valid description`, { variant: 'error' });
+            return;
+        }
+
+        if (new Date(end_date) < new Date(start_date)) {
+            enqueueSnackbar(`End Date must be equal or greater than start date`, { variant: 'error' });
+            return;
+        }
+
+        setSubmitted(true)
+
+        handleClickSubmit();
+    }
 
     useEffect(() => {
         const selectedVendor = vid !== '' ? vendors.find((element) => element.vid === vid)?.vendor_name : '';
@@ -83,6 +132,15 @@ const CouponsForm = React.memo((props) => {
         setSelectedSubCategoryName(sub_category_name);
         setScid(scid);
     }
+
+    const handleChangeStartDate = (e) => {
+        setStartDate(e.target.value);
+    }
+
+    const handleChangeEndDate = (e) => {
+        setEnddate(e.target.value);
+    }
+
 
     return (
         <Dialog
@@ -106,7 +164,7 @@ const CouponsForm = React.memo((props) => {
                     <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                         {formType} Coupons
                     </Typography>
-                    <Button autoFocus color="inherit" onClick={handleClickSubmit}>
+                    <Button autoFocus color="inherit" onClick={validateCoupons}>
                         save
                     </Button>
                 </Toolbar>
@@ -126,7 +184,7 @@ const CouponsForm = React.memo((props) => {
                                             label="Coupon Code"
                                             type="text"
                                             variant="outlined"
-                                            sx={{backgroundColor: '#30C3CD20'}}
+                                            sx={{ backgroundColor: '#30C3CD20' }}
                                             value={coupon_code}
                                             onChange={handleChangeCoupon_code}
                                             required
@@ -140,7 +198,7 @@ const CouponsForm = React.memo((props) => {
                                             label="Deal Type"
                                             type="text"
                                             variant="outlined"
-                                            sx={{backgroundColor: '#30C3CD20'}}
+                                            sx={{ backgroundColor: '#30C3CD20' }}
                                             value={percentage_off}
                                             onChange={handleChangePercentage_off}
                                             required
@@ -148,15 +206,15 @@ const CouponsForm = React.memo((props) => {
                                         />
                                     </Grid>
                                 </Grid>
-                                <p style={{fontSize: '1.15rem'}}>Select the appropriate box/s: </p>
-                                <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                                <p style={{ fontSize: '1.15rem' }}>Select the appropriate box/s: </p>
+                                <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
                                     <Grid container item direction="column" spacing={2} xs={12}>
                                         <Grid item>
                                             <Checkbox
                                                 label="Is Active"
                                                 onChange={handleChangeSingle_use}
                                                 checked={single_use}
-                                                /> <span>Single Use</span>
+                                            /> <span>Single Use</span>
                                         </Grid>
                                     </Grid>
                                     <Grid container item direction="column" spacing={2} xs={12}>
@@ -165,7 +223,7 @@ const CouponsForm = React.memo((props) => {
                                                 label="Feture Vendor"
                                                 onChange={handleChangeFeature_coupon}
                                                 checked={feature_coupon}
-                                                /> <span>Feature Coupon</span>
+                                            /> <span>Feature Coupon</span>
                                         </Grid>
                                     </Grid>
                                     <Grid container item direction="column" spacing={2} xs={12} sx={{ marginBottom: '1.5rem' }}>
@@ -174,7 +232,7 @@ const CouponsForm = React.memo((props) => {
                                                 label="Feture Vendor"
                                                 onChange={handleChangeIs_Active}
                                                 checked={isActive}
-                                                /> <span>Is Active</span>
+                                            /> <span>Is Active</span>
                                         </Grid>
                                     </Grid>
                                 </div>
@@ -186,7 +244,7 @@ const CouponsForm = React.memo((props) => {
                                             id="demo-simple-select"
                                             value={selectedVendorName}
                                             label="Select a Vendor"
-                                            sx={{backgroundColor: '#30C3CD20'}}
+                                            sx={{ backgroundColor: '#30C3CD20' }}
                                         >
                                             {vendors?.map((element, index) => (
                                                 <MenuItem key={index}
@@ -204,7 +262,7 @@ const CouponsForm = React.memo((props) => {
                                             id="demo-simple-select"
                                             value={selectedSubCategoryName}
                                             label="Select a Sub-Category"
-                                            sx={{backgroundColor: '#30C3CD20'}}
+                                            sx={{ backgroundColor: '#30C3CD20' }}
                                         >
                                             {subCategories?.map((element, index) => (
                                                 <MenuItem key={index}
@@ -215,31 +273,31 @@ const CouponsForm = React.memo((props) => {
                                         </Select>
                                     </FormControl>
                                 </Box>
-                                <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                                <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
                                     <Box sx={{ marginBottom: "1rem", width: '50%', marginRight: '0.5rem' }}>
-                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                            <DatePicker
-                                                label="Start Date"
+                                        <div className='input--container'>
+                                            <label htmlFor='date'>Start Date</label>
+                                            <input id='date' className='input--date'
+                                                type="date"
+                                                name={'Start Date'}
+                                                min={today}
                                                 value={start_date}
-                                                onChange={(newValue) => {
-                                                    setStartDate(new Date(newValue).toISOString().substring(0, 10));
-                                                }}
-                                                renderInput={(params) => <TextField fullWidth {...params} sx={{backgroundColor: '#30C3CD20'}}/>}
-                                                />
-                                        </LocalizationProvider>
+                                                onChange={handleChangeStartDate}
+                                            />
+                                        </div>
                                     </Box>
                                     <br />
                                     <Box sx={{ marginBottom: "1rem", width: '50%', marginLeft: '0.5rem' }}>
-                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                            <DatePicker
-                                                label="End Date"
+                                        <div className='input--container'>
+                                            <label htmlFor='date'>End Date</label>
+                                            <input id='date' className='input--date'
+                                                type="date"
+                                                name={'end Date'}
+                                                min={start_date}
                                                 value={end_date}
-                                                onChange={(newValue) => {
-                                                    setEnddate(new Date(newValue).toISOString().substring(0, 10));
-                                                }}
-                                                renderInput={(params) => <TextField fullWidth {...params} sx={{backgroundColor: '#30C3CD20'}}/>}
-                                                />
-                                        </LocalizationProvider>
+                                                onChange={handleChangeEndDate}
+                                            />
+                                        </div>
                                     </Box>
                                 </div>
                                 <Grid container item direction="column" spacing={2} lg={12} sx={{ marginBottom: '1.5rem' }}>
@@ -254,7 +312,7 @@ const CouponsForm = React.memo((props) => {
                                             multiline
                                             rows={7}
                                             variant="outlined"
-                                            sx={{backgroundColor: '#30C3CD20'}}
+                                            sx={{ backgroundColor: '#30C3CD20' }}
                                         />
                                     </Grid>
                                 </Grid>
@@ -275,7 +333,7 @@ const CouponsForm = React.memo((props) => {
                                 </FormControl>
 
                                 <Grid item>
-                                    <Button fullWidth variant="contained" onClick={handleClickSubmit}>Submit</Button>
+                                    <Button disabled={submitted} fullWidth variant="contained" onClick={validateCoupons}>Submit</Button>
                                 </Grid>
                             </Box>
                         </form>

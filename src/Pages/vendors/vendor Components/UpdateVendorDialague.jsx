@@ -27,7 +27,7 @@ const UpdateVendorDialague = React.memo((props) => {
             window.location.reload();
         }
         else {
-            enqueueSnackbar(`Failes to Update - ${res.message}`, { variant: 'error' });
+            enqueueSnackbar(`Failed to Update - ${res.message}`, { variant: 'error' });
         }
         props.setupdateOpen(false);
     }, [enqueueSnackbar, file, props, state, vid])

@@ -15,19 +15,26 @@ const style = makeStyles((theme) => ({
     title: {
         fontSize: "1rem",
         paddingRight: "1rem",
+        color: '#e65100'
     },
     value: {
         fontSize: "1rem",
         color: "#263238",
         overflowWrap: 'break-word',
+        textAlign: 'center'
     }, 
     icon: {
         height: '100%',
     },
+    // emptyIcon: {
+    //     margin: '0',
+    //     paddingTop: '10px'
+    // },
     website: {
         fontSize: "1rem",
         color: "#018F8F",
         overflowWrap: 'break-word',
+        textDecoration: 'underline'
     }
 }));
 

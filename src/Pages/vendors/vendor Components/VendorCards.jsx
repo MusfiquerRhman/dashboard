@@ -42,18 +42,16 @@ const VendorCards = React.memo((props) => {
   const classes = Styles();
   const { element } = props;
 
-  console.log(element);
-
-  if(element.facebook.length > 0 && element.facebook[0] !== 'h') {
+  if (element.facebook.length > 0 && element.facebook[0] !== 'h') {
     element.facebook = `http://${element.facebook}`
   }
-  if(element.twitter.length > 0 && element.twitter[0] !== 'h') {
+  if (element.twitter.length > 0 && element.twitter[0] !== 'h') {
     element.twitter = `http://${element.twitter}`
   }
-  if(element.youtube.length > 0 && element.youtube[0] !== 'h') {
+  if (element.youtube.length > 0 && element.youtube[0] !== 'h') {
     element.youtube = `http://${element.youtube}`
   }
-  if(element.instagram.length > 0 && element.instagram[0] !== 'h') {
+  if (element.instagram.length > 0 && element.instagram[0] !== 'h') {
     element.instagram = `http://${element.instagram}`
   }
 
@@ -80,7 +78,7 @@ const VendorCards = React.memo((props) => {
       enqueueSnackbar(`Successfully Deleted`, { variant: 'info' });
     }
     else {
-      enqueueSnackbar(`Failed to Deleted - ${res.message}`, { variant: 'error' });
+      enqueueSnackbar(`Failed to Delete`, { variant: 'error' });
     }
     setDeleteOpen(false);
     window.location.reload();
@@ -104,87 +102,50 @@ const VendorCards = React.memo((props) => {
 
       <Box className={classes.form} >
         <Box sx={{ width: '100%' }}>
-          <Card sx={{ maxWidth: 400, boxShadow: "2px 2px 6px #01010144" }}>
+          <Card sx={{ maxWidth: 400, boxShadow: "1px 1px 6px #01010144" }}>
             <CardHeader
               avatar={
                 <img src={element.vendor_log_path} alt='vendor' className={classes.vendorImg} />
               }
               title={element.vendor_name}
               subheader={element.email}
+              sx={{ color: '#e65100' }}
+              titleTypographyProps={{ variant: 'h5' }}
             />
 
             <CardContent>
               <Grid container sx={{ color: 'text.primary', lineHeight: '1.7' }}>
+                <Grid item xs={12} sx={{ alignItems: 'center' }}>
+                  <span className={classes.title}>Phone:</span>
                   {
-                    (element.zip_code.length > 1 && element.zip_code !== null) && (
-                      <>
-                        <Grid item xs={4}>
-                          <span className={classes.title}>Phone:</span>
-                        </Grid>
-                        <Grid item xs={8}>
-                          <span className={classes.value}>{element.phone}</span>
-                        </Grid>
-                      </>
+                    (element.phone.length > 1 && element.phone !== null) ? (
+                      <span className={classes.value}>{element.phone}</span>
+                    ) : (
+                      <span className={classes.emptyIcon}>[No Data]</span>
                     )
                   }
-
-                  {
-                    (element.website.length > 1 && element.website !== null) && (
-                      <>
-                        <Grid item xs={4}>
-                          <span className={classes.title}>Website:</span>
-                        </Grid>
-                        <Grid item xs={8}>
-                          <a target="_blank" href={element.website} className={classes.website} rel="noreferrer">{element.website}</a>
-                        </Grid>
-                      </>
-                    )
-                  }
-    
-                <Grid item xs={4}>
-                  <span className={classes.title}>Active:</span>
                 </Grid>
-                <Grid item xs={8}>
+
+                <Grid item xs={12} sx={{ alignItems: 'center', display: 'flex' }}>
+                  <span className={classes.title}>Website:</span>
+                  {
+                    (element.website.length > 1 && element.website !== null) ? (
+                      <a target="_blank" href={element.website} className={classes.website} rel="noreferrer">{element.website}</a>
+                    ) : (
+                      <span className={classes.emptyIcon}>[No Data]</span>
+                    )
+                  }
+                </Grid>
+
+                <Grid item xs={12}>
+                  <span className={classes.title}>Active:</span>
                   <span className={classes.value}>{element.is_active ? "Yes" : "No"}</span>
                 </Grid>
 
-                  {
-                    (element.feature_vendor.length > 1 && element.feature_vendor !== null) && (
-                      <>
-                        <Grid item xs={4}>
-                          <span className={classes.title}>Feature:</span>
-                        </Grid>
-                        <Grid item xs={8}>
-                          <span className={classes.icon}>{element.feature_vendor ? "Yes" : "No"}</span>
-                        </Grid>
-                      </>
-                    )
-                  }
-
-                  {
-                    (element.hours.length > 1 && element.hours !== null) && (
-                        <>
-                      <Grid item xs={4}>
-                        <span className={classes.title}>Hours:</span>
-                      </Grid>
-                      <Grid item xs={8}>
-                        <span className={classes.value}>{element.hours}</span>
-                      </Grid>
-                      </>
-                    )
-                  }
-                  {
-                    (element.requirements.length > 1 && element.requirements !== null) && (
-                      <>
-                        <Grid item xs={4}>
-                          <span className={classes.title}>Requirements:</span>
-                        </Grid>
-                        <Grid item xs={8}>
-                          <span className={classes.value}>{element.requirements}</span>
-                        </Grid>
-                      </>
-                    )
-                  }
+                <Grid item xs={12} sx={{ alignItems: 'center', display: 'flex' }}>
+                  <span className={classes.title}>Feature:</span>
+                  <span className={classes.icon}>{element.feature_vendor ? "Yes" : "No"}</span>
+                </Grid>
 
               </Grid>
             </CardContent>
@@ -209,6 +170,32 @@ const VendorCards = React.memo((props) => {
             <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent >
                 <Grid container sx={{ color: 'text.primary', lineHeight: '2' }}>
+                  {
+                    (element.requirements.length > 1 && element.requirements !== null) && (
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>Requirements:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}>{element.requirements}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
+
+                  {
+                    (element.hours.length > 1 && element.hours !== null) && (
+                      <>
+                        <Grid item xs={4}>
+                          <span className={classes.title}>Hours:</span>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <span className={classes.value}>{element.hours}</span>
+                        </Grid>
+                      </>
+                    )
+                  }
+
                   {
                     (element.description.length > 1 && element.description !== null) && (
                       <>
@@ -279,13 +266,13 @@ const VendorCards = React.memo((props) => {
                   }
 
                   {
-                    (element.facebook.length > 1 && element.facebook !== null) && (                      
+                    (element.facebook.length > 1 && element.facebook !== null) && (
                       <>
                         <Grid item xs={4}>
                           <span className={classes.title}>Facebook:</span>
                         </Grid>
                         <Grid item xs={8}>
-                          <span className={classes.value}> 
+                          <span className={classes.value}>
                             <Tooltip title={element.facebook}>
                               <a target="_blank" className={classes.website} href={element.facebook} rel="noreferrer">Click here</a>
                             </Tooltip>
@@ -296,13 +283,13 @@ const VendorCards = React.memo((props) => {
                   }
 
                   {
-                    (element.twitter.length > 1 && element.twitter !== null) && (                      
+                    (element.twitter.length > 1 && element.twitter !== null) && (
                       <>
                         <Grid item xs={4}>
                           <span className={classes.title}>Twitter:</span>
                         </Grid>
                         <Grid item xs={8}>
-                          <span className={classes.value}> 
+                          <span className={classes.value}>
                             <Tooltip title={element.twitter}>
                               <a target="_blank" className={classes.website} href={element.twitter} rel="noreferrer">Click here</a>
                             </Tooltip>
@@ -312,14 +299,14 @@ const VendorCards = React.memo((props) => {
                     )
                   }
 
-                {
-                    (element.youtube.length > 1 && element.youtube !== null) && (    
-                      <>           
+                  {
+                    (element.youtube.length > 1 && element.youtube !== null) && (
+                      <>
                         <Grid item xs={4}>
                           <span className={classes.title}>Youtube:</span>
                         </Grid>
                         <Grid item xs={8}>
-                          <span className={classes.value}> 
+                          <span className={classes.value}>
                             <Tooltip title={element.youtube}>
                               <a target="_blank" className={classes.website} href={element.youtube} rel="noreferrer">Click here</a>
                             </Tooltip>
@@ -330,13 +317,13 @@ const VendorCards = React.memo((props) => {
                   }
 
                   {
-                    (element.instagram.length > 1 && element.instagram !== null) && (                      
+                    (element.instagram.length > 1 && element.instagram !== null) && (
                       <>
                         <Grid item xs={4}>
                           <span className={classes.title}>Instagram:</span>
                         </Grid>
                         <Grid item xs={8}>
-                          <span className={classes.value}> 
+                          <span className={classes.value}>
                             <Tooltip title={element.instagram}>
                               <a target="_blank" className={classes.website} href={element.instagram} rel="noreferrer">Click here</a>
                             </Tooltip>
@@ -347,7 +334,7 @@ const VendorCards = React.memo((props) => {
                   }
 
                   {
-                    (element.best_of_logan_picks.length > 1 && element.best_of_logan_picks !== null) && (                      
+                    (element.best_of_logan_picks.length > 1 && element.best_of_logan_picks !== null) && (
                       <>
                         <Grid item xs={4}>
                           <span className={classes.title}>BL Picks:</span>
@@ -376,7 +363,11 @@ const VendorCards = React.memo((props) => {
                       new Date(element.updated_date).toLocaleDateString() + " " + new Date(element.updated_date).toLocaleTimeString()
                     }</span>
                   </Grid>
-                  <p className='info'>* BL Picks stands for Best of Logan picks<i></i></p>
+                  {
+                    (element.best_of_logan_picks.length > 1 && element.best_of_logan_picks !== null) && (
+                      <p className='info'>* BL Picks stands for Best of Logan picks<i></i></p>
+                    )
+                  }
                 </Grid>
               </CardContent>
             </Collapse>

@@ -75,7 +75,7 @@ const Category = () => {
         else {
             categoriesAPI.addCategories(category_name, categoryOrderId, file).then(res => {
                 if (res.status !== 200) {
-                    enqueueSnackbar(`Error - ${res.message}`, { variant: 'error' });
+                    enqueueSnackbar(`Failed to add category, try again later`, { variant: 'error' });
                 }
                 else {
                     window.location.reload();
@@ -96,7 +96,7 @@ const Category = () => {
         else {
             subcategoriesAPI.addSubCategories(selectedCategoriesIdInSubcategory, subCategory_name, fileSub).then(res => {
                 if (res.status !== 200) {
-                    enqueueSnackbar(`Error - ${res.message}`, { variant: 'error' });
+                    enqueueSnackbar(`Failed to add subcategory, try again later`, { variant: 'error' });
                 }
                 else {
                     window.location.reload();

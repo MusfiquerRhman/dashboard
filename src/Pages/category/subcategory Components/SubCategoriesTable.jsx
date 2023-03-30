@@ -72,7 +72,7 @@ const SubCategoryTable = React.memo((subCategories) => {
   const updateSubCatgoriesForm = useCallback(() => {
     subcategoriesAPI.updateSubCategories(categoryID, subCategoryID, subCategory_name, file).then(res => {
       if (res.status !== 200) {
-        enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
+        enqueueSnackbar(`Failed to update subcategory`, { variant: 'error' });
       }
       else {
         window.location.reload();
@@ -83,7 +83,7 @@ const SubCategoryTable = React.memo((subCategories) => {
   const deleteForm = useCallback(() => {
     subcategoriesAPI.deleteSubCategories(subCategoryID).then(res => {
       if (res.status !== 200) {
-        enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
+        enqueueSnackbar(`Failed to delete subcategory`, { variant: 'error' });
       }
       else {
         window.location.reload();

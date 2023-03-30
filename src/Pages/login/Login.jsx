@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import * as userApi from '../../API/auth';
@@ -13,15 +13,28 @@ import useInputState from '../../Hooks/UseInputHook';
 import style from '../../Styles/GlobalStyles';
 
 const Login = () => {
-    const [userName, handleChangeUserName] = useInputState("");
+    const [userEmail, handleChangeUserEmail] = useInputState("");
     const [password, handleChangePassword] = useInputState("");
+    const [submitted, setSubmitted] = useState(false)
     const classes = style();
     const { enqueueSnackbar } = useSnackbar();
 
     const submitForm = async (e) => {
-        const res = await userApi.login(userName, password);
+        if(!(/^\w+([.-/+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(userEmail))) {
+            enqueueSnackbar("Enter a valid email", { variant: 'error' });
+            return;
+        }
+
+        if(password.length < 1){
+            enqueueSnackbar("Enter a valid password", { variant: 'error' });
+            return;
+        }
+
+        setSubmitted(true)
+
+        const res = await userApi.login(userEmail, password);
         if (res === -1) {
-            enqueueSnackbar("Error Logining in!", { variant: 'error' });
+            enqueueSnackbar("Error Logging in!", { variant: 'error' });
         } else if (res.status === 200) {
             localStorage.setItem('userInformations', JSON.stringify(res.data));
             localStorage.setItem('last_login', new Date().getTime());
@@ -44,10 +57,10 @@ const Login = () => {
                         <Grid container item direction="column" spacing={2} xs={12} >
                             <Grid item>
                                 <TextField id="login-name"
-                                    label="User Name"
+                                    label="User Email"
                                     variant="standard"
-                                    value={userName}
-                                    onChange={handleChangeUserName}
+                                    value={userEmail}
+                                    onChange={handleChangeUserEmail}
                                     required
                                     fullWidth
                                 />
@@ -64,7 +77,7 @@ const Login = () => {
                                 />
                             </Grid>
                             <Grid item>
-                                <Button fullWidth onClick={submitForm} variant="contained" >Login</Button>
+                                <Button disabled={submitted} fullWidth onClick={submitForm} variant="contained" >Login</Button>
                             </Grid>
                             <Grid item>
                                 <Typography variant="subtitle1">

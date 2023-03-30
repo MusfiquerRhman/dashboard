@@ -49,6 +49,7 @@ const SubCategoriesForm = React.memo((props) => {
     const { categories } = useContext(CategoryContext);
     const [categoryName, setCategoryName] = useState('');
     const { enqueueSnackbar } = useSnackbar();
+    const [submitted, setSubmitted] = useState(false)
     const classes = Style();
 
     const handleClickCategory = (category) => {
@@ -70,9 +71,25 @@ const SubCategoriesForm = React.memo((props) => {
                 reader.readAsDataURL(files[0]);
             }
         } catch (error) {
-            enqueueSnackbar(`Failed to compress image - ${error.message}`, { variant: 'error' });
+            enqueueSnackbar(`Failed to compress image`, { variant: 'error' });
         }
     };
+
+    const validateSubCategory = () => {
+        if(category_name.length < 1){
+            enqueueSnackbar(`Enter a valid name`, { variant: 'error' });
+            return;
+        }
+
+        if(categoryName.length < 1){
+            enqueueSnackbar(`Enter a valid category`, { variant: 'error' });
+            return;
+        }
+
+        setSubmitted(true)
+
+        handleClickAction();
+    }
 
     let imageSelectedMsg = (
         <Typography variant="h6" className={classes.imagetext}>
@@ -107,7 +124,7 @@ const SubCategoriesForm = React.memo((props) => {
                     <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                         {formType} Sub-Category
                     </Typography>
-                    <Button autoFocus color="inherit" onClick={handleClickAction}>
+                    <Button autoFocus color="inherit" onClick={validateSubCategory}>
                         save
                     </Button>
                 </Toolbar>
@@ -181,7 +198,7 @@ const SubCategoriesForm = React.memo((props) => {
                                     </Grid>
                                 </Grid>
                                 <Grid item>
-                                    <Button fullWidth variant="contained" onClick={handleClickAction}>Submit</Button>
+                                    <Button disabled={submitted} fullWidth variant="contained" onClick={validateSubCategory}>Submit</Button>
                                 </Grid>
                             </Box>
                         </form>

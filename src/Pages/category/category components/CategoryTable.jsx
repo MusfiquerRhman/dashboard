@@ -70,7 +70,7 @@ const CategoryTable = React.memo((categories) => {
   const updateCategoriesForm = useCallback(() => {
     categoriesAPI.updateCategories(categoryID, category_name, categoryOrderId, file).then(res => {
       if (res.status !== 200) {
-        enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
+        enqueueSnackbar(`Failed to update category`, { variant: 'error' });
       }
       else {
         window.location.reload();
@@ -81,7 +81,7 @@ const CategoryTable = React.memo((categories) => {
   const deleteForm = useCallback(() => {
     categoriesAPI.deleteCategories(categoryID).then(res => {
       if (res.status !== 200) {
-        enqueueSnackbar(`Failed to update category - ${res.message}`, { variant: 'error' });
+        enqueueSnackbar(`Failed to Delete category`, { variant: 'error' });
       }
       else {
         window.location.reload();

@@ -58,14 +58,21 @@ const Cupons = () => {
         setAddOpen(true);
     }
 
+    let date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    if(month < 10) month = `0${month}`;
+    let year = date.getFullYear();
+    let today = `${year}-${month}-${day}`
+
     const [coupon_code, handleChangeCoupon_code] = useInputState('')
     const [percentage_off, handleChangePercentage_off] = useInputState('');
     const [single_use, setSingle_use] = useState(false)
     const [feature_coupon, setFeature_coupon] = useState(false)
     const [isActive, setIsActive] = useState(true)
-    const [start_date, setStartDate] = useState(new Date().getTime() + 24 * 60 * 60 * 1000);
-    const [end_date, setEndDate] = useState(new Date().getTime() + 24 * 60 * 60 * 1000);
-    const [scheduler, setScheduler] = useState('')
+    const [start_date, setStartDate] = useState(today);
+    const [end_date, setEndDate] = useState(today);
+    const [scheduler, setScheduler] = useState('weekly')
     const [vid, setVid] = useState('');
     const [scid, setScid] = useState([]);
     const [couponDescription, setCouponDescription] = useState('')
@@ -116,6 +123,7 @@ const Cupons = () => {
 
     const addForm = async () => {
         let flag = 0;
+        console.log({start_date, end_date})
         scid?.forEach(item => {
             couponsAPI.addCoupons(vid, item, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, couponDescription, scheduler).then(res => {
                 if (res.status === 200) {
@@ -124,7 +132,7 @@ const Cupons = () => {
                     if (flag === scid.length) window.location.reload();
                 }
                 else {
-                    enqueueSnackbar(`Failed to Add - ${res.message}`, { variant: 'error' });
+                    enqueueSnackbar(`Failed to Add coupon, try again later`, { variant: 'error' });
                 }
             });
         })
@@ -253,7 +261,7 @@ const Cupons = () => {
                                     You can sort Coupon Codes, Vendor names, Start dates, End dates, Sub-category names Deal types and Scheduler by clicking on the column name in the table.
                                     Click on the Pen icon to edit and the trash icon to delete the corresponding coupon.
                                     </i></p>
-                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="1">< AllCupons coupons={cupons} /></TabPanel> {/* Active Cpupons panel */}
+                                    <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="1">< AllCupons coupons={cupons} /></TabPanel> {/* Active Coupons panel */}
                                     <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="2">< ActiveAndFutureCoupons /></TabPanel> {/* All Coupons panel */}
                                     <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="3">< FeaturedCoupons /></TabPanel>
                                     <TabPanel sx={{ padding: 0, paddingTop: '1.5rem' }} value="4">< ExpiredCoupons /></TabPanel>
