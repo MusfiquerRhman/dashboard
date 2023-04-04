@@ -112,7 +112,8 @@ const CouponsForm = React.memo((props) => {
             return;
         }
 
-        setSubmitted(true)
+        setSubmitted(true);
+        enqueueSnackbar(`Submitting, Please wait`, { variant: 'info' });
 
         handleClickSubmit();
     }

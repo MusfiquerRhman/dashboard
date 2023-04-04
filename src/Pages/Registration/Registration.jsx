@@ -42,8 +42,9 @@ function Registration() {
             return;
         }
 
-        setSubmitted(true)
-
+        setSubmitted(true);
+        enqueueSnackbar(`Submitting, Please wait`, { variant: 'info' });
+        
         e.preventDefault();
         if (password === confirmPassword) {
             const res = await authApi.registration(email, password, phoneNo, admin_status);

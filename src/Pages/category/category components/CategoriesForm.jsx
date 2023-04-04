@@ -76,7 +76,14 @@ const CategoriesForm = React.memo((props) => {
             return;
         }
 
-        setSubmitted(true)
+        if(displayImage === ""){
+            enqueueSnackbar(`Please Select an image file`, { variant: 'error' });
+            return;
+        }
+
+
+        setSubmitted(true);
+        enqueueSnackbar(`Submitting, Please wait`, { variant: 'info' });
 
         handleClickAction();
     }

@@ -40,8 +40,8 @@ const Category = () => {
 
     let isLoggedin = localStorage.getItem('userInformations') !== null;
 
-    if(isLoggedin){
-        if(new Date().getTime() - parseInt(localStorage.getItem('last_login')) > 21600000){ // 6 Hours
+    if (isLoggedin) {
+        if (new Date().getTime() - parseInt(localStorage.getItem('last_login')) > 21600000) { // 6 Hours
             localStorage.removeItem('userInformations');
             localStorage.removeItem('last_login');
             window.location.reload();
@@ -69,41 +69,26 @@ const Category = () => {
     }
 
     const addCategoriesForm = () => {
-        if (file === "") {
-            enqueueSnackbar(`Please Select an image file`, { variant: 'error' });
-        }
-        else {
-            categoriesAPI.addCategories(category_name, categoryOrderId, file).then(res => {
-                if (res.status !== 200) {
-                    enqueueSnackbar(`Failed to add category, try again later`, { variant: 'error' });
-                }
-                else {
-                    window.location.reload();
-                }
+        categoriesAPI.addCategories(category_name, categoryOrderId, file).then(res => {
+            if (res.status !== 200) {
+                enqueueSnackbar(`Failed to add category, try again later`, { variant: 'error' });
             }
-            );
-        }
+            else {
+                window.location.reload();
+            }
+        });
     }
 
 
     const addSubCatgoriesForm = () => {
-        if (fileSub === "") {
-            enqueueSnackbar(`Please Select an image file`, { variant: 'error' });
-        }
-        else if (selectedCategoriesIdInSubcategory === "") {
-            enqueueSnackbar(`Please Select Category`, { variant: 'error' });
-        }
-        else {
-            subcategoriesAPI.addSubCategories(selectedCategoriesIdInSubcategory, subCategory_name, fileSub).then(res => {
-                if (res.status !== 200) {
-                    enqueueSnackbar(`Failed to add subcategory, try again later`, { variant: 'error' });
-                }
-                else {
-                    window.location.reload();
-                }
+        subcategoriesAPI.addSubCategories(selectedCategoriesIdInSubcategory, subCategory_name, fileSub).then(res => {
+            if (res.status !== 200) {
+                enqueueSnackbar(`Failed to add subcategory, try again later`, { variant: 'error' });
             }
-            );
-        }
+            else {
+                window.location.reload();
+            }
+        });
     }
 
     return (
@@ -135,7 +120,7 @@ const Category = () => {
                 <div className={classes.header}>
                     <h1>All Categories and Subcategories</h1>
                     <div>
-                        <Button className={classes.button} variant="contained" onClick={handleClickOpenAdd} startIcon={<AddIcon />} sx={{marginRight: "1rem"}}>Add Category</Button>
+                        <Button className={classes.button} variant="contained" onClick={handleClickOpenAdd} startIcon={<AddIcon />} sx={{ marginRight: "1rem" }}>Add Category</Button>
                         <Button className={classes.button} variant="contained" onClick={handleClickOpenAddSubcategory} startIcon={<AddIcon />}>Add Subcategory</Button>
                     </div>
                 </div>
@@ -155,7 +140,7 @@ const Category = () => {
                             sx={{
                                 background: '#018F8F',
                                 color: '#FFFFFF',
-                                
+
                                 "& button": {
                                     color: '#FFFFFF',
                                     fontWeight: 'bold',
