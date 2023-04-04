@@ -76,11 +76,11 @@ const CouponsForm = React.memo((props) => {
 
     let date = new Date();
     let day = date.getDate();
+    if(day < 10) day = `0${day}`;
     let month = date.getMonth() + 1;
     if(month < 10) month = `0${month}`;
     let year = date.getFullYear();
     let today = `${year}-${month}-${day}`
-
 
     const [selectedVendorName, setSelectedVendorName] = useState('')
     const [selectedSubCategoryName, setSelectedSubCategoryName] = useState([])
@@ -153,6 +153,9 @@ const CouponsForm = React.memo((props) => {
 
     const handleChangeStartDate = (e) => {
         setStartDate(e.target.value);
+        if (new Date(end_date) < new Date(e.target.value)) {
+            setEnddate(e.target.value);
+        }
     }
 
     const handleChangeEndDate = (e) => {
@@ -360,12 +363,13 @@ const CouponsForm = React.memo((props) => {
                                 </Grid>
 
                                 <FormControl fullWidth sx={{ marginBottom: '1.5rem' }}>
-                                    <InputLabel id="demo-simple-select-label">Scheduler</InputLabel>
+                                    <InputLabel id="demo-simple-select-label">Scheduler *</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-scheduler"
                                         id="demo-simple-scheduler"
                                         value={scheduler}
                                         label="Scheduler"
+                                        required
                                         onChange={handleChangeCouponScheduler}
                                         sx={{ backgroundColor: '#30C3CD20' }}
                                     >
