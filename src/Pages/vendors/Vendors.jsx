@@ -47,20 +47,15 @@ const Vendor = () => {
     }
 
     const handleClickAddVendor = useCallback(async () => {
-        if(file === ""){
-            enqueueSnackbar(`Please Select an image file`, { variant: 'error' });
+        const res = await vendorAPI.addVendor(state, file);
+        if (res.status === 200) {
+            enqueueSnackbar(`Successfully Added New Vendor`, { variant: 'success' });
+            window.location.reload();
         }
         else {
-            const res = await vendorAPI.addVendor(state, file);
-            if (res.status === 200) {
-                enqueueSnackbar(`Successfully Added New Vendor`, { variant: 'info' });
-                window.location.reload();
-            }
-            else {
-                enqueueSnackbar(`Failed to Add new Vendor`, { variant: 'error' });
-            }
-            setUpdateAdd(false);
+            enqueueSnackbar(`Failed to Add new Vendor`, { variant: 'error' });
         }
+        setUpdateAdd(false);
     }, [enqueueSnackbar, file, state])
 
     return (

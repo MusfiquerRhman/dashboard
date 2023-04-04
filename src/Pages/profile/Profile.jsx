@@ -23,6 +23,8 @@ function Profile() {
     const [zip, handleChangeZip, setZip] = useInputState("");
     const [displayImage, setDisplayImage] = useState("");
     const [Image, setImage] = useState('');
+    const [submitted, setSubmitted] = useState(false)
+
 
     useEffect(() => {
         userAPI.getUserProfile().then((user) => {
@@ -74,6 +76,9 @@ function Profile() {
             return;
         }
 
+        setSubmitted(true);
+        enqueueSnackbar(`Submitting, Please wait`, { variant: 'info' });
+
         const res = await userAPI.updateUserProfile(fullName, phoneNo, zip);
         if (res === -1) {
             enqueueSnackbar("Connection Error, Try again", { variant: 'error' });
@@ -91,9 +96,10 @@ function Profile() {
                 enqueueSnackbar("Profile Picture successfully updated", { variant: 'success' });
             }
         }
+
+        setSubmitted(false);
     }
 
-    const [submitted, setSubmitted] = useState(false)
     const [deleteOpen, setDeleteOpen] = useState(false);
 
     const handleClickOpenDelete = () => {
@@ -206,7 +212,7 @@ function Profile() {
                                     </Grid>
                                 </Grid>
                             <Grid item>
-                                <Button fullWidth onClick={submitForm} variant="contained" >Update</Button>
+                                <Button disabled={submitted} fullWidth onClick={submitForm} variant="contained" >Update</Button>
                             </Grid>
                             <Grid item>
                                 <Typography variant="subtitle1">

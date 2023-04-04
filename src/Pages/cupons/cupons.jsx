@@ -128,7 +128,7 @@ const Cupons = () => {
         scid?.forEach(item => {
             couponsAPI.addCoupons(vid, item, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, couponDescription, scheduler).then(res => {
                 if (res.status === 200) {
-                    enqueueSnackbar(`Successfully Added`, { variant: 'info' });
+                    enqueueSnackbar(`Successfully Added`, { variant: 'success' });
                     flag++;
                     if (flag === scid.length) window.location.reload();
                 }
