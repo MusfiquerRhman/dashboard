@@ -81,12 +81,12 @@ const SubCategoriesForm = React.memo((props) => {
             return;
         }
 
-        if(categoryName.length < 1){
+        if(formType === 'Add' && categoryName.length < 1){
             enqueueSnackbar(`Enter a valid category`, { variant: 'error' });
             return;
         }
 
-        if(displayImage === ""){
+        if(formType === 'Add' && displayImage === ""){
             enqueueSnackbar(`Please Select an image file`, { variant: 'error' });
             return;
         }
@@ -96,6 +96,10 @@ const SubCategoriesForm = React.memo((props) => {
         enqueueSnackbar(`Submitting, Please wait`, { variant: 'info' });
 
         handleClickAction();
+
+        setTimeout(() => {
+            setSubmitted(false);
+        }, 1000);
     }
 
     let imageSelectedMsg = (

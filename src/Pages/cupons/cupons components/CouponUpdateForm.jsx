@@ -18,9 +18,6 @@ import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { useSnackbar } from 'notistack';
 import { SubCategoryContext } from '../../../Context APIs/subcategoriesContext';
 import { VendorContext } from '../../../Context APIs/vendorContext';
@@ -116,6 +113,10 @@ const CouponsForm = React.memo((props) => {
         enqueueSnackbar(`Submitting, Please wait`, { variant: 'info' });
 
         handleClickSubmit();
+
+        setTimeout(() => {
+            setSubmitted(false);
+        }, 1000);
     }
 
     useEffect(() => {
@@ -251,7 +252,9 @@ const CouponsForm = React.memo((props) => {
                                             {vendors?.map((element, index) => (
                                                 <MenuItem key={index}
                                                     onClick={() => handleClickItemVendorMenu(element.vid, element.vendor_name)}
-                                                    value={element.vendor_name}>{element.vendor_name}
+                                                    value={element.vendor_name}
+                                                >
+                                                    {element.vendor_name}
                                                 </MenuItem>
                                             ))}
                                         </Select>
@@ -269,7 +272,9 @@ const CouponsForm = React.memo((props) => {
                                             {subCategories?.map((element, index) => (
                                                 <MenuItem key={index}
                                                     onClick={() => handleClickItemSubctegory(element.scid, element.sub_category_name)}
-                                                    value={element.sub_category_name}>{element.sub_category_name}
+                                                    value={element.sub_category_name}
+                                                >
+                                                    {element.sub_category_name}
                                                 </MenuItem>
                                             ))}
                                         </Select>

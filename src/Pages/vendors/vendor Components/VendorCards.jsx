@@ -100,9 +100,10 @@ const VendorCards = React.memo((props) => {
         setupdateOpen={setupdateOpen}
       />
 
+      {/*box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;*/}
       <Box className={classes.form} >
         <Box sx={{ width: '100%' }}>
-          <Card sx={{ maxWidth: 400, boxShadow: "1px 1px 6px #01010144" }}>
+          <Card sx={{ boxShadow: " rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px" }}>
             <CardHeader
               avatar={
                 <img src={element.vendor_log_path} alt='vendor' className={classes.vendorImg} />
