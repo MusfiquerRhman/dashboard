@@ -53,7 +53,9 @@ export const deleteCoupon = async (coupon_id) => {
   }
 };
 
-export const updateCoupons = async (coupon_id, vendor_id, subcategory_id, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, updateDate, coupon_description, scheduler) => {
+export const updateCoupons = async (
+    coupon_id, vendor_id, subcategory_id, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, updateDate, coupon_description, scheduler
+  ) => {
   try {
     return await axios.put(`${API_URL}/${vendor_id}/coupon/${coupon_id}/${subcategory_id}/`, {
       vid: vendor_id,
@@ -78,7 +80,9 @@ export const updateCoupons = async (coupon_id, vendor_id, subcategory_id, coupon
 };
 
 
-export const addCoupons = async (vendor_id, subcategory_id, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, coupon_description, scheduler) => {
+export const addCoupons = async (
+    vendor_id, subcategory_id, coupon_code, percentage_off, single_use, feature_coupon, start_date, end_date, coupon_description, scheduler
+  ) => {
   try {
     return await axios.post(`${API_URL}/${vendor_id}/${subcategory_id}/coupon`, {
       coupon_code: coupon_code,

@@ -76,7 +76,7 @@ const CategoriesForm = React.memo((props) => {
             return;
         }
 
-        if(displayImage === ""){
+        if(displayImage === "" && formType === 'Add'){
             enqueueSnackbar(`Please Select an image file`, { variant: 'error' });
             return;
         }
@@ -86,6 +86,10 @@ const CategoriesForm = React.memo((props) => {
         enqueueSnackbar(`Submitting, Please wait`, { variant: 'info' });
 
         handleClickAction();
+
+        setTimeout(() => {
+            setSubmitted(false);
+        }, 1000);
     }
 
     let imageSelectedMsg = (
