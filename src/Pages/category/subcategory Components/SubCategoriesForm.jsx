@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 // MaterialUI Elements
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import CloseIcon from '@mui/icons-material/Close';
@@ -41,6 +41,7 @@ const SubCategoriesForm = React.memo((props) => {
         addOpen,
         formType,
         setImage,
+        file,
         handleClickAction,
         setCategoriesId,
     } = props;
@@ -51,6 +52,10 @@ const SubCategoriesForm = React.memo((props) => {
     const { enqueueSnackbar } = useSnackbar();
     const [submitted, setSubmitted] = useState(false)
     const classes = Style();
+
+    useEffect(() => {
+        if(formType === "Update") setDisplayImage(file);
+    }, [file, formType])
 
     const handleClickCategory = (category) => {
         setCategoriesId(category.cid);
@@ -99,7 +104,7 @@ const SubCategoriesForm = React.memo((props) => {
 
         setTimeout(() => {
             setSubmitted(false);
-        }, 1000);
+        }, 2000);
     }
 
     let imageSelectedMsg = (

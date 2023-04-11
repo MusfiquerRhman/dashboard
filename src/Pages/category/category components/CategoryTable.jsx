@@ -30,6 +30,7 @@ const CategoryTable = React.memo((categories) => {
   const [addOpen, setAddOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [file, setImage] = useState("");
+  const [displayFile, setDisplayImage] = useState("");
   const { enqueueSnackbar } = useSnackbar();
 
   let rows = [];
@@ -64,6 +65,7 @@ const CategoryTable = React.memo((categories) => {
     setCategory_name(row.category_name);
     setCategoryOrderId(row.app_order_id);
     setCategoryID(row.cid);
+    setDisplayImage(row.category_logo_path)
     setAddOpen(true);
   }
 
@@ -100,6 +102,7 @@ const CategoryTable = React.memo((categories) => {
         addOpen={addOpen}
         formType="Update"
         setImage={setImage}
+        file={displayFile}
         handleClickAction={updateCategoriesForm}
       />
 

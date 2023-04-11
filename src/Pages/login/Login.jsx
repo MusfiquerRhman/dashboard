@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import * as userApi from '../../API/auth';
@@ -15,7 +15,6 @@ import style from '../../Styles/GlobalStyles';
 const Login = () => {
     const [userEmail, handleChangeUserEmail] = useInputState("");
     const [password, handleChangePassword] = useInputState("");
-    const [submitted, setSubmitted] = useState(false)
     const classes = style();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -29,8 +28,6 @@ const Login = () => {
             enqueueSnackbar("Enter a valid password", { variant: 'error' });
             return;
         }
-
-        setSubmitted(true)
 
         const res = await userApi.login(userEmail, password);
         if (res === -1) {
@@ -77,7 +74,7 @@ const Login = () => {
                                 />
                             </Grid>
                             <Grid item>
-                                <Button disabled={submitted} fullWidth onClick={submitForm} variant="contained" >Login</Button>
+                                <Button fullWidth onClick={submitForm} variant="contained" >Login</Button>
                             </Grid>
                             <Grid item>
                                 <Typography variant="subtitle1">
