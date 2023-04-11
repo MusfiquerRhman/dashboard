@@ -18,6 +18,7 @@ export const INITIAL_STATE = {
     isActive: false,
     featureVendor: false,
     bestOfLoganPicks: '',
+    vendorImage: '',
 }
 
 export const ACTION_TYPE = {
@@ -72,6 +73,7 @@ export const vendorReducer = (state = INITIAL_STATE, action) => {
                 twitter: twitter,
                 youtube: youtube,
                 bestOfLoganPicks: bestOfLoganPicks,
+                vendorImage: action.payload.data.vendor_log_path,
             }
 
         default:

@@ -30,10 +30,11 @@ function Profile() {
         userAPI.getUserProfile().then((user) => {
             setPhoneNo(user.data.phone)
             setEmail(user.data.email)
-            setFullName(user.data.fullname === null ? "" : user.data.fullname)
+            setFullName(user.data.fullname === null ? "" : user.data.fullname);
+            setDisplayImage(user.data.profile_logo_path)
             setZip(user.data.zip === null ? "" : user.data.zip);
         })
-    }, [])
+    }, [setEmail, setFullName, setPhoneNo, setZip])
 
     const imageSelectHandeler = (files) => {
         setImage(files[0]);
@@ -97,7 +98,9 @@ function Profile() {
             }
         }
 
-        setSubmitted(false);
+        setTimeout(() => {
+            setSubmitted(false);
+        }, 2000);
     }
 
     const [deleteOpen, setDeleteOpen] = useState(false);
@@ -155,7 +158,8 @@ function Profile() {
                                     required
                                     fullWidth
                                 />
-                            </Grid>                            <Grid item>
+                            </Grid>                            
+                            <Grid item>
                                 <TextField id="registration-zip"
                                     label="Zip Code"
                                     type="number"
@@ -178,7 +182,7 @@ function Profile() {
                                     fullWidth
                                 />
                             </Grid>
-                            <Grid item>
+                            <Grid item sx={{marginBottom: '1rem'}}>
                                 <TextField id="registration-phoneNo"
                                     label="Phone NO"
                                     variant="standard"

@@ -23,8 +23,9 @@ const style = makeStyles((theme) => ({
     },
   },
   image: {
-    marginLeft: "10%",
-    width: "80%",
+    borderRadius: '50%',
+    margin: '0 25%',
+    width: "50%",
     aspectRatio: "1/1",
   },
   subCategoryMenu: {

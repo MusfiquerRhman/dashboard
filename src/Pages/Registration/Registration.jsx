@@ -50,6 +50,7 @@ function Registration() {
             const res = await authApi.registration(email, password, phoneNo, admin_status);
             if (res === -1) {
                 enqueueSnackbar("Error: Try again", { variant: 'error' });
+                setSubmitted(true);
             }
             else if (res.status === 200) {
                 setIsRegistrated(true);
@@ -57,10 +58,12 @@ function Registration() {
             }
             else if (res.status === 422) {
                 enqueueSnackbar("Validation error", { variant: 'error' });
+                setSubmitted(true);
             }
         }
         else {
             enqueueSnackbar("Passwords not matched", { variant: 'error' });
+            setSubmitted(true);
         }
     }
 

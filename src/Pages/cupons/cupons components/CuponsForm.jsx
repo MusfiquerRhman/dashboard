@@ -139,7 +139,7 @@ const CouponsForm = React.memo((props) => {
 
         setTimeout(() => {
             setSubmitted(false);
-        }, 1000);
+        }, 2000);
     }
 
 

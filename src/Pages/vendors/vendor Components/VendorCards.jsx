@@ -173,193 +173,141 @@ const VendorCards = React.memo((props) => {
                 <Grid container sx={{ color: 'text.primary', lineHeight: '2' }}>
                   {
                     (element.requirements.length > 1 && element.requirements !== null) && (
-                      <>
-                        <Grid item xs={4}>
+                      <Grid item xs={12}>
                           <span className={classes.title}>Requirements:</span>
-                        </Grid>
-                        <Grid item xs={8}>
                           <span className={classes.value}>{element.requirements}</span>
-                        </Grid>
-                      </>
+                      </Grid>
                     )
                   }
 
                   {
                     (element.hours.length > 1 && element.hours !== null) && (
-                      <>
-                        <Grid item xs={4}>
+                      <Grid item xs={12}>
                           <span className={classes.title}>Hours:</span>
-                        </Grid>
-                        <Grid item xs={8}>
                           <span className={classes.value}>{element.hours}</span>
-                        </Grid>
-                      </>
+                      </Grid>
                     )
                   }
 
                   {
                     (element.description.length > 1 && element.description !== null) && (
-                      <>
-                        <Grid item xs={4}>
+                      <Grid item xs={12}>
                           <span className={classes.title}>Description:</span>
-                        </Grid>
-                        <Grid item xs={8}>
                           <span className={classes.value}>{element.description}</span>
-                        </Grid>
-                      </>
+                      </Grid>
                     )
                   }
 
                   {
                     (element.street1.length > 1 && element.street1 !== null) && (
-                      <>
-                        <Grid item xs={4}>
+                      <Grid item xs={12}>
                           <span className={classes.title}>Address:</span>
-                        </Grid>
-                        <Grid item xs={8}>
                           <span className={classes.value}>{element.street1}</span>
                           {(element.street2.length > 1 && element.street2 !== null) && (
                             <span className={classes.value}>{element.street2}</span>
                           )}
-                        </Grid>
-                      </>
+                      </Grid>
                     )
                   }
 
 
                   {
                     (element.city.length > 1 && element.city !== null) && (
-                      <>
-                        <Grid item xs={4}>
+                      <Grid item xs={12}>
                           <span className={classes.title}>City:</span>
-                        </Grid>
-                        <Grid item xs={8}>
                           <span className={classes.value}> {element.city}</span>
-                        </Grid>
-                      </>
+                      </Grid>
                     )
                   }
 
                   {
                     (element.state.length > 1 && element.state !== null) && (
-                      <>
-                        <Grid item xs={4}>
+                      <Grid item xs={12}>
                           <span className={classes.title}>State:</span>
-                        </Grid>
-                        <Grid item xs={8}>
                           <span className={classes.value}> {element.state}</span>
-                        </Grid>
-                      </>
+                      </Grid>
                     )
                   }
 
                   {
                     (element.zip_code.length > 1 && element.zip_code !== null) && (
-                      <>
-                        <Grid item xs={4}>
+                      <Grid item xs={12}>
                           <span className={classes.title}>Zip Code:</span>
-                        </Grid>
-                        <Grid item xs={8}>
                           <span className={classes.value}> {element.zip_code}</span>
-                        </Grid>
-                      </>
+                      </Grid>
                     )
                   }
 
                   {
                     (element.facebook.length > 1 && element.facebook !== null) && (
-                      <>
-                        <Grid item xs={4}>
+                      <Grid item xs={12}>
                           <span className={classes.title}>Facebook:</span>
-                        </Grid>
-                        <Grid item xs={8}>
                           <span className={classes.value}>
                             <Tooltip title={element.facebook}>
                               <a target="_blank" className={classes.website} href={element.facebook} rel="noreferrer">Click here</a>
                             </Tooltip>
                           </span>
-                        </Grid>
-                      </>
+                      </Grid>
                     )
                   }
 
                   {
                     (element.twitter.length > 1 && element.twitter !== null) && (
-                      <>
-                        <Grid item xs={4}>
+                      <Grid item xs={12}>
                           <span className={classes.title}>Twitter:</span>
-                        </Grid>
-                        <Grid item xs={8}>
                           <span className={classes.value}>
                             <Tooltip title={element.twitter}>
                               <a target="_blank" className={classes.website} href={element.twitter} rel="noreferrer">Click here</a>
                             </Tooltip>
                           </span>
-                        </Grid>
-                      </>
+                      </Grid>
                     )
                   }
 
                   {
                     (element.youtube.length > 1 && element.youtube !== null) && (
-                      <>
-                        <Grid item xs={4}>
+                      <Grid item xs={12}>
                           <span className={classes.title}>Youtube:</span>
-                        </Grid>
-                        <Grid item xs={8}>
                           <span className={classes.value}>
                             <Tooltip title={element.youtube}>
                               <a target="_blank" className={classes.website} href={element.youtube} rel="noreferrer">Click here</a>
                             </Tooltip>
                           </span>
-                        </Grid>
-                      </>
+                      </Grid>
                     )
                   }
 
                   {
                     (element.instagram.length > 1 && element.instagram !== null) && (
-                      <>
-                        <Grid item xs={4}>
+                      <Grid item xs={12}>
                           <span className={classes.title}>Instagram:</span>
-                        </Grid>
-                        <Grid item xs={8}>
                           <span className={classes.value}>
                             <Tooltip title={element.instagram}>
                               <a target="_blank" className={classes.website} href={element.instagram} rel="noreferrer">Click here</a>
                             </Tooltip>
                           </span>
-                        </Grid>
-                      </>
+                      </Grid>
                     )
                   }
 
                   {
                     (element.best_of_logan_picks.length > 1 && element.best_of_logan_picks !== null) && (
-                      <>
-                        <Grid item xs={4}>
+                      <Grid item xs={12}>
                           <span className={classes.title}>BL Picks:</span>
-                        </Grid>
-                        <Grid item xs={8}>
                           <span className={classes.value}> {element.best_of_logan_picks}</span>
-                        </Grid>
-                      </>
+                      </Grid>
                     )
                   }
 
-                  <Grid item xs={4}>
+                  <Grid item xs={12}>
                     <span className={classes.title}>Created:</span>
-                  </Grid>
-                  <Grid item xs={8}>
                     <span className={classes.value}> {
                       new Date(element.created_date).toLocaleDateString() + " " + new Date(element.created_date).toLocaleTimeString()
                     }</span>
                   </Grid>
 
-                  <Grid item xs={4}>
+                  <Grid item xs={12}>
                     <span className={classes.title}>Updated:</span>
-                  </Grid>
-                  <Grid item xs={8}>
                     <span className={classes.value}> {
                       new Date(element.updated_date).toLocaleDateString() + " " + new Date(element.updated_date).toLocaleTimeString()
                     }</span>

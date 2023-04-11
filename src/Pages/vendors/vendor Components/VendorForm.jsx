@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // MaterialUI Elements
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import CloseIcon from '@mui/icons-material/Close';
@@ -31,10 +31,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const VendorForm = React.memo((props) => {
     const classes = Style();
-    const [displayImage, setDisplayImage] = useState("");
     const { enqueueSnackbar } = useSnackbar();
     const [submitted, setSubmitted] = useState(false)
-
+    const [displayImage, setDisplayImage] = useState('');
+    
     const {
         formType,
         updateOpen,
@@ -45,6 +45,10 @@ const VendorForm = React.memo((props) => {
         ACTION_TYPE,
         setImage,
     } = props;
+
+    useEffect(() => {
+        setDisplayImage(state.vendorImage)
+    }, [state.vendorImage])
     
     //(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})
 
@@ -103,6 +107,10 @@ const VendorForm = React.memo((props) => {
         enqueueSnackbar(`Submitting, Please wait`, { variant: 'info' });
 
         handleClickVendor();
+
+        setTimeout(() => {
+            setSubmitted(false);
+        }, 2000);
     }
 
     const onChangeInput = (event) => {

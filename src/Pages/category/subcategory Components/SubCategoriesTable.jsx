@@ -32,6 +32,7 @@ const SubCategoryTable = React.memo((subCategories) => {
   const [addOpen, setaddOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [file, setImage] = useState("");
+  const [displayFile, setDisplayImage] = useState("");
   const { enqueueSnackbar } = useSnackbar();
 
   let rows = [];
@@ -66,6 +67,7 @@ const SubCategoryTable = React.memo((subCategories) => {
     setSubCategory_name(row.sub_category_name);
     setSubCategoryID(row.scid);
     setcategoryID(row.cid);
+    setDisplayImage(row.sub_category_logo_path)
     setaddOpen(true);
   }
 
@@ -100,6 +102,7 @@ const SubCategoryTable = React.memo((subCategories) => {
         addOpen={addOpen}
         formType="Update"
         setImage={setImage}
+        file={displayFile}
         handleClickAction={updateSubCatgoriesForm}
         setCategoriesId={setcategoryID}
       />
