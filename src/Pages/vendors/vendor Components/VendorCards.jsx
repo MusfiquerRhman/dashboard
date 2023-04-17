@@ -45,14 +45,21 @@ const VendorCards = React.memo((props) => {
   if (element.facebook.length > 0 && element.facebook[0] !== 'h') {
     element.facebook = `http://${element.facebook}`
   }
+
   if (element.twitter.length > 0 && element.twitter[0] !== 'h') {
     element.twitter = `http://${element.twitter}`
   }
+
   if (element.youtube.length > 0 && element.youtube[0] !== 'h') {
     element.youtube = `http://${element.youtube}`
   }
+
   if (element.instagram.length > 0 && element.instagram[0] !== 'h') {
     element.instagram = `http://${element.instagram}`
+  }
+
+  if (element.website.length > 0 && element.website[0] !== 'h') {
+    element.website = `http://${element.website}`
   }
 
   const handleClickOpenDelete = () => {
@@ -75,7 +82,7 @@ const VendorCards = React.memo((props) => {
   const deleteForm = useCallback(async () => {
     const res = await vendorAPI.deleteVendor(element.vid);
     if (res.status === 200) {
-      enqueueSnackbar(`Successfully Deleted`, { variant: 'info' });
+      enqueueSnackbar(`Successfully Deleted`, { variant: 'success' });
     }
     else {
       enqueueSnackbar(`Failed to Delete`, { variant: 'error' });

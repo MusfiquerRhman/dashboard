@@ -13,6 +13,7 @@ const FeaturedCoupons = React.memo(() => {
         });
     }, []);
 
+
     return (
         <React.Fragment>
             <div>

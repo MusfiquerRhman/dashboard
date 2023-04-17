@@ -77,7 +77,7 @@ const Row = React.memo((props) => {
     const deleteForm = async () => {
         const res = await couponsAPI.deleteCoupon(row.history.coupon_id);
         if (res.status === 200) {
-            enqueueSnackbar(`Successfully Deleted`, { variant: 'info' });
+            enqueueSnackbar(`Successfully Deleted`, { variant: 'success' });
             window.location.reload();
         }
         else {
@@ -102,7 +102,7 @@ const Row = React.memo((props) => {
             scheduler,
             ).then(res => {
                 if (res.status === 200) {
-                    enqueueSnackbar(`Successfully updated`, { variant: 'info' });
+                    enqueueSnackbar(`Successfully updated`, { variant: 'success' });
                     window.location.reload();
                 }
                 else {
