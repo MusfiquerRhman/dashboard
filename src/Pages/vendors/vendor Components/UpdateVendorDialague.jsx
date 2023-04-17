@@ -23,7 +23,7 @@ const UpdateVendorDialague = React.memo((props) => {
     const handleClickUpdateVendor = useCallback(async () => {
         const res = await vendorAPI.updateVendor(vid, state, file);
         if (res.status === 200) {
-            enqueueSnackbar(`Successfully Updated Vendor`, { variant: 'info' });
+            enqueueSnackbar(`Successfully Updated Vendor`, { variant: 'success' });
             window.location.reload();
         }
         else {
